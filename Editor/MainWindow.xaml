@@ -1,0 +1,6 @@
+﻿<Window x:Class="Editor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        SizeToContent="WidthAndHeight">
+    <Button Width="Auto" Height="Auto" Content="Do Something" Click="ButtonBase_OnClick" />
+</Window>
