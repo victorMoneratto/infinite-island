@@ -7,7 +7,7 @@ namespace DasGame
 {
     public class HueGame : Game
     {
-        public static readonly World World = new World(new Vector2(0, 20));
+        public static readonly World World = new World(new Vector2(0, 40));
 
         private readonly Input _input;
         public readonly DebugComponent DebugComponent;
@@ -20,6 +20,7 @@ namespace DasGame
                 {
                     PreferredBackBufferWidth = 1280,
                     PreferredBackBufferHeight = 720,
+                    PreferMultiSampling = true,
                     SynchronizeWithVerticalRetrace = true
                 };
 
@@ -55,11 +56,12 @@ namespace DasGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightSkyBlue);
+            GraphicsDevice.Clear(Color.DeepSkyBlue);
+
+            FloorComponent.Draw();
+            EntityComponent.Draw();
 
             DebugComponent.Draw();
-            EntityComponent.Draw();
-            FloorComponent.Draw();
 
             base.Draw(gameTime);
         }

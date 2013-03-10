@@ -41,6 +41,7 @@
       <Name>moss</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -35,12 +35,13 @@ namespace DasGame.Entity
 
             Body wheel = BodyFactory.CreateCircle(
                 world: HueGame.World,
-                radius: widthMeters/2f,
+                radius: widthMeters/1.9f,
                 density: 1,
                 position: _torso.Position + new Vector2(0, torsoHeight/2));
 
             wheel.BodyType = BodyType.Dynamic;
             wheel.Friction = float.MaxValue;
+            wheel.Restitution = 0;
 
             JointFactory.CreateFixedAngleJoint(HueGame.World, _torso);
 
@@ -50,7 +51,7 @@ namespace DasGame.Entity
 
             _sprite = new Sprite<State>(content.Load<Texture2D>("cowboy"), 9, 1)
                 {
-                    OffsetFromCenter = MeasureUtil.ToPixels(new Vector2(widthMeters/4, widthMeters/4))
+                    OffsetFromCenter = MeasureUtil.ToPixels(new Vector2(widthMeters/3, widthMeters/4))
                 };
 
             _sprite.SetAnimation(State.Idle, new Point(0, 0));
@@ -62,7 +63,6 @@ namespace DasGame.Entity
             //Tweening for velocity?
 
             _motor.MotorSpeed = 0;
-            _sprite.AnimationKey = State.Idle;
 
             if (Input.IsKeyDown(Keys.D))
             {
@@ -76,7 +76,20 @@ namespace DasGame.Entity
                 _sprite.AnimationKey = State.Moving;
             }
 
+            if (Input.IsKeyPressed(Keys.Space))
+            {
+                _torso.ApplyLinearImpulse(new Vector2(0, -6));
+            }
+
+            if(_motor.MotorSpeed == 0)
+                _sprite.AnimationKey = State.Idle;
+
             _sprite.Update(gameTime, MeasureUtil.ToPixels(_torso.Position));
+
+            //Completely temporary
+            if ((_motor.MotorSpeed < 0 && _sprite.OffsetFromCenter.X > 0)
+               || _motor.MotorSpeed > 0 && _sprite.OffsetFromCenter.X < 0)
+                _sprite.OffsetFromCenter = new Vector2(-1, 1) * _sprite.OffsetFromCenter;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

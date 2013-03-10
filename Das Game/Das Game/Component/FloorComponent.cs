@@ -17,16 +17,25 @@ namespace DasGame.Component
         private Vector2 _viewport;
         private Vector2[] _vertices;
 
+        //temp
+        readonly float _fixedDistance = MeasureUtil.ToMeters(80);
+        private const int VerticesCount = 20;
+        //                                /\
+        //                                ||
+        //Oh, I'm sorry did I break your concentration?                    
+        //don't change this without changing the Effect
+        //I DARE YOU! I DOUBLE DARE YOU, MOTHERFUCKER!
+        
+
         public void Generate()
         {
             _body.FixtureList.Clear();
             Random random = new Random();
-            Vertices vertices = new Vertices(8);
+            Vertices vertices = new Vertices(VerticesCount);
             _vertices = new Vector2[vertices.Capacity];
-            float multiplier = MeasureUtil.ToMeters(200);
             for (int i = 0; i < vertices.Capacity; ++i)
             {
-                vertices.Add(new Vector2(i * multiplier, random.Next(3)));
+                vertices.Add(new Vector2(i * _fixedDistance,(float) random.NextDouble()/2f));
                 _vertices[i] = new Vector2(MeasureUtil.ToPixels(vertices[i].X), MeasureUtil.ToPixels(vertices[i].Y) + 400);
             }
             for (int i = 0; i < vertices.Capacity - 1; ++i)
@@ -38,21 +47,32 @@ namespace DasGame.Component
 
         public void LoadContent(Game game)
         {
-            _spriteBatch = new SpriteBatch(game.GraphicsDevice);
-            _moss = game.Content.Load<Texture2D>("moss");
-            _effect = game.Content.Load<Effect>("DasEffect");
+            
             _viewport = new Vector2(
                 x: game.GraphicsDevice.Viewport.Width,
                 y: game.GraphicsDevice.Viewport.Height);
+
+            _spriteBatch = new SpriteBatch(game.GraphicsDevice);
+
+            _effect = game.Content.Load<Effect>("DasEffect");
+            _effect.Parameters["viewport"].SetValue(_viewport);
+            _effect.Parameters["fixedDistance"].SetValue(MeasureUtil.ToPixels(_fixedDistance));
+
+            _moss = game.Content.Load<Texture2D>("moss");
+            _tempTexture = new Texture2D(game.GraphicsDevice, 1, 1);
+            _tempTexture.SetData(new[]{Color.White});
         }
+
+        private Texture2D _tempTexture;
 
         public void Draw()
         {
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            _effect.Parameters["viewport"].SetValue(_viewport);
+            
             _effect.Parameters["terrain"].SetValue(_vertices);
             _effect.CurrentTechnique.Passes[0].Apply();
-            _spriteBatch.Draw(_moss, Vector2.Zero, Color.White);
+            //_spriteBatch.Draw(_moss, Vector2.Zero, Color.White);
+            _spriteBatch.Draw(_tempTexture, new Rectangle(0, 0, (int)_viewport.X, (int)_viewport.Y), Color.White);
             _spriteBatch.End();
         }
     }

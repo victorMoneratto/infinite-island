@@ -12,22 +12,45 @@ void VertexShaderFunction(inout float4 color    : COLOR0,
 	position.xy *= float2(2, -2);  
 	position.xy -= float2(1, -1);  
 }
-int verticesCount;
-float2 terrain[8];
+
+float linearInterpolate(float v0, float v1, float delta)
+{
+	return v0 + (v1-v0)* delta;
+}
+
+float smoothInterpolate(float v0, float v1, float delta)
+{
+	delta = delta * delta * (3-2*delta);
+	return v0 * (1-delta) + v1 * delta;
+}
+
+float cosineInterpolate(float v0, float v1, float delta)
+{
+	float delta2 = (1-cos(delta*3.14159265f))/2;
+	return v0*(1-delta2) + v1 * delta2;
+}
+
+static const int verticesCount = 20;
+float2 terrain[20];
 sampler s0;
+
+//temp
+float fixedDistance;
+float treshold;
 
 float4 PixelShaderFunction(float2 pixelCoords : VPOS, float2 textureCoords :TEXCOORD0) : COLOR0
 {
 	float4 color = tex2D(s0, textureCoords);
-	int i = pixelCoords.x / 200;
-	float totalDeltaX = terrain[i+1].x - terrain[i].x;
-	float curentDeltaX = terrain[i+1].x - pixelCoords.x;
-	float deltaPercentage = 1 - curentDeltaX/totalDeltaX;
-	if(lerp(terrain[i].y, terrain[i+1].y, deltaPercentage)> pixelCoords.y)
+	int i = pixelCoords.x / fixedDistance;
+	float delta = (pixelCoords.x - terrain[i].x)/(terrain[i+1].x - terrain[i].x);
+	if(cosineInterpolate(terrain[i].y, terrain[i+1].y, delta) >= pixelCoords.y)
+	{
 		color.rgba = 0;
-
+	}
 	return color;
 }
+
+
 
 technique Technique1
 {
