@@ -13,7 +13,7 @@ namespace DasGame.Util
         /// <returns>Value in Pixels</returns>
         public static int ToPixels(float meters)
         {
-            return (int) (meters*PixelsPerMeter);
+            return (int)(meters * PixelsPerMeter);
         }
 
         public static Vector2 ToPixels(Vector2 meters)
@@ -29,9 +29,16 @@ namespace DasGame.Util
         /// </summary>
         /// <param name="pixels">Value in pixels</param>
         /// <returns>Value in meters</returns>
-        public static float ToMeters(int pixels)
+        public static float ToMeters(float pixels)
         {
-            return (float) pixels/PixelsPerMeter;
+            return (float)pixels / PixelsPerMeter;
+        }
+
+        public static Vector2 ToMeters(Vector2 pixels)
+        {
+            pixels.X /= PixelsPerMeter;
+            pixels.Y /= PixelsPerMeter;
+            return pixels;
         }
     }
 }

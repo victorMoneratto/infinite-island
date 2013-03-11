@@ -78,6 +78,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
     <Compile Include="Component\DebugComponent.cs" />
     <Compile Include="Component\EntityComponent.cs" />
     <Compile Include="Component\FloorComponent.cs" />

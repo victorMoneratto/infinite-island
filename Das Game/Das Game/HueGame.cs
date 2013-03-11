@@ -8,11 +8,14 @@ namespace DasGame
     public class HueGame : Game
     {
         public static readonly World World = new World(new Vector2(0, 40));
+        public static Camera Camera;
 
-        private readonly Input _input;
         public readonly DebugComponent DebugComponent;
         public readonly EntityComponent EntityComponent;
         public readonly FloorComponent FloorComponent;
+        private readonly Input _input;
+
+        private bool _debugEnabled = false;
 
         public HueGame()
         {
@@ -34,7 +37,10 @@ namespace DasGame
 
         protected override void LoadContent()
         {
+            Camera = new Camera(GraphicsDevice.Viewport);
+#if DEBUG
             DebugComponent.LoadContent(this);
+#endif
             EntityComponent.LoadContent(this);
             FloorComponent.LoadContent(this);
             FloorComponent.Generate();
@@ -46,6 +52,8 @@ namespace DasGame
             _input.Update();
             if (Input.IsKeyPressed(Keys.Escape))
                 Exit();
+            if (Input.IsKeyPressed(Keys.F3))
+                _debugEnabled = !_debugEnabled;
 
             World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
 
@@ -56,12 +64,14 @@ namespace DasGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DeepSkyBlue);
+            GraphicsDevice.Clear(Color.DarkBlue);
 
             FloorComponent.Draw();
             EntityComponent.Draw();
-
-            DebugComponent.Draw();
+#if DEBUG
+            if (_debugEnabled)
+                DebugComponent.Draw();
+#endif
 
             base.Draw(gameTime);
         }

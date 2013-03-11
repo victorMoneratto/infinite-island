@@ -58,6 +58,9 @@ namespace DasGame.Entity
             _sprite.SetAnimation(State.Moving, 0);
         }
 
+        //Not precise position, but pretty close
+        public Vector2 Position { get { return _torso.Position; } }
+
         public override void Update(GameTime gameTime)
         {
             //Tweening for velocity?
