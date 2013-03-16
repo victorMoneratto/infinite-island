@@ -19,9 +19,9 @@ namespace DasGame
         public float Zoom { get; set; }
         public float Rotation { get; set; }
 
-        public Matrix CalculateViewMatrix()
+        public Matrix CalculateViewMatrix(Vector2 parallax)
         {
-            return Matrix.CreateTranslation(new Vector3(-Position, 0))*
+            return Matrix.CreateTranslation(new Vector3(-Position * parallax, 0))*
                    Matrix.CreateTranslation(new Vector3(-Origin, 0))*
                    Matrix.CreateRotationZ(Rotation)*
                    Matrix.CreateScale(Zoom, Zoom, 1)*

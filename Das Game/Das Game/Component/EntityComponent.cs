@@ -25,8 +25,8 @@ namespace DasGame.Component
 
         public void Draw()
         {
-            //_spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, HueGame.Camera.CalculateViewMatrix());
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, HueGame.Camera.CalculateViewMatrix(Vector2.One));
+            //_spriteBatch.Begin();
             _player.Draw(_spriteBatch);
             _spriteBatch.End();
         }

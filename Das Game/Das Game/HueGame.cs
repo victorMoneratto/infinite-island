@@ -64,7 +64,7 @@ namespace DasGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkBlue);
+            GraphicsDevice.Clear(Color.DeepSkyBlue);
 
             FloorComponent.Draw();
             EntityComponent.Draw();

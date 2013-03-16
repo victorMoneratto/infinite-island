@@ -28,7 +28,7 @@ namespace DasGame.Component
             _heightMap = new Texture2D(game.GraphicsDevice, VerticesCount, 1, false, SurfaceFormat.Vector2);
 
             _tempTexture = new Texture2D(game.GraphicsDevice, 1, 1);
-            _tempTexture.SetData(new[] { Color.Black });
+            _tempTexture.SetData(new[] { Color.PaleGoldenrod });
 
             _body.Position = Vector2.UnitY * 8;
             _destinationRect = new Rectangle(
@@ -61,7 +61,7 @@ namespace DasGame.Component
 
         public void Draw()
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, null);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, HueGame.Camera.CalculateViewMatrix(Vector2.One));
             _effect.Parameters["vectorHorizontalDistance"].SetValue(VectorHorizontalDistance);
             _effect.Parameters["heightmap"].SetValue(_heightMap);
             _effect.CurrentTechnique.Passes[0].Apply();
