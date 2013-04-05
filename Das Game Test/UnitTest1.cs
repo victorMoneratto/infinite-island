@@ -2,13 +2,15 @@
 
 namespace DasGameTest
 {
+    
     [TestFixture]
-    public class UnitTest1  //RENAME THIS
+    //NUnit Quick Guide: http://www.codeproject.com/Articles/178635/Unit-Testing-Using-NUnit
+    public class UnitTest1  //TODO Rename class.
     {
         [TestCase]
         public void ShouldPass()
         {
-            //Quick Guide: http://www.codeproject.com/Articles/178635/Unit-Testing-Using-NUnit
+            
             Assert.AreEqual(true, true);
         }
     }
