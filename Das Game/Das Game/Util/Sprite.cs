@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DasGame.Util
+namespace InfiniteIsland.Game.Util
 {
     internal class Sprite<T> where T : struct
     {

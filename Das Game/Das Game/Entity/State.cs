@@ -1,4 +1,4 @@
-﻿namespace DasGame.Entity
+﻿namespace InfiniteIsland.Game.Entity
 {
     internal enum State
     {

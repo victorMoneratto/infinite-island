@@ -1,8 +1,8 @@
-﻿using DasGame.Util;
-using FarseerPhysics.DebugViews;
+﻿using FarseerPhysics.DebugViews;
+using InfiniteIsland.Game.Util;
 using Microsoft.Xna.Framework;
 
-namespace DasGame.Component
+namespace InfiniteIsland.Game.Component
 {
     public class DebugComponent
     {
@@ -11,10 +11,10 @@ namespace DasGame.Component
 
         public DebugComponent()
         {
-            _debugView = new DebugViewXNA(HueGame.World);
+            _debugView = new DebugViewXNA(InfiniteIsland.World);
         }
 
-        public void LoadContent(Game game)
+        public void LoadContent(Microsoft.Xna.Framework.Game game)
         {
             _debugView.LoadContent(game.GraphicsDevice, game.Content);
 

@@ -1,15 +1,15 @@
 ﻿using System;
-using DasGame.Util;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using InfiniteIsland.Game.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DasGame.Component
+namespace InfiniteIsland.Game.Component
 {
     public class FloorComponent
     {
-        private readonly Body _body = new Body(HueGame.World);
+        private readonly Body _body = new Body(InfiniteIsland.World);
         private Effect _effect;
         private SpriteBatch _spriteBatch;
         //temp
@@ -19,7 +19,7 @@ namespace DasGame.Component
 
         private Rectangle _destinationRect;
 
-        public void LoadContent(Game game)
+        public void LoadContent(Microsoft.Xna.Framework.Game game)
         {
             _spriteBatch = new SpriteBatch(game.GraphicsDevice);
 
@@ -61,7 +61,7 @@ namespace DasGame.Component
 
         public void Draw()
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, HueGame.Camera.CalculateViewMatrix(Vector2.One));
+            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, InfiniteIsland.Camera.CalculateViewMatrix(Vector2.One));
             _effect.Parameters["vectorHorizontalDistance"].SetValue(VectorHorizontalDistance);
             _effect.Parameters["heightmap"].SetValue(_heightMap);
             _effect.CurrentTechnique.Passes[0].Apply();

@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DasGame</RootNamespace>
-    <AssemblyName>Das Game</AssemblyName>
+    <RootNamespace>InfiniteIsland.Game</RootNamespace>
+    <AssemblyName>Ilhinfinita</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
@@ -88,7 +88,7 @@
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="HueGame.cs" />
+    <Compile Include="InfiniteIsland.cs" />
     <Compile Include="Util\Animation.cs" />
     <Compile Include="Util\EffectsUtil.cs" />
     <Compile Include="Util\MeasureUtil.cs" />
@@ -117,9 +117,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Das GameContent\Das Game Content.contentproj">
+    <ProjectReference Include="..\Das GameContent\Game Content.contentproj">
       <Project>{C6C8F7AB-8CBA-43A5-A8F3-B89CFF6CC001}</Project>
-      <Name>Das Game Content %28Content%29</Name>
+      <Name>Game Content %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

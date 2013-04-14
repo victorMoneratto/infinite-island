@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace DasGame.Util
+namespace InfiniteIsland.Game.Util
 {
-    internal class MeasureUtil
+    internal static class MeasureUtil
     {
         private const int PixelsPerMeter = 64;
 
@@ -31,7 +31,7 @@ namespace DasGame.Util
         /// <returns>Value in meters</returns>
         public static float ToMeters(float pixels)
         {
-            return (float)pixels / PixelsPerMeter;
+            return pixels / PixelsPerMeter;
         }
 
         public static Vector2 ToMeters(Vector2 pixels)

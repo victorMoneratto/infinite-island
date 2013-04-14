@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace DasGame.Util
+namespace InfiniteIsland.Game.Util
 {
     internal class Animation
     {

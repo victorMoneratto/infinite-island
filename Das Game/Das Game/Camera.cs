@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DasGame
+namespace InfiniteIsland.Game
 {
     public class Camera
     {

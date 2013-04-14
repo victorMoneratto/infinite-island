@@ -1,13 +1,13 @@
-﻿using DasGame.Util;
-using FarseerPhysics.Dynamics;
+﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
+using InfiniteIsland.Game.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace DasGame.Entity
+namespace InfiniteIsland.Game.Entity
 {
     internal class Player : Entity
     {
@@ -25,7 +25,7 @@ namespace DasGame.Entity
             float torsoHeight = heightMeters - widthMeters/2f;
 
             _torso = BodyFactory.CreateRectangle(
-                world: HueGame.World,
+                world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
                 density: 1,
@@ -34,7 +34,7 @@ namespace DasGame.Entity
             _torso.BodyType = BodyType.Dynamic;
 
             Body wheel = BodyFactory.CreateCircle(
-                world: HueGame.World,
+                world: InfiniteIsland.World,
                 radius: widthMeters/1.9f,
                 density: 1,
                 position: _torso.Position + new Vector2(0, torsoHeight/2));
@@ -43,9 +43,9 @@ namespace DasGame.Entity
             wheel.Friction = float.MaxValue;
             wheel.Restitution = 0;
 
-            JointFactory.CreateFixedAngleJoint(HueGame.World, _torso);
+            JointFactory.CreateFixedAngleJoint(InfiniteIsland.World, _torso);
 
-            _motor = JointFactory.CreateRevoluteJoint(HueGame.World, _torso, wheel, Vector2.Zero);
+            _motor = JointFactory.CreateRevoluteJoint(InfiniteIsland.World, _torso, wheel, Vector2.Zero);
             _motor.MotorEnabled = true;
             _motor.MaxMotorTorque = 10;
 

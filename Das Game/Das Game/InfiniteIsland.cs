@@ -1,23 +1,23 @@
-using DasGame.Component;
 using FarseerPhysics.Dynamics;
+using InfiniteIsland.Game.Component;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace DasGame
+namespace InfiniteIsland.Game
 {
-    public class HueGame : Game
+    public class InfiniteIsland : Microsoft.Xna.Framework.Game
     {
         public static readonly World World = new World(new Vector2(0, 40));
         public static Camera Camera;
 
-        public readonly DebugComponent DebugComponent;
-        public readonly EntityComponent EntityComponent;
-        public readonly FloorComponent FloorComponent;
+        private readonly DebugComponent _debugComponent;
+        private readonly EntityComponent _entityComponent;
+        private readonly FloorComponent _floorComponent;
         private readonly Input _input;
 
-        private bool _debugEnabled = false;
+        private bool _debugEnabled;
 
-        public HueGame()
+        public InfiniteIsland()
         {
             new GraphicsDeviceManager(this)
                 {
@@ -30,20 +30,20 @@ namespace DasGame
             Content.RootDirectory = "Content";
 
             _input = new Input();
-            DebugComponent = new DebugComponent();
-            EntityComponent = new EntityComponent();
-            FloorComponent = new FloorComponent(); //Completely temporary
+            _debugComponent = new DebugComponent();
+            _entityComponent = new EntityComponent();
+            _floorComponent = new FloorComponent(); //Completely temporary
         }
 
         protected override void LoadContent()
         {
             Camera = new Camera(GraphicsDevice.Viewport);
 #if DEBUG
-            DebugComponent.LoadContent(this);
+            _debugComponent.LoadContent(this);
 #endif
-            EntityComponent.LoadContent(this);
-            FloorComponent.LoadContent(this);
-            FloorComponent.Generate();
+            _entityComponent.LoadContent(this);
+            _floorComponent.LoadContent(this);
+            _floorComponent.Generate();
             base.LoadContent();
         }
 
@@ -57,7 +57,7 @@ namespace DasGame
 
             World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
 
-            EntityComponent.Update(gameTime);
+            _entityComponent.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -66,11 +66,11 @@ namespace DasGame
         {
             GraphicsDevice.Clear(Color.DeepSkyBlue);
 
-            FloorComponent.Draw();
-            EntityComponent.Draw();
+            _floorComponent.Draw();
+            _entityComponent.Draw();
 #if DEBUG
             if (_debugEnabled)
-                DebugComponent.Draw();
+                _debugComponent.Draw();
 #endif
 
             base.Draw(gameTime);

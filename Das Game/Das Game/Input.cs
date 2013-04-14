@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace DasGame
+namespace InfiniteIsland.Game
 {
     /// <summary>
     /// Handle XNA input, must be updated and can be accessed statically

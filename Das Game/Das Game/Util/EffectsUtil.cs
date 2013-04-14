@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DasGame.Util
+namespace InfiniteIsland.Game.Util
 {
     internal class EffectsUtil
     {

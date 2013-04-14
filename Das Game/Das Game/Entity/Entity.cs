@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DasGame.Entity
+namespace InfiniteIsland.Game.Entity
 {
     internal abstract class Entity
     {
