@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Das Game\Das Game\Game.csproj", "{60B11E6C-9AC5-4102-9F9D-B43B8E0B9FFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game\Game.csproj", "{60B11E6C-9AC5-4102-9F9D-B43B8E0B9FFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Content", "Das Game\Das GameContent\Game Content.contentproj", "{C6C8F7AB-8CBA-43A5-A8F3-B89CFF6CC001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Content", "Game\Content\Game Content.contentproj", "{C6C8F7AB-8CBA-43A5-A8F3-B89CFF6CC001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Das Game Test\Test.csproj", "{1026F91D-6648-4E7C-86E4-19ECC37D52FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1026F91D-6648-4E7C-86E4-19ECC37D52FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
