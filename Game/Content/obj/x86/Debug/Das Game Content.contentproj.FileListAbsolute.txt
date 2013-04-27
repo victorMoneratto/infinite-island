@@ -1,0 +1,2 @@
+C:\Users\Victor\documents\visual studio 2012\Projects\Das Game\Das Game\Das GameContent\obj\x86\Debug\Das Game Content.contentprojResolveAssemblyReference.cache
+C:\Users\Victor\Desktop\ShittyPrototype\Das Game\Das Game\Das GameContent\obj\x86\Debug\Das Game Content.contentprojResolveAssemblyReference.cache
