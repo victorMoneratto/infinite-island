@@ -15,7 +15,11 @@ namespace InfiniteIsland.Game
         private readonly FloorComponent _floorComponent;
         private readonly Input _input;
 
-        private bool _debugEnabled;
+#if DEBUG
+        private bool _debugEnabled = true;
+#else
+        private bool _debugEnabled = false;
+#endif
 
         public InfiniteIsland()
         {
@@ -38,9 +42,7 @@ namespace InfiniteIsland.Game
         protected override void LoadContent()
         {
             Camera = new Camera(GraphicsDevice.Viewport);
-#if DEBUG
             _debugComponent.LoadContent(this);
-#endif
             _entityComponent.LoadContent(this);
             _floorComponent.LoadContent(this);
             _floorComponent.Generate();
@@ -50,8 +52,10 @@ namespace InfiniteIsland.Game
         protected override void Update(GameTime gameTime)
         {
             _input.Update();
+            
             if (Input.IsKeyPressed(Keys.Escape))
                 Exit();
+
             if (Input.IsKeyPressed(Keys.F3))
                 _debugEnabled = !_debugEnabled;
 
@@ -59,6 +63,7 @@ namespace InfiniteIsland.Game
 
             _entityComponent.Update(gameTime);
 
+            _debugComponent.Update();
             base.Update(gameTime);
         }
 
@@ -68,10 +73,8 @@ namespace InfiniteIsland.Game
 
             _floorComponent.Draw();
             _entityComponent.Draw();
-#if DEBUG
             if (_debugEnabled)
                 _debugComponent.Draw();
-#endif
 
             base.Draw(gameTime);
         }

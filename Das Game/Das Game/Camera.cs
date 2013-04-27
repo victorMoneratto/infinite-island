@@ -10,7 +10,7 @@ namespace InfiniteIsland.Game
         public Camera(Viewport viewport)
         {
             _viewport = viewport;
-            Origin = new Vector2(viewport.Width/2f, viewport.Height/2f);
+            Origin = new Vector2(viewport.Width*.5f, viewport.Height*.5f);
             Zoom = 1f;
         }
 
@@ -30,7 +30,7 @@ namespace InfiniteIsland.Game
 
         public void LookAt(Vector2 position)
         {
-            Position = position - new Vector2(_viewport.Width/2f, _viewport.Height/2f);
+            Position = position - new Vector2(_viewport.Width*.5f, _viewport.Height*.5f);
         }
     }
 }
