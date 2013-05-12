@@ -1,9 +1,8 @@
-﻿using InfiniteIsland.Game.Entity;
-using InfiniteIsland.Game.Util;
+﻿using InfiniteIsland.Game.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Game.Component
+namespace InfiniteIsland.Game.Entity
 {
     public class EntityComponent
     {
@@ -26,7 +25,6 @@ namespace InfiniteIsland.Game.Component
         public void Draw()
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, InfiniteIsland.Camera.CalculateViewMatrix(Vector2.One));
-            //_spriteBatch.Begin();
             _player.Draw(_spriteBatch);
             _spriteBatch.End();
         }

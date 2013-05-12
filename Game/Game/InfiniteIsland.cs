@@ -1,5 +1,7 @@
 using FarseerPhysics.Dynamics;
-using InfiniteIsland.Game.Component;
+using InfiniteIsland.Game.Entity;
+using InfiniteIsland.Game.Floor;
+using InfiniteIsland.Game.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -18,7 +20,7 @@ namespace InfiniteIsland.Game
 #if DEBUG
         private bool _debugEnabled = true;
 #else
-        private bool _debugEnabled = false;
+        private bool _debugEnabled;
 #endif
 
         public InfiniteIsland()
@@ -52,7 +54,7 @@ namespace InfiniteIsland.Game
         protected override void Update(GameTime gameTime)
         {
             _input.Update();
-            
+
             if (Input.IsKeyPressed(Keys.Escape))
                 Exit();
 

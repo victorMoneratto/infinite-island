@@ -2,6 +2,7 @@
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
 using InfiniteIsland.Game.Util;
+using InfiniteIsland.Game.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,8 +16,6 @@ namespace InfiniteIsland.Game.Entity
         private readonly RevoluteJoint _motor;
         private readonly Sprite<State> _sprite;
         private readonly Body _torso;
-
-        private State _currentState = State.Idle;
 
         public Player(ContentManager content)
         {
@@ -54,8 +53,8 @@ namespace InfiniteIsland.Game.Entity
                     OffsetFromCenter = MeasureUtil.ToPixels(new Vector2(widthMeters/3, widthMeters/4))
                 };
 
-            _sprite.SetAnimation(State.Idle, new Point(0, 0));
-            _sprite.SetAnimation(State.Moving, 0);
+            _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
+            _sprite.RegisterAnimation(State.Moving, 0);
         }
 
         //Not precise position, but pretty close
@@ -97,7 +96,6 @@ namespace InfiniteIsland.Game.Entity
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //flipHorizontally should be replaced
             _sprite.Draw(spriteBatch, _motor.MotorSpeed < 0);
         }
     }

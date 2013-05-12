@@ -3,7 +3,7 @@ using InfiniteIsland.Game.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Game.Component
+namespace InfiniteIsland.Game.Visual
 {
     public class DebugComponent
     {

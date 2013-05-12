@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace InfiniteIsland.Game.Util
+namespace InfiniteIsland.Game.Visual
 {
     internal class Animation
     {
@@ -19,6 +19,7 @@ namespace InfiniteIsland.Game.Util
             FramesPerSecond = DefaultFps;
             _animationFrames = frames;
             _frames = _animationFrames.Length;
+            _currentFrame = _animationFrames[_currentIndex];
         }
 
         public int FramesPerSecond

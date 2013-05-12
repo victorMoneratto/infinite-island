@@ -5,7 +5,7 @@ using InfiniteIsland.Game.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Game.Component
+namespace InfiniteIsland.Game.Floor
 {
     public class FloorComponent
     {
@@ -23,7 +23,7 @@ namespace InfiniteIsland.Game.Component
         {
             _spriteBatch = new SpriteBatch(game.GraphicsDevice);
 
-            _effect = game.Content.Load<Effect>("DasEffect");
+            _effect = game.Content.Load<Effect>("FloorEffect");
 
             _heightMap = new Texture2D(game.GraphicsDevice, VerticesCount, 1, false, SurfaceFormat.Vector2);
 
@@ -34,8 +34,8 @@ namespace InfiniteIsland.Game.Component
             _destinationRect = new Rectangle(
                 x: 0,
                 y: MeasureUtil.ToPixels(_body.Position.Y),
-               width: game.GraphicsDevice.Viewport.Width,
-               height: game.GraphicsDevice.Viewport.Height - (MeasureUtil.ToPixels(_body.Position.Y)));
+               width:(int) (VerticesCount * VectorHorizontalDistance) * game.GraphicsDevice.Viewport.Width,
+               height: game.GraphicsDevice.Viewport.Height/2);
         }
 
         private const float VectorHorizontalDistance = .1f;
@@ -47,7 +47,7 @@ namespace InfiniteIsland.Game.Component
             Vector2 destinationSize = new Vector2(MeasureUtil.ToMeters(_destinationRect.Width), MeasureUtil.ToMeters(_destinationRect.Height));
             for (int i = 0; i < verticesUV.Length; i++)
             {
-                float positionY = (float)random.NextDouble()/2;//temp random usage.
+                float positionY = (float)random.NextDouble()/5f;//temp random usage.
                 verticesUV[i] = new Vector2(i * VectorHorizontalDistance, positionY);
                 if (i > 0)
                 {

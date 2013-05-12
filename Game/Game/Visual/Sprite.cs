@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Game.Util
+namespace InfiniteIsland.Game.Visual
 {
     internal class Sprite<T> where T : struct
     {
@@ -21,9 +21,9 @@ namespace InfiniteIsland.Game.Util
             OffsetFromCenter = Vector2.Zero;
             _spriteSheet = spriteSheet;
 
-            _width = spriteSheet.Width/columns;
-            _height = spriteSheet.Height/rows;
-            _center = new Vector2(_width/2f, _height/2f);
+            _width = spriteSheet.Width / columns;
+            _height = spriteSheet.Height / rows;
+            _center = new Vector2(_width / 2f, _height / 2f);
         }
 
         public Vector2 OffsetFromCenter { get; set; }
@@ -45,29 +45,29 @@ namespace InfiniteIsland.Game.Util
             }
         }
 
-        public void SetAnimation(T key, params Point[] points)
+        public void RegisterAnimation(T key, params Point[] points)
         {
             var rectangles = new Rectangle[points.Length];
             for (int i = 0; i < points.Length; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: points[i].X*_width,
-                    y: points[i].Y*_height,
+                    x: points[i].X * _width,
+                    y: points[i].Y * _height,
                     width: _width,
                     height: _height);
             }
             _animations.Add(key, new Animation(rectangles));
         }
 
-        public void SetAnimation(T key, int row)
+        public void RegisterAnimation(T key, int row)
         {
-            int columns = _spriteSheet.Width/_width;
+            int columns = _spriteSheet.Width / _width;
             var rectangles = new Rectangle[columns];
             for (int i = 0; i < columns; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: i*_width,
-                    y: row*_height,
+                    x: i * _width,
+                    y: row * _height,
                     width: _width,
                     height: _height);
             }
