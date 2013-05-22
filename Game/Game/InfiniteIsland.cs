@@ -46,7 +46,6 @@ namespace InfiniteIsland.Game
             Camera = new Camera(GraphicsDevice.Viewport);
             _debugComponent.LoadContent(this);
             _entityComponent.LoadContent(this);
-            _floorComponent.LoadContent(this);
             _floorComponent.Generate();
             base.LoadContent();
         }
@@ -71,7 +70,8 @@ namespace InfiniteIsland.Game
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DeepSkyBlue);
+            //GraphicsDevice.Clear(Color.DeepSkyBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             _floorComponent.Draw();
             _entityComponent.Draw();

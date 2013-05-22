@@ -19,7 +19,7 @@ namespace InfiniteIsland.Game.Entity
         public void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
-            InfiniteIsland.Camera.LookAt(MeasureUtil.ToPixels(_player.Position));
+            InfiniteIsland.Camera.LookAt(_player.Position.ToPixels());
         }
 
         public void Draw()

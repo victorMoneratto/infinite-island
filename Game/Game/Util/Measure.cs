@@ -2,7 +2,7 @@
 
 namespace InfiniteIsland.Game.Util
 {
-    internal static class MeasureUtil
+    internal static class Measure
     {
         private const int PixelsPerMeter = 64;
 
@@ -11,30 +11,29 @@ namespace InfiniteIsland.Game.Util
         /// </summary>
         /// <param name="meters">Value in meters</param>
         /// <returns>Value in Pixels</returns>
-        public static int ToPixels(float meters)
+        public static int ToPixels(this float meters)
         {
             return (int)(meters * PixelsPerMeter);
         }
 
-        public static Vector2 ToPixels(Vector2 meters)
+        public static Vector2 ToPixels(this Vector2 meters)
         {
             meters.X *= PixelsPerMeter;
             meters.Y *= PixelsPerMeter;
             return meters;
         }
 
-
         /// <summary>
         /// Convert pixels to meters according to pre-defined ratio
         /// </summary>
         /// <param name="pixels">Value in pixels</param>
         /// <returns>Value in meters</returns>
-        public static float ToMeters(float pixels)
+        public static float ToMeters(this float pixels)
         {
             return pixels / PixelsPerMeter;
         }
 
-        public static Vector2 ToMeters(Vector2 pixels)
+        public static Vector2 ToMeters(this Vector2 pixels)
         {
             pixels.X /= PixelsPerMeter;
             pixels.Y /= PixelsPerMeter;

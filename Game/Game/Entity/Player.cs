@@ -19,8 +19,8 @@ namespace InfiniteIsland.Game.Entity
 
         public Player(ContentManager content)
         {
-            float heightMeters = MeasureUtil.ToMeters(102);
-            float widthMeters = MeasureUtil.ToMeters(24);
+            float heightMeters = 102f.ToMeters();
+            float widthMeters = 24f.ToMeters();
             float torsoHeight = heightMeters - widthMeters/2f;
 
             _torso = BodyFactory.CreateRectangle(
@@ -49,16 +49,19 @@ namespace InfiniteIsland.Game.Entity
             _motor.MaxMotorTorque = 10;
 
             _sprite = new Sprite<State>(content.Load<Texture2D>("cowboy"), 9, 1)
-                {
-                    OffsetFromCenter = MeasureUtil.ToPixels(new Vector2(widthMeters/3, widthMeters/4))
-                };
+                          {
+                              OffsetFromCenter = new Vector2(widthMeters/3, widthMeters/4).ToPixels()
+                          };
 
             _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
             _sprite.RegisterAnimation(State.Moving, 0);
         }
 
         //Not precise position, but pretty close
-        public Vector2 Position { get { return _torso.Position; } }
+        public Vector2 Position
+        {
+            get { return _torso.Position; }
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -83,15 +86,15 @@ namespace InfiniteIsland.Game.Entity
                 _torso.ApplyLinearImpulse(new Vector2(0, -6));
             }
 
-            if(_motor.MotorSpeed == 0)
+            if (_motor.MotorSpeed == 0)
                 _sprite.AnimationKey = State.Idle;
 
-            _sprite.Update(gameTime, MeasureUtil.ToPixels(_torso.Position));
+            _sprite.Update(gameTime, _torso.Position.ToPixels());
 
             //Completely temporary
             if ((_motor.MotorSpeed < 0 && _sprite.OffsetFromCenter.X > 0)
-               || _motor.MotorSpeed > 0 && _sprite.OffsetFromCenter.X < 0)
-                _sprite.OffsetFromCenter = new Vector2(-1, 1) * _sprite.OffsetFromCenter;
+                || _motor.MotorSpeed > 0 && _sprite.OffsetFromCenter.X < 0)
+                _sprite.OffsetFromCenter = new Vector2(-1, 1)*_sprite.OffsetFromCenter;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

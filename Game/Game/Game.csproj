@@ -20,6 +20,8 @@
     </ApplicationIcon>
     <Thumbnail>
     </Thumbnail>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <XnaUpgrade />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -32,7 +34,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -48,6 +49,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -60,6 +62,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DebugViewXNA, Version=3.3.1.32803, Culture=neutral, processorArchitecture=x86">
@@ -79,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Floor\Chunk.cs" />
+    <Compile Include="Floor\FloorGenerator.cs" />
+    <Compile Include="Util\RectangleF.cs" />
     <Compile Include="Visual\DebugComponent.cs" />
     <Compile Include="Entity\EntityComponent.cs" />
     <Compile Include="Floor\FloorComponent.cs" />
@@ -90,8 +96,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="InfiniteIsland.cs" />
     <Compile Include="Visual\Animation.cs" />
-    <Compile Include="Util\EffectsUtil.cs" />
-    <Compile Include="Util\MeasureUtil.cs" />
+    <Compile Include="Util\Measure.cs" />
     <Compile Include="Visual\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ namespace InfiniteIsland.Game
     {
         private static void Main(string[] args)
         {
-            using (InfiniteIsland game = new InfiniteIsland())
+            using (var game = new InfiniteIsland())
             {
                 game.Window.Title = "Infinite Island";
                 game.Run();
