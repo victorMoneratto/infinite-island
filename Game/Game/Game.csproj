@@ -82,12 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="Floor\Chunk.cs" />
-    <Compile Include="Floor\FloorGenerator.cs" />
+    <Compile Include="Terrain\Chunk.cs" />
+    <Compile Include="Terrain\TerrainGenerator.cs" />
     <Compile Include="Util\RectangleF.cs" />
     <Compile Include="Visual\DebugComponent.cs" />
     <Compile Include="Entity\EntityComponent.cs" />
-    <Compile Include="Floor\FloorComponent.cs" />
+    <Compile Include="Terrain\TerrainComponent.cs" />
     <Compile Include="Entity\State.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Entity\Entity.cs" />

@@ -24,8 +24,11 @@ namespace InfiniteIsland.Game.Entity
 
         public void Draw()
         {
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, InfiniteIsland.Camera.CalculateViewMatrix(Vector2.One));
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
+                               InfiniteIsland.Camera.CalculateViewMatrix(Vector2.One));
+
             _player.Draw(_spriteBatch);
+
             _spriteBatch.End();
         }
     }

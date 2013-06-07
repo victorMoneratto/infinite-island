@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace InfiniteIsland.Game.Floor
+namespace InfiniteIsland.Game.Terrain
 {
-    internal class FloorGenerator
+    internal class TerrainGenerator
     {
         private const int VerticesCount = 100;
 

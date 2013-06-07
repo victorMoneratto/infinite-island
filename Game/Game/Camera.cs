@@ -58,11 +58,15 @@ namespace InfiniteIsland.Game
         /// </summary>
         public Vector2 BottomRight
         {
-            get { return new Vector2(_topLeft.X + _dimensions.X*Zoom, _topLeft.Y + _dimensions.Y*Zoom); }
+            get
+            {
+                return new Vector2(x: _topLeft.X + _dimensions.X*Zoom,
+                                   y: _topLeft.Y + _dimensions.Y*Zoom);
+            }
         }
 
         /// <summary>
-        /// Calculate the resulting camera matrix for translation, rotation and scale
+        ///     Calculate the resulting camera matrix for translation, rotation and scale
         /// </summary>
         /// <param name="parallax">Parallax factor, higher values result in higher velocities</param>
         /// <returns></returns>

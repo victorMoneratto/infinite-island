@@ -2,15 +2,15 @@
 
 namespace InfiniteIsland.Game.Util
 {
-    struct RectangleF
+    internal struct RectangleF
     {
-        public Vector2 Position;
-        public Vector2 Dimensions;
+        public readonly Vector2 Dimensions;
+        public readonly Vector2 TopLeft;
 
-        public RectangleF(Vector2 position, Vector2 dimensions)
+        public RectangleF(Vector2 topLeft, Vector2 dimensions)
         {
-            this.Position = position;
-            this.Dimensions = dimensions;
+            TopLeft = topLeft;
+            Dimensions = dimensions;
         }
     }
 }

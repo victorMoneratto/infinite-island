@@ -1,6 +1,7 @@
 using FarseerPhysics.Dynamics;
 using InfiniteIsland.Game.Entity;
 using InfiniteIsland.Game.Floor;
+using InfiniteIsland.Game.Terrain;
 using InfiniteIsland.Game.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -14,7 +15,7 @@ namespace InfiniteIsland.Game
 
         private readonly DebugComponent _debugComponent;
         private readonly EntityComponent _entityComponent;
-        private readonly FloorComponent _floorComponent;
+        private readonly TerrainComponent _terrainComponent;
         private readonly Input _input;
 
 #if DEBUG
@@ -38,7 +39,7 @@ namespace InfiniteIsland.Game
             _input = new Input();
             _debugComponent = new DebugComponent();
             _entityComponent = new EntityComponent();
-            _floorComponent = new FloorComponent(); //Completely temporary
+            _terrainComponent = new TerrainComponent(); //Completely temporary
         }
 
         protected override void LoadContent()
@@ -46,7 +47,7 @@ namespace InfiniteIsland.Game
             Camera = new Camera(GraphicsDevice.Viewport.Bounds);
             _debugComponent.LoadContent(this);
             _entityComponent.LoadContent(this);
-            _floorComponent.Generate();
+            _terrainComponent.Generate();
             base.LoadContent();
         }
 
@@ -63,7 +64,7 @@ namespace InfiniteIsland.Game
             World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
             _entityComponent.Update(gameTime);
             _debugComponent.Update();
-            _floorComponent.Update();
+            _terrainComponent.Update();
             base.Update(gameTime);
         }
 
@@ -71,8 +72,9 @@ namespace InfiniteIsland.Game
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _floorComponent.Draw();
+            _terrainComponent.Draw();
             _entityComponent.Draw();
+
             if (_debugEnabled)
                 _debugComponent.Draw();
 

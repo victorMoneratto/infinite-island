@@ -38,8 +38,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FloorEffect.fx">
-      <Name>FloorEffect</Name>
+    <Compile Include="TerrainEffect.fx">
+      <Name>TerrainEffect</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
