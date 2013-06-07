@@ -19,7 +19,7 @@ namespace InfiniteIsland.Game.Terrain
         public void LoadContent(Microsoft.Xna.Framework.Game game)
         {
             _tempTexture = new Texture2D(game.GraphicsDevice, 1, 1);
-            _tempTexture.SetData(new[] { Color.White });
+            _tempTexture.SetData(new[] { Color.Gray });
 
             _spriteBatch = new SpriteBatch(game.GraphicsDevice);
             _terrainEffect = game.Content.Load<Effect>("TerrainEffect");
@@ -35,7 +35,10 @@ namespace InfiniteIsland.Game.Terrain
             for (int i = 0; i < _loadedChunks.Count; i++)
             {
                 if (_loadedChunks[i].LastVertice.X.ToPixels() < InfiniteIsland.Camera.TopLeft.X)
+                {
+                    _loadedChunks[i].RemoveFromWorld();
                     _loadedChunks.RemoveAt(i);
+                }
                 else break;
             }
 

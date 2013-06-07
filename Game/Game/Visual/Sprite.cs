@@ -8,22 +8,21 @@ namespace InfiniteIsland.Game.Visual
     {
         private readonly Dictionary<T?, Animation> _animations = new Dictionary<T?, Animation>();
         private readonly Vector2 _center;
-        private readonly int _height;
+        private readonly Point _dimensions;
         private readonly Texture2D _spriteSheet;
-        private readonly int _width;
 
         private T? _animationKey;
         private Animation _currentAnimation;
         private Vector2 _position;
 
-        public Sprite(Texture2D spriteSheet, int columns, int rows)
+        public Sprite(Texture2D spriteSheet, Point dimensions)
         {
-            OffsetFromCenter = Vector2.Zero;
+            _dimensions = dimensions;
             _spriteSheet = spriteSheet;
 
-            _width = spriteSheet.Width / columns;
-            _height = spriteSheet.Height / rows;
-            _center = new Vector2(_width / 2f, _height / 2f);
+            OffsetFromCenter = Vector2.Zero;
+
+            _center = new Vector2(_dimensions.X / 2f, _dimensions.Y/ 2f);
         }
 
         public Vector2 OffsetFromCenter { get; set; }
@@ -38,7 +37,11 @@ namespace InfiniteIsland.Game.Visual
 
                 Animation animation;
 
-                if (!_animations.TryGetValue(value, out animation)) return;
+                if (!_animations.TryGetValue(value, out animation))
+                {
+                    _currentAnimation = null;
+                    return;
+                }
 
                 _animationKey = value;
                 _currentAnimation = animation;
@@ -51,47 +54,65 @@ namespace InfiniteIsland.Game.Visual
             for (int i = 0; i < points.Length; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: points[i].X * _width,
-                    y: points[i].Y * _height,
-                    width: _width,
-                    height: _height);
+                    x: points[i].X * _dimensions.X,
+                    y: points[i].Y * _dimensions.Y,
+                    width: _dimensions.X,
+                    height: _dimensions.Y);
             }
             _animations.Add(key, new Animation(rectangles));
         }
 
         public void RegisterAnimation(T key, int row)
         {
-            int columns = _spriteSheet.Width / _width;
+            int columns = _spriteSheet.Width / _dimensions.X;
             var rectangles = new Rectangle[columns];
             for (int i = 0; i < columns; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: i * _width,
-                    y: row * _height,
-                    width: _width,
-                    height: _height);
+                    x: i * _dimensions.X,
+                    y: row * _dimensions.Y,
+                    width: _dimensions.X,
+                    height: _dimensions.Y);
             }
             _animations.Add(key, new Animation(rectangles));
         }
 
+        public void RegisterAnimation(T key, int frameCount, Point first)
+        {
+            int columns = _spriteSheet.Width/_dimensions.X;
+            Point[] points = new Point[frameCount];
+            for (int i = 0; i < frameCount; i++)
+            {
+                points[i] = new Point((first.X + i)%columns, first.Y + (first.X + i)/columns);
+            }
+
+            RegisterAnimation(key, points);
+        }
+
         public void Update(GameTime gameTime, Vector2 position)
         {
-            _currentAnimation.Update(gameTime);
+            if (_currentAnimation != null)
+            {
+                _currentAnimation.Update(gameTime);
+            }
             _position = position;
         }
 
         public void Draw(SpriteBatch spriteBatch, bool flipHorizontal)
         {
-            spriteBatch.Draw(
-                texture: _spriteSheet,
-                position: _position + OffsetFromCenter,
-                sourceRectangle: _currentAnimation.CurrentFrame,
-                color: Color.White,
-                rotation: 0,
-                origin: _center,
-                scale: 1,
-                effects: flipHorizontal ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-                layerDepth: 0);
+            if (_currentAnimation != null)
+            {
+                spriteBatch.Draw(
+                    texture: _spriteSheet,
+                    position: _position + OffsetFromCenter,
+                    sourceRectangle: _currentAnimation.CurrentFrame,
+                    color: Color.White,
+                    rotation: 0,
+                    origin: _center,
+                    scale: 1,
+                    effects: flipHorizontal ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                    layerDepth: 0);
+            }
         }
     }
 }

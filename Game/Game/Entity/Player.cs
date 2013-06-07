@@ -19,24 +19,24 @@ namespace InfiniteIsland.Game.Entity
 
         public Player(ContentManager content)
         {
-            float heightMeters = 102f.ToMeters();
-            float widthMeters = 24f.ToMeters();
-            float torsoHeight = heightMeters - widthMeters/2f;
+            float heightMeters = 176f.ToMeters();
+            float widthMeters = 48f.ToMeters();
+            float torsoHeight = heightMeters - widthMeters / 2f;
 
             _torso = BodyFactory.CreateRectangle(
                 world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
-                density: 1,
+                density: .1f,
                 position: Vector2.One);
 
             _torso.BodyType = BodyType.Dynamic;
 
             Body wheel = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
-                radius: widthMeters/1.9f,
+                radius: widthMeters / 1.9f,
                 density: 1,
-                position: _torso.Position + new Vector2(0, torsoHeight/2));
+                position: _torso.Position + new Vector2(0, torsoHeight / 2));
 
             wheel.BodyType = BodyType.Dynamic;
             wheel.Friction = float.MaxValue;
@@ -48,16 +48,21 @@ namespace InfiniteIsland.Game.Entity
             _motor.MotorEnabled = true;
             _motor.MaxMotorTorque = 10;
 
-            _sprite = new Sprite<State>(content.Load<Texture2D>("cowboy"), 9, 1)
-                          {
-                              OffsetFromCenter = new Vector2(widthMeters/3, widthMeters/4).ToPixels()
-                          };
+            //_sprite = new Sprite<State>(content.Load<Texture2D>("cowboy"), 9, 1)
+            //              {
+            //                  OffsetFromCenter = new Vector2(widthMeters/3, widthMeters/4).ToPixels()
+            //              };
 
-            _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
-            _sprite.RegisterAnimation(State.Moving, 0);
+            //_sprite.RegisterAnimation(State.Idle, new Point(0, 0));
+            //_sprite.RegisterAnimation(State.Moving, 0);
+
+            _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Point(96, 176));
+            _sprite.RegisterAnimation(State.Idle, new Point(1, 0));
+            _sprite.RegisterAnimation(State.Moving, 14, new Point(7,1));
+
         }
 
-        
+
         public Vector2 Position
         {
             //Not precise position, but pretty close
@@ -95,7 +100,7 @@ namespace InfiniteIsland.Game.Entity
             //Completely temporary
             if ((_motor.MotorSpeed < 0 && _sprite.OffsetFromCenter.X > 0)
                 || _motor.MotorSpeed > 0 && _sprite.OffsetFromCenter.X < 0)
-                _sprite.OffsetFromCenter = new Vector2(-1, 1)*_sprite.OffsetFromCenter;
+                _sprite.OffsetFromCenter = new Vector2(-1, 1) * _sprite.OffsetFromCenter;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

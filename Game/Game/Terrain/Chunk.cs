@@ -36,6 +36,11 @@ namespace InfiniteIsland.Game.Terrain
             }
         }
 
+        public void RemoveFromWorld()
+        {
+            InfiniteIsland.World.RemoveBody(_body);
+        }
+
         public RectangleF Rect
         {
             get { return _rect; }
