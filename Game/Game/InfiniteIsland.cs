@@ -1,6 +1,5 @@
 using FarseerPhysics.Dynamics;
 using InfiniteIsland.Game.Entity;
-using InfiniteIsland.Game.Floor;
 using InfiniteIsland.Game.Terrain;
 using InfiniteIsland.Game.Visual;
 using Microsoft.Xna.Framework;
@@ -45,9 +44,14 @@ namespace InfiniteIsland.Game
         protected override void LoadContent()
         {
             Camera = new Camera(GraphicsDevice.Viewport.Bounds);
+
             _debugComponent.LoadContent(this);
+
             _entityComponent.LoadContent(this);
+
+            _terrainComponent.LoadContent(this);
             _terrainComponent.Generate();
+
             base.LoadContent();
         }
 
