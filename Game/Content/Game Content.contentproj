@@ -45,8 +45,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="galaxy.jpg">
+    <Compile Include="img\alabama_man.png">
+      <Name>alabama_man</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="img\galaxy.jpg">
       <Name>galaxy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="img\guepardo.png">
+      <Name>guepardo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="img\morcego.png">
+      <Name>morcego</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="img\rato.png">
+      <Name>rato</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
