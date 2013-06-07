@@ -1,14 +1,21 @@
-﻿using FarseerPhysics.Dynamics;
-using InfiniteIsland.Game.Util;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+
 namespace InfiniteIsland.Game.Floor
 {
     public class FloorComponent
     {
+        private readonly List<Chunk> _loadedChunks = new List<Chunk>();
+
         public void Generate()
         {
             var gen = new FloorGenerator();
-            new Chunk(Vector2.UnitY*8, gen.Generate());
+            _loadedChunks.Add(new Chunk(Vector2.UnitY*8, new FloorGenerator().Generate()));
+            _loadedChunks.Add(new Chunk(_loadedChunks[0].LastVertice, new FloorGenerator().Generate(), true));
+        }
+
+        public void Update()
+        {
         }
 
         public void Draw()

@@ -26,10 +26,10 @@ namespace InfiniteIsland.Game.Visual
         public void Update()
         {
             _debugProjection = Matrix.CreateOrthographicOffCenter(
-                left: InfiniteIsland.Camera.Position.X.ToMeters(),
-                right: (InfiniteIsland.Camera.Position.X + _viewport.Width).ToMeters(),
-                bottom: (InfiniteIsland.Camera.Position.Y + _viewport.Height).ToMeters(),
-                top: InfiniteIsland.Camera.Position.Y.ToMeters(),
+                left: InfiniteIsland.Camera.TopLeft.X.ToMeters(),
+                right: (InfiniteIsland.Camera.TopLeft.X + _viewport.Width).ToMeters(),
+                bottom: (InfiniteIsland.Camera.TopLeft.Y + _viewport.Height).ToMeters(),
+                top: InfiniteIsland.Camera.TopLeft.Y.ToMeters(),
                 zNearPlane: 0,
                 zFarPlane: 1);
         }

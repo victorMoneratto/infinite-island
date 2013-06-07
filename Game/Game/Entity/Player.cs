@@ -12,7 +12,7 @@ namespace InfiniteIsland.Game.Entity
 {
     internal class Player : Entity
     {
-        private const float MaxSpeed = 20f;
+        private const float MaxSpeed = 100f;
         private readonly RevoluteJoint _motor;
         private readonly Sprite<State> _sprite;
         private readonly Body _torso;
@@ -57,9 +57,10 @@ namespace InfiniteIsland.Game.Entity
             _sprite.RegisterAnimation(State.Moving, 0);
         }
 
-        //Not precise position, but pretty close
+        
         public Vector2 Position
         {
+            //Not precise position, but pretty close
             get { return _torso.Position; }
         }
 
