@@ -27,7 +27,7 @@ namespace InfiniteIsland.Game.Terrain
 
         public void Generate()
         {
-            _loadedChunks.Add(new Chunk(Vector2.UnitY * 2, _generator.Generate()));
+            _loadedChunks.Add(new Chunk(Vector2.UnitY * 3, _generator.Generate()));
         }
 
         public void Update()

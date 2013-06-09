@@ -10,7 +10,7 @@
         <key>autoSDSettings</key>
         <array/>
         <key>allowRotation</key>
-        <true/>
+        <false/>
         <key>quiet</key>
         <false/>
         <key>premultiplyAlpha</key>
@@ -54,9 +54,9 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
+            <int>1024</int>
             <key>height</key>
-            <int>512</int>
+            <int>1024</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -78,7 +78,7 @@
             <key>forceSquared</key>
             <false/>
             <key>forceWordAligned</key>
-            <false/>
+            <true/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>

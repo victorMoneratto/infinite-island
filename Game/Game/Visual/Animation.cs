@@ -12,7 +12,7 @@ namespace InfiniteIsland.Game.Visual
         private int _millisPerFrame;
         private int _millisSinceLastFrame;
 
-        private const int DefaultFps = 15;
+        private const int DefaultFps = 20;
 
         public Animation(params Rectangle[] frames)
         {

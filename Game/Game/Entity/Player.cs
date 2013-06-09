@@ -12,7 +12,7 @@ namespace InfiniteIsland.Game.Entity
 {
     internal class Player : Entity
     {
-        private const float MaxSpeed = 100f;
+        private const float MaxSpeed = 80f;
         private readonly RevoluteJoint _motor;
         private readonly Sprite<State> _sprite;
         private readonly Body _torso;
@@ -27,7 +27,7 @@ namespace InfiniteIsland.Game.Entity
                 world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
-                density: .1f,
+                density: .5f,
                 position: Vector2.One);
 
             _torso.BodyType = BodyType.Dynamic;
@@ -40,7 +40,7 @@ namespace InfiniteIsland.Game.Entity
 
             wheel.BodyType = BodyType.Dynamic;
             wheel.Friction = float.MaxValue;
-            wheel.Restitution = 0;
+            wheel.Restitution = float.MinValue;
 
             JointFactory.CreateFixedAngleJoint(InfiniteIsland.World, _torso);
 
@@ -56,9 +56,10 @@ namespace InfiniteIsland.Game.Entity
             //_sprite.RegisterAnimation(State.Idle, new Point(0, 0));
             //_sprite.RegisterAnimation(State.Moving, 0);
 
-            _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Point(96, 176));
+            _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Point(100, 176));
             _sprite.RegisterAnimation(State.Idle, new Point(1, 0));
-            _sprite.RegisterAnimation(State.Moving, 14, new Point(7,1));
+            //_sprite.RegisterAnimation(State.Moving, 14, new Point(7,1));
+            _sprite.RegisterAnimation(State.Moving, 27, 14);
 
         }
 
@@ -96,11 +97,6 @@ namespace InfiniteIsland.Game.Entity
                 _sprite.AnimationKey = State.Idle;
 
             _sprite.Update(gameTime, _torso.Position.ToPixels());
-
-            //Completely temporary
-            if ((_motor.MotorSpeed < 0 && _sprite.OffsetFromCenter.X > 0)
-                || _motor.MotorSpeed > 0 && _sprite.OffsetFromCenter.X < 0)
-                _sprite.OffsetFromCenter = new Vector2(-1, 1) * _sprite.OffsetFromCenter;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

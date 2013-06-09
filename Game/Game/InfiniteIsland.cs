@@ -9,7 +9,7 @@ namespace InfiniteIsland.Game
 {
     public class InfiniteIsland : Microsoft.Xna.Framework.Game
     {
-        public static readonly World World = new World(new Vector2(0, 40));
+        public static readonly World World = new World(new Vector2(0, 20));
         public static Camera Camera;
 
         private readonly DebugComponent _debugComponent;

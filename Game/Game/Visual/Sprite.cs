@@ -20,12 +20,8 @@ namespace InfiniteIsland.Game.Visual
             _dimensions = dimensions;
             _spriteSheet = spriteSheet;
 
-            OffsetFromCenter = Vector2.Zero;
-
-            _center = new Vector2(_dimensions.X / 2f, _dimensions.Y/ 2f);
+            _center = new Vector2(_dimensions.X/2f, _dimensions.Y/2f);
         }
-
-        public Vector2 OffsetFromCenter { get; set; }
 
         public T? AnimationKey
         {
@@ -54,33 +50,30 @@ namespace InfiniteIsland.Game.Visual
             for (int i = 0; i < points.Length; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: points[i].X * _dimensions.X,
-                    y: points[i].Y * _dimensions.Y,
+                    x: points[i].X*_dimensions.X,
+                    y: points[i].Y*_dimensions.Y,
                     width: _dimensions.X,
                     height: _dimensions.Y);
             }
             _animations.Add(key, new Animation(rectangles));
         }
 
-        public void RegisterAnimation(T key, int row)
+        //TODO refactor function
+        public void RegisterAnimation(T key, int firstSprite, int frameCount)
         {
-            int columns = _spriteSheet.Width / _dimensions.X;
-            var rectangles = new Rectangle[columns];
-            for (int i = 0; i < columns; i++)
+            int columns = _spriteSheet.Width/_dimensions.X;
+            var spritePoints = new Point[frameCount];
+            for (int i = 0; i < frameCount; i++)
             {
-                rectangles[i] = new Rectangle(
-                    x: i * _dimensions.X,
-                    y: row * _dimensions.Y,
-                    width: _dimensions.X,
-                    height: _dimensions.Y);
+                spritePoints[i] = new Point((firstSprite + i)%columns, (firstSprite + i)/columns);
             }
-            _animations.Add(key, new Animation(rectangles));
+            RegisterAnimation(key, spritePoints);
         }
 
         public void RegisterAnimation(T key, int frameCount, Point first)
         {
             int columns = _spriteSheet.Width/_dimensions.X;
-            Point[] points = new Point[frameCount];
+            var points = new Point[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
                 points[i] = new Point((first.X + i)%columns, first.Y + (first.X + i)/columns);
@@ -104,7 +97,7 @@ namespace InfiniteIsland.Game.Visual
             {
                 spriteBatch.Draw(
                     texture: _spriteSheet,
-                    position: _position + OffsetFromCenter,
+                    position: _position,
                     sourceRectangle: _currentAnimation.CurrentFrame,
                     color: Color.White,
                     rotation: 0,
