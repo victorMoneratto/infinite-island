@@ -65,6 +65,15 @@ namespace InfiniteIsland.Game
             if (Input.IsKeyPressed(Keys.F3))
                 _debugEnabled = !_debugEnabled;
 
+            if (Input.IsKeyDown(Keys.Up))
+                Camera.Zoom += 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-4f);
+            if (Input.IsKeyDown(Keys.Down))
+                Camera.Zoom -= 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-4f);
+            if (Input.IsKeyDown(Keys.Left))
+                Camera.Rotation += MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-4f);
+            if (Input.IsKeyDown(Keys.Right))
+                Camera.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-4f);
+
             World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
             _entityComponent.Update(gameTime);
             _debugComponent.Update();

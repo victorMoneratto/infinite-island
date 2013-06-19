@@ -48,19 +48,9 @@ namespace InfiniteIsland.Game.Entity
             _motor.MotorEnabled = true;
             _motor.MaxMotorTorque = 10;
 
-            //_sprite = new Sprite<State>(content.Load<Texture2D>("cowboy"), 9, 1)
-            //              {
-            //                  OffsetFromCenter = new Vector2(widthMeters/3, widthMeters/4).ToPixels()
-            //              };
-
-            //_sprite.RegisterAnimation(State.Idle, new Point(0, 0));
-            //_sprite.RegisterAnimation(State.Moving, 0);
-
             _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Point(100, 176));
-            _sprite.RegisterAnimation(State.Idle, new Point(1, 0));
-            //_sprite.RegisterAnimation(State.Moving, 14, new Point(7,1));
-            _sprite.RegisterAnimation(State.Moving, 27, 14);
-
+            _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
+            _sprite.RegisterAnimation(State.Moving, 28, 14);
         }
 
 
