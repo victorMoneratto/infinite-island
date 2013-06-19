@@ -19,7 +19,7 @@ namespace InfiniteIsland.Game.Entity
 
         public Player(ContentManager content)
         {
-            float heightMeters = 176f.ToMeters();
+            float heightMeters = 150f.ToMeters();
             float widthMeters = 48f.ToMeters();
             float torsoHeight = heightMeters - widthMeters / 2f;
 

@@ -4,7 +4,7 @@ namespace InfiniteIsland.Game.Terrain
 {
     internal class TerrainGenerator
     {
-        private const int VerticesCount = 100;
+        private const int VerticesCount = 30;
 
         public float[] Generate(int verticesCount = VerticesCount)
         {

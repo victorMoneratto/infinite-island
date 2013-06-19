@@ -1,16 +1,16 @@
-float smoothInterpolate(float v0, float v1, float delta)
+float4 smoothInterpolate(float4 v0, float4 v1, float delta)
 {
 	delta = pow(delta, 2) * (3 - 2*delta);
 	return lerp(v0, v1,delta);
 }
+//
+//float cosineInterpolate(float v0, float v1, float delta)
+//{
+//	delta = (1 - cos(delta*3.14159265f))/2;
+//	return lerp(v0, v1, delta);
+//}
 
-float cosineInterpolate(float v0, float v1, float delta)
-{
-	delta = (1 - cos(delta*3.14159265f))/2;
-	return lerp(v0, v1, delta);
-}
-
-sampler s0;
+sampler s0 : register(s0);
 
 texture heightmap;  
 sampler heightmap_sampler = sampler_state
@@ -19,17 +19,29 @@ sampler heightmap_sampler = sampler_state
 	Filter = Point;
 };
 
-float vectorHorizontalDistance;
+int verticesCount;
 
-float4 PixelShaderFunction(float2 textureCoords :TEXCOORD0) : COLOR0
+float4 PixelShaderFunction(float2 texCoords :TEXCOORD0) : COLOR0
 {
-	float4 color = tex2D(s0, textureCoords);
-	float2 lastPosition = tex2D(heightmap_sampler, textureCoords);
-	float2 nextPosition = tex2D(heightmap_sampler, float2(textureCoords.x + .1, textureCoords.y));
-	float delta = (textureCoords.x - lastPosition.x)/(nextPosition.x - lastPosition.x);
-	if(smoothInterpolate(lastPosition.y, nextPosition.y, delta) > textureCoords.y)
-		color.rgba = 0;
-	return color;
+    float verticesFrequency = 1/(float)verticesCount;
+    texCoords *= (float)(verticesCount-1)/verticesCount;
+
+    float lastHeight = tex2D(heightmap_sampler, texCoords);
+    float nextHeight = tex2D(heightmap_sampler, float2(texCoords.x + verticesFrequency, texCoords.y));
+
+    float delta = (texCoords.x % verticesFrequency) * verticesCount;
+    float height = lerp(lastHeight, nextHeight, delta);
+
+    //TODO: Replace with texture or something
+    float4 color0 = float4(1, 1, 0, 1);
+    float4 color1 = float4(0, .5, 0, 1);
+    float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y - texCoords.y % .05) - (height - height % .05));
+
+    if(height - height %.05 < texCoords.y)
+    {
+        return finalColor;
+    }
+    return float4(0, 0, 0, 0);
 }
 
 technique Technique1

@@ -15,6 +15,7 @@ namespace InfiniteIsland.Game.Terrain
 
         //Temporary and should be removed
         private Texture2D _tempTexture;
+        private GraphicsDevice _graphicsDevice;
 
         public void LoadContent(Microsoft.Xna.Framework.Game game)
         {
@@ -23,11 +24,12 @@ namespace InfiniteIsland.Game.Terrain
 
             _spriteBatch = new SpriteBatch(game.GraphicsDevice);
             _terrainEffect = game.Content.Load<Effect>("TerrainEffect");
+            _graphicsDevice = game.GraphicsDevice;
         }
 
         public void Generate()
         {
-            _loadedChunks.Add(new Chunk(Vector2.UnitY * 3, _generator.Generate()));
+            _loadedChunks.Add(new Chunk(Vector2.UnitY * 3, _generator.Generate(), _graphicsDevice));
         }
 
         public void Update()
@@ -44,20 +46,21 @@ namespace InfiniteIsland.Game.Terrain
 
             if (_loadedChunks[_loadedChunks.Count - 1].LastVertice.X.ToPixels() <= InfiniteIsland.Camera.BottomRight.X)
                 _loadedChunks.Add(new Chunk(_loadedChunks[_loadedChunks.Count - 1].LastVertice, _generator.Generate(),
-                                            true));
+                    _graphicsDevice, true));
         }
 
         public void Draw()
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null,
+            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _terrainEffect,
                                 InfiniteIsland.Camera.CalculateViewMatrix(Vector2.One));
 
-            //_effect.Parameters["heightmap"].SetValue(_heightMap);
             //_effect.CurrentTechnique.Passes[0].Apply();
             //_spriteBatch.Draw(_tempTexture, _destinationRect, Color.White);
 
             foreach (Chunk chunk in _loadedChunks)
             {
+                _terrainEffect.Parameters["heightmap"].SetValue(chunk.Heightmap);
+                _terrainEffect.Parameters["verticesCount"].SetValue(chunk.VerticesCount);
                 _spriteBatch.Draw(_tempTexture, chunk.Rect.ToPixels(), Color.White);
             }
 
