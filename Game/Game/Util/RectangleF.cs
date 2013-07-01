@@ -12,5 +12,9 @@ namespace InfiniteIsland.Game.Util
             TopLeft = topLeft;
             Dimensions = dimensions;
         }
+
+        public Vector2 BottomRight {
+            get { return TopLeft + Dimensions; }
+        }
     }
 }

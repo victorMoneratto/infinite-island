@@ -20,14 +20,14 @@ namespace InfiniteIsland.Game.Entity
         public Player(ContentManager content)
         {
             float heightMeters = 150f.ToMeters();
-            float widthMeters = 48f.ToMeters();
+            float widthMeters = 45f.ToMeters();
             float torsoHeight = heightMeters - widthMeters / 2f;
 
             _torso = BodyFactory.CreateRectangle(
                 world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
-                density: .5f,
+                density: 1f,
                 position: Vector2.One);
 
             _torso.BodyType = BodyType.Dynamic;
@@ -35,7 +35,7 @@ namespace InfiniteIsland.Game.Entity
             Body wheel = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
                 radius: widthMeters / 1.9f,
-                density: 1,
+                density: 1f,
                 position: _torso.Position + new Vector2(0, torsoHeight / 2));
 
             wheel.BodyType = BodyType.Dynamic;
@@ -93,5 +93,11 @@ namespace InfiniteIsland.Game.Entity
         {
             _sprite.Draw(spriteBatch, _motor.MotorSpeed < 0);
         }
+
+        private enum State
+        {
+            Idle,
+            Moving
+        };
     }
 }

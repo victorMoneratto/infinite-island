@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Game.Entity
 {
-    public class EntityComponent
+    public class EntitiesManager
     {
         private Player _player;
         private SpriteBatch _spriteBatch;
@@ -19,13 +19,13 @@ namespace InfiniteIsland.Game.Entity
         public void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
-            InfiniteIsland.Camera.LookAt(_player.Position.ToPixels());
+            Camera.LookAt(_player.Position.ToPixels());
         }
 
         public void Draw()
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                               InfiniteIsland.Camera.CalculateViewMatrix(Vector2.One));
+                               Camera.CalculateTransformMatrix(Vector2.One));
 
             _player.Draw(_spriteBatch);
 

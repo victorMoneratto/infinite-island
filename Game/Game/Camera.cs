@@ -2,43 +2,34 @@
 
 namespace InfiniteIsland.Game
 {
-    public class Camera
+    //This class' atributes should be redesigned for duplicate data removal and matrix buffering
+    public static class Camera
     {
-        private Vector2 _center;
-        private Point _dimensions;
-        private float _rotation;
-        private Vector2 _topLeft;
-        private float _zoom;
+        private static Vector2 _center;
+        private static Point _dimensions;
+        private static float _rotation;
+        private static Vector2 _position;
+        private static float _zoom = 1f;
 
-        public Camera(Rectangle dimensions)
+        public static void Setup(Rectangle dimensions)
         {
             _dimensions = new Point(dimensions.Right, dimensions.Bottom);
-            Center = new Vector2(_dimensions.X*.5f, _dimensions.Y*.5f);
-            Zoom = 1.0f;
+            _center = new Vector2(_dimensions.X*.5f, _dimensions.Y*.5f);
         }
 
         /// <summary>
         ///     Camera's top-left coordinate (in pixels)
         /// </summary>
-        public Vector2 TopLeft
+        public static Vector2 Position
         {
-            get { return _topLeft; }
-            set { _topLeft = value; }
-        }
-
-        /// <summary>
-        ///     Camera's center coordinate (in pixels)
-        /// </summary>
-        public Vector2 Center
-        {
-            get { return _center; }
-            set { _center = value; }
+            get { return _position; }
+            set { _position = value; }
         }
 
         /// <summary>
         ///     Camera's zoom factor
         /// </summary>
-        public float Zoom
+        public static float Zoom
         {
             get { return _zoom; }
             set { _zoom = value; }
@@ -47,7 +38,7 @@ namespace InfiniteIsland.Game
         /// <summary>
         ///     Camera's rotation factor (in radians)
         /// </summary>
-        public float Rotation
+        public static float Rotation
         {
             get { return _rotation; }
             set { _rotation = value; }
@@ -56,12 +47,12 @@ namespace InfiniteIsland.Game
         /// <summary>
         ///     Camera's bottom-right position of camera.
         /// </summary>
-        public Vector2 BottomRight
+        public static Vector2 BottomRight
         {
             get
             {
-                return new Vector2(x: _topLeft.X + _dimensions.X*Zoom,
-                                   y: _topLeft.Y + _dimensions.Y*Zoom);
+                return new Vector2(x: _position.X + _dimensions.X*Zoom,
+                                   y: _position.Y + _dimensions.Y*Zoom);
             }
         }
 
@@ -69,19 +60,23 @@ namespace InfiniteIsland.Game
         ///     Calculate the resulting camera matrix for translation, rotation and scale
         /// </summary>
         /// <param name="parallax">Parallax factor, higher values result in higher velocities</param>
-        /// <returns></returns>
-        public Matrix CalculateViewMatrix(Vector2 parallax)
+        /// <returns>Camera transform matrix</returns>
+        public static Matrix CalculateTransformMatrix(Vector2 parallax)
         {
-            return Matrix.CreateTranslation(new Vector3(-_topLeft*parallax, 0))*
+            return Matrix.CreateTranslation(new Vector3(-_position*parallax, 0))*
                    Matrix.CreateTranslation(new Vector3(-_center, 0))*
                    Matrix.CreateRotationZ(_rotation)*
                    Matrix.CreateScale(_zoom, _zoom, 1)*
                    Matrix.CreateTranslation(new Vector3(_center, 0));
         }
 
-        public void LookAt(Vector2 position)
+        /// <summary>
+        /// Centers the camera on a given position
+        /// </summary>
+        /// <param name="position">The position to center</param>
+        public static void LookAt(Vector2 position)
         {
-            TopLeft = position - new Vector2(_dimensions.X*.5f, _dimensions.Y*.5f);
+            Camera.Position = position - new Vector2(_dimensions.X*.5f, _dimensions.Y*.5f);
         }
     }
 }
