@@ -27,7 +27,7 @@ namespace InfiniteIsland.Game.Entity
                 world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
-                density: 1f,
+                density: 2f,
                 position: Vector2.One);
 
             _torso.BodyType = BodyType.Dynamic;
@@ -35,7 +35,7 @@ namespace InfiniteIsland.Game.Entity
             Body wheel = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
                 radius: widthMeters / 1.9f,
-                density: 1f,
+                density: 2f,
                 position: _torso.Position + new Vector2(0, torsoHeight / 2));
 
             wheel.BodyType = BodyType.Dynamic;
@@ -66,19 +66,19 @@ namespace InfiniteIsland.Game.Entity
 
             _motor.MotorSpeed = 0;
 
-            if (Input.IsKeyDown(Keys.D))
+            if (Input.Keyboard.IsKeyDown(Keys.D))
             {
                 _motor.MotorSpeed += MaxSpeed;
                 _sprite.AnimationKey = State.Moving;
             }
 
-            if (Input.IsKeyDown(Keys.A))
+            if (Input.Keyboard.IsKeyDown(Keys.A))
             {
                 _motor.MotorSpeed -= MaxSpeed;
                 _sprite.AnimationKey = State.Moving;
             }
 
-            if (Input.IsKeyPressed(Keys.Space))
+            if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
                 _torso.ApplyLinearImpulse(new Vector2(0, -6));
             }

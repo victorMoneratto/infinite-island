@@ -2,7 +2,6 @@
 
 namespace InfiniteIsland.Game
 {
-    //This class' atributes should be redesigned for duplicate data removal and matrix buffering
     public static class Camera
     {
         private static Vector2 _center;
@@ -51,8 +50,8 @@ namespace InfiniteIsland.Game
         {
             get
             {
-                return new Vector2(x: _position.X + _dimensions.X*Zoom,
-                                   y: _position.Y + _dimensions.Y*Zoom);
+                return new Vector2(_position.X + _dimensions.X*Zoom,
+                                   _position.Y + _dimensions.Y*Zoom);
             }
         }
 
@@ -76,7 +75,7 @@ namespace InfiniteIsland.Game
         /// <param name="position">The position to center</param>
         public static void LookAt(Vector2 position)
         {
-            Camera.Position = position - new Vector2(_dimensions.X*.5f, _dimensions.Y*.5f);
+            Position = position - _center;
         }
     }
 }

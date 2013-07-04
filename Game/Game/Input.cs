@@ -3,59 +3,96 @@
 namespace InfiniteIsland.Game
 {
     /// <summary>
-    /// Handle XNA input, must be updated and can be accessed statically
+    ///     Handle XNA input, must be updated and can be accessed statically
     /// </summary>
-    internal class Input
+    internal static class Input
     {
-        private static KeyboardState _currentState;
-        private static KeyboardState _prevState;
+        private static KeyboardState _prevKeyboardState;
+        private static KeyboardState _currKeyboardState;
 
-        public Input()
+        private static MouseState _prevMouseState;
+        private static MouseState _currMouseState;
+
+        public static void Update()
         {
-            _currentState = Keyboard.GetState();
-            _prevState = _currentState;
+            _prevKeyboardState = _currKeyboardState;
+            _currKeyboardState = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+
+            _prevMouseState = _currMouseState;
+            _currMouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
         }
 
-        public void Update()
+        public static class Keyboard
         {
-            _prevState = _currentState;
-            _currentState = Keyboard.GetState();
+            /// <summary>
+            ///     Check if key is being pressed right now
+            /// </summary>
+            /// <param name="key">Key to check</param>
+            public static bool IsKeyDown(Keys key)
+            {
+                return _currKeyboardState.IsKeyDown(key);
+            }
+
+            /// <summary>
+            ///     Check if key is being not pressed right now
+            /// </summary>
+            /// <param name="key">Key to check</param>
+            public static bool IsKeyUp(Keys key)
+            {
+                return !IsKeyDown(key);
+            }
+
+            /// <summary>
+            ///     Check if key has just being pressed
+            /// </summary>
+            /// <param name="key">Key to check</param>
+            public static bool IsKeyTyped(Keys key)
+            {
+                return _prevKeyboardState.IsKeyUp(key) && _currKeyboardState.IsKeyDown(key);
+            }
         }
 
-        /// <summary>
-        ///     Check if key is being pressed right now
-        /// </summary>
-        /// <param name="key">Key to check</param>
-        public static bool IsKeyDown(Keys key)
+        public static class Mouse
         {
-            return _currentState.IsKeyDown(key);
-        }
+            public enum MouseButton
+            {
+                Left,
+                Middle,
+                Right
+            }
 
-        /// <summary>
-        ///     Check if key is being not pressed right now
-        /// </summary>
-        /// <param name="key">Key to check</param>
-        public static bool IsKeyUp(Keys key)
-        {
-            return _currentState.IsKeyUp(key);
-        }
+            private static bool IsButtonDown(MouseButton mouseButton, MouseState mouseState)
+            {
+                switch (mouseButton)
+                {
+                    case MouseButton.Left:
+                        return _currMouseState.LeftButton == ButtonState.Pressed;
+                        break;
+                    case MouseButton.Middle:
+                        return _currMouseState.MiddleButton == ButtonState.Pressed;
+                        break;
+                    case MouseButton.Right:
+                        return _currMouseState.RightButton == ButtonState.Pressed;
+                        break;
+                    default:
+                        return false;
+                }
+            }
 
-        /// <summary>
-        ///     Check if key has just being pressed
-        /// </summary>
-        /// <param name="key">Key to check</param>
-        public static bool IsKeyPressed(Keys key)
-        {
-            return _prevState.IsKeyUp(key) && _currentState.IsKeyDown(key);
-        }
+            public static bool IsButtonDown(MouseButton mouseButton)
+            {
+                return IsButtonDown(mouseButton, _currMouseState);
+            }
 
-        /// <summary>
-        ///     Check if key has just being released
-        /// </summary>
-        /// <param name="key">Key to check</param>
-        public static bool IsKeyReleased(Keys key)
-        {
-            return _prevState.IsKeyDown(key) && _currentState.IsKeyUp(key);
+            public static bool IsButtonUp(MouseButton mouseButton)
+            {
+                return !IsButtonDown(mouseButton, _currMouseState);
+            }
+
+            public static bool IsButtonClicked(MouseButton mouseButton)
+            {
+                return IsButtonDown(mouseButton, _currMouseState) && !IsButtonDown(mouseButton, _prevMouseState);
+            }
         }
     }
 }

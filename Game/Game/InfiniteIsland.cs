@@ -14,7 +14,6 @@ namespace InfiniteIsland.Game
         private readonly Debug _debug;
         private readonly EntitiesManager _entitiesManager;
         private readonly TerrainManager _terrainManager;
-        private readonly Input _input;
 
 #if DEBUG
         private bool _debugEnabled = true;
@@ -34,7 +33,6 @@ namespace InfiniteIsland.Game
 
             Content.RootDirectory = "Content";
 
-            _input = new Input();
             _debug = new Debug();
             _entitiesManager = new EntitiesManager();
             _terrainManager = new TerrainManager();
@@ -56,30 +54,34 @@ namespace InfiniteIsland.Game
 
         protected override void Update(GameTime gameTime)
         {
-            _input.Update();
+            Input.Update();
 
-            if (Input.IsKeyPressed(Keys.Escape))
+            if (Input.Keyboard.IsKeyTyped(Keys.Escape))
                 Exit();
 
-            if (Input.IsKeyPressed(Keys.F3))
+            if (Input.Keyboard.IsKeyTyped(Keys.F3))
                 _debugEnabled = !_debugEnabled;
 
-            if (Input.IsKeyDown(Keys.Up))
-                Camera.Zoom += 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+            if (Input.Keyboard.IsKeyDown(Keys.Up))
+                Camera.Zoom += 1f * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            if (Input.IsKeyDown(Keys.Down))
-                Camera.Zoom -= 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+            if (Input.Keyboard.IsKeyDown(Keys.Down))
+                Camera.Zoom -= 1f * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            if (Input.IsKeyDown(Keys.Left))
-                Camera.Rotation += MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+            if (Input.Keyboard.IsKeyDown(Keys.Left))
+                Camera.Rotation += MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            if (Input.IsKeyDown(Keys.Right))
-                Camera.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+            if (Input.Keyboard.IsKeyDown(Keys.Right))
+                Camera.Rotation -= MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
+            World.Step(gameTime.ElapsedGameTime.Milliseconds * 0.001f);
+
             _entitiesManager.Update(gameTime);
-            _debug.Update();
+
             _terrainManager.Update();
+            if (_debugEnabled)
+                _debug.Update();
+
             base.Update(gameTime);
         }
 
