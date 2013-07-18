@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland.Game.Entity
 {
-    internal class Player : Entity
+    public class Player : Entity
     {
         private const float MaxSpeed = 80f;
         private readonly RevoluteJoint _motor;
@@ -27,15 +27,15 @@ namespace InfiniteIsland.Game.Entity
                 world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
-                density: 2f,
-                position: Vector2.One);
+                density: 1f,
+                position: Vector2.UnitX * 10);
 
             _torso.BodyType = BodyType.Dynamic;
 
             Body wheel = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
                 radius: widthMeters / 1.9f,
-                density: 2f,
+                density: 1f,
                 position: _torso.Position + new Vector2(0, torsoHeight / 2));
 
             wheel.BodyType = BodyType.Dynamic;

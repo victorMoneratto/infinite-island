@@ -24,7 +24,7 @@ namespace InfiniteIsland.Game.Terrain
             _tempTexture.SetData(new[] {Color.White});
 
             _spriteBatch = new SpriteBatch(_graphicsDevice);
-            _terrainEffect = game.Content.Load<Effect>("TerrainEffect");
+            _terrainEffect = game.Content.Load<Effect>("Terrain");
         }
 
         public void Generate()

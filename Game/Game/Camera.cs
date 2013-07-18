@@ -2,18 +2,22 @@
 
 namespace InfiniteIsland.Game
 {
+    //This class' atributes should be redesigned for duplicate data removal and matrix buffering
     public static class Camera
     {
         private static Vector2 _center;
-        private static Point _dimensions;
+        private static Vector2 _dimensions;
         private static float _rotation;
         private static Vector2 _position;
         private static float _zoom = 1f;
 
         public static void Setup(Rectangle dimensions)
         {
-            _dimensions = new Point(dimensions.Right, dimensions.Bottom);
-            _center = new Vector2(_dimensions.X*.5f, _dimensions.Y*.5f);
+            _dimensions = new Vector2(dimensions.Right, dimensions.Bottom);
+            _center = new Vector2(_dimensions.X * .5f, _dimensions.Y * .5f);
+
+            //TODO: this, but better
+            MaxBottom = 3 * 64 + 100;
         }
 
         /// <summary>
@@ -22,7 +26,13 @@ namespace InfiniteIsland.Game
         public static Vector2 Position
         {
             get { return _position; }
-            set { _position = value; }
+            set
+            {
+                if (MaxBottom.HasValue)
+                    if (value.Y + _dimensions.Y > MaxBottom)
+                        value = new Vector2(value.X, MaxBottom.Value - _dimensions.Y);
+                _position = value;
+            }
         }
 
         /// <summary>
@@ -50,10 +60,18 @@ namespace InfiniteIsland.Game
         {
             get
             {
-                return new Vector2(_position.X + _dimensions.X*Zoom,
-                                   _position.Y + _dimensions.Y*Zoom);
+                return new Vector2(x: _position.X + _dimensions.X * Zoom,
+                                   y: _position.Y + _dimensions.Y * Zoom);
             }
         }
+
+        public static Vector2 Dimensions
+        {
+            get { return _dimensions; }
+            set { _dimensions = value; }
+        }
+
+        public static float? MaxBottom { get; set; }
 
         /// <summary>
         ///     Calculate the resulting camera matrix for translation, rotation and scale
@@ -62,10 +80,10 @@ namespace InfiniteIsland.Game
         /// <returns>Camera transform matrix</returns>
         public static Matrix CalculateTransformMatrix(Vector2 parallax)
         {
-            return Matrix.CreateTranslation(new Vector3(-_position*parallax, 0))*
-                   Matrix.CreateTranslation(new Vector3(-_center, 0))*
-                   Matrix.CreateRotationZ(_rotation)*
-                   Matrix.CreateScale(_zoom, _zoom, 1)*
+            return Matrix.CreateTranslation(new Vector3(-_position * parallax, 0)) *
+                   Matrix.CreateTranslation(new Vector3(-_center, 0)) *
+                   Matrix.CreateRotationZ(_rotation) *
+                   Matrix.CreateScale(_zoom, _zoom, 1) *
                    Matrix.CreateTranslation(new Vector3(_center, 0));
         }
 
@@ -75,7 +93,7 @@ namespace InfiniteIsland.Game
         /// <param name="position">The position to center</param>
         public static void LookAt(Vector2 position)
         {
-            Position = position - _center;
+            Camera.Position = position - new Vector2(_dimensions.X * .5f, _dimensions.Y * .5f);
         }
     }
 }

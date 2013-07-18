@@ -85,6 +85,7 @@
     <Compile Include="Terrain\TerrainChunk.cs" />
     <Compile Include="Terrain\TerrainGenerator.cs" />
     <Compile Include="Util\RectangleF.cs" />
+    <Compile Include="Visual\Background.cs" />
     <Compile Include="Visual\Debug.cs" />
     <Compile Include="Entity\EntitiesManager.cs" />
     <Compile Include="Terrain\TerrainManager.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="InfiniteIsland.cs" />
     <Compile Include="Visual\Animation.cs" />
     <Compile Include="Util\Measure.cs" />
+    <Compile Include="Visual\Layer.cs" />
     <Compile Include="Visual\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>

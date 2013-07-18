@@ -9,11 +9,11 @@ namespace InfiniteIsland.Game
 {
     public class InfiniteIsland : Microsoft.Xna.Framework.Game
     {
-        public static readonly World World = new World(new Vector2(0, 20));
+        public static readonly World World = new World(new Vector2(0, 40));
 
-        private readonly Debug _debug;
-        private readonly EntitiesManager _entitiesManager;
-        private readonly TerrainManager _terrainManager;
+        public static readonly Debug Debug = new Debug();
+        public static readonly EntitiesManager EntitiesManager = new EntitiesManager();
+        public static readonly TerrainManager TerrainManager = new TerrainManager();
 
 #if DEBUG
         private bool _debugEnabled = true;
@@ -28,26 +28,22 @@ namespace InfiniteIsland.Game
                     PreferredBackBufferWidth = 1280,
                     PreferredBackBufferHeight = 720,
                     PreferMultiSampling = true,
-                    SynchronizeWithVerticalRetrace = true
+                    SynchronizeWithVerticalRetrace = true,
                 };
 
             Content.RootDirectory = "Content";
-
-            _debug = new Debug();
-            _entitiesManager = new EntitiesManager();
-            _terrainManager = new TerrainManager();
         }
 
         protected override void LoadContent()
         {
             Camera.Setup(GraphicsDevice.Viewport.Bounds);
 
-            _debug.LoadContent(this);
+            Debug.LoadContent(this);
 
-            _entitiesManager.LoadContent(this);
+            EntitiesManager.LoadContent(this);
 
-            _terrainManager.LoadContent(this);
-            _terrainManager.Generate();
+            TerrainManager.LoadContent(this);
+            TerrainManager.Generate();
 
             base.LoadContent();
         }
@@ -63,25 +59,21 @@ namespace InfiniteIsland.Game
                 _debugEnabled = !_debugEnabled;
 
             if (Input.Keyboard.IsKeyDown(Keys.Up))
-                Camera.Zoom += 1f * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
+                Camera.Zoom += 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Down))
-                Camera.Zoom -= 1f * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
+                Camera.Zoom -= 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Left))
-                Camera.Rotation += MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
+                Camera.Rotation += MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Right))
-                Camera.Rotation -= MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
+                Camera.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
-            World.Step(gameTime.ElapsedGameTime.Milliseconds * 0.001f);
-
-            _entitiesManager.Update(gameTime);
-
-            _terrainManager.Update();
-            if (_debugEnabled)
-                _debug.Update();
-
+            World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
+            EntitiesManager.Update(gameTime);
+            Debug.Update();
+            TerrainManager.Update();
             base.Update(gameTime);
         }
 
@@ -89,11 +81,11 @@ namespace InfiniteIsland.Game
         {
             GraphicsDevice.Clear(Color.DeepSkyBlue);
 
-            _terrainManager.Draw();
-            _entitiesManager.Draw();
+            TerrainManager.Draw();
+            EntitiesManager.Draw();
 
             if (_debugEnabled)
-                _debug.Draw();
+                Debug.Draw();
 
             base.Draw(gameTime);
         }

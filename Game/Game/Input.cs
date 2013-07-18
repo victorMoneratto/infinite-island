@@ -5,7 +5,7 @@ namespace InfiniteIsland.Game
     /// <summary>
     ///     Handle XNA input, must be updated and can be accessed statically
     /// </summary>
-    internal static class Input
+    public static class Input
     {
         private static KeyboardState _prevKeyboardState;
         private static KeyboardState _currKeyboardState;
@@ -67,13 +67,13 @@ namespace InfiniteIsland.Game
                 {
                     case MouseButton.Left:
                         return _currMouseState.LeftButton == ButtonState.Pressed;
-                        break;
+
                     case MouseButton.Middle:
                         return _currMouseState.MiddleButton == ButtonState.Pressed;
-                        break;
+
                     case MouseButton.Right:
                         return _currMouseState.RightButton == ButtonState.Pressed;
-                        break;
+
                     default:
                         return false;
                 }
