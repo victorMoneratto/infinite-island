@@ -35,7 +35,7 @@ float4 PixelShaderFunction(float2 texCoords :TEXCOORD0) : COLOR0
     //TODO: Replace with texture or something
     float4 color0 = float4(1, 1, 0, 1);
     float4 color1 = float4(0, .5, 0, 1);
-    float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y - texCoords.y % .05) - (height - height % .05));
+    float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y - texCoords.y % .04) - (height - height % .04));
 
     if(height - height %.05 < texCoords.y)
     {

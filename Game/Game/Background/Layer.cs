@@ -37,15 +37,9 @@ namespace InfiniteIsland.Background
 
         public override void LoadContent(Game game)
         {
-            Texture2D lonelyMount = game.Content.Load<Texture2D>("img/mount00");
+            Texture2D lonelyMount = game.Content.Load<Texture2D>("img/rock");
             Random random = new Random();
-            Sprites = new List<Sprite<Mount>>
-                {
-                    new Sprite<Mount>(lonelyMount, new Point(lonelyMount.Width, lonelyMount.Height))
-                        {
-                            Position = new Vector2(5, 3)
-                        }
-                };
+            Sprites = new List<Sprite<Mount>>();
 
             const int mountCounts = 20;
             for (int i = 0; i < mountCounts; i++)
@@ -53,9 +47,9 @@ namespace InfiniteIsland.Background
                 Sprite<Mount> sprite = new Sprite<Mount>(lonelyMount, new Point(lonelyMount.Width, lonelyMount.Height))
                     {
                         Position = new Vector2(
-                            x: (2f + (5 + random.Next(11)) * i).ToPixels(),
-                            y: (2.7f + (float) random.NextDouble()/2f).ToPixels()),
-                        Rotation = MathHelper.PiOver4/2*(float) random.NextDouble() - MathHelper.PiOver4/4
+                            x: ((10f + random.Next(11)) * i).ToPixels(),
+                            y: (3f + (float)random.NextDouble()).ToPixels()),
+                        Rotation = MathHelper.PiOver4 * (float)random.NextDouble() - MathHelper.PiOver4/2
                     };
                 sprite.RegisterAnimation(Mount.Lonely, 0, 1);
                 sprite.AnimationKey = Mount.Lonely;

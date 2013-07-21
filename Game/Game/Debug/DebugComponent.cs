@@ -3,8 +3,6 @@ using FarseerPhysics.Dynamics;
 using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using XNAGameConsole;
 
 namespace InfiniteIsland.Debug
 {
@@ -13,8 +11,8 @@ namespace InfiniteIsland.Debug
         private readonly DebugViewXNA _debugView;
         private Matrix _debugProjection;
         
-        //public static? How ugly.
-        public static GameConsole Console;
+        //public static? How ugly!
+        //public static GameConsole Console;
 
         private Viewport _viewport;
 

@@ -79,9 +79,6 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="XNAGameConsole">
-      <HintPath>..\..\..\..\..\Desktop\jameswalkoski-xnagameconsole-xna4\XNAGameConsole.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Background\Layer.cs" />

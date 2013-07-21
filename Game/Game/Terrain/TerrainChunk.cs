@@ -28,7 +28,6 @@ namespace InfiniteIsland.Terrain
         {
             _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition));
             _rect = new RectangleF(_body.Position, new Vector2(Dimensions.X, Dimensions.Y));
-            System.Diagnostics.Debug.WriteLine("W: " + _rect.Dimensions.X + " H: " + _rect.Dimensions.Y);
             _heightmap = new Texture2D(graphicsDevice, HeightCount, 1, false, SurfaceFormat.Single);
 
             if (firstHeight.HasValue)
