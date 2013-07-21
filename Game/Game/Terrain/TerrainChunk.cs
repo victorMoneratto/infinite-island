@@ -9,7 +9,7 @@ namespace InfiniteIsland.Terrain
     internal class TerrainChunk
     {
         public const int HeightCount = 10;
-        private const float VerticalPosition = 3f;
+        public const float VerticalPosition = 3f;
         public static readonly Vector2 Dimensions = new Vector2(5000f.ToMeters(), 150f.ToMeters());
 
         private readonly Body _body;
@@ -27,7 +27,7 @@ namespace InfiniteIsland.Terrain
                             float? firstHeight = null)
         {
             _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition));
-            _rect = new RectangleF(_body.Position, new Vector2(Dimensions.X, Dimensions.Y));
+            _rect = new RectangleF(Dimensions) { TopLeft = _body.Position };
             _heightmap = new Texture2D(graphicsDevice, HeightCount, 1, false, SurfaceFormat.Single);
 
             if (firstHeight.HasValue)

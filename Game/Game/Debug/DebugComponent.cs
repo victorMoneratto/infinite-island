@@ -27,10 +27,10 @@ namespace InfiniteIsland.Debug
         public void Update(GameTime gameTime)
         {
             _debugProjection = Matrix.CreateOrthographicOffCenter(
-                left: Camera.Position.X.ToMeters(),
-                right: (Camera.Position.X + _viewport.Width).ToMeters(),
-                bottom: (Camera.Position.Y + _viewport.Height).ToMeters(),
-                top: Camera.Position.Y.ToMeters(),
+                left: Camera.TopLeft.X.ToMeters(),
+                right: (Camera.TopLeft.X + _viewport.Width).ToMeters(),
+                bottom: (Camera.TopLeft.Y + _viewport.Height).ToMeters(),
+                top: Camera.TopLeft.Y.ToMeters(),
                 zNearPlane: 0,
                 zFarPlane: 1);
         }

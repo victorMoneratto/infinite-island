@@ -47,7 +47,7 @@ namespace InfiniteIsland.Terrain
         public void Update(GameTime gameTime)
         {
             TerrainChunk firstChunk = _chunks[0];
-            if (firstChunk.LastVertex.X.ToPixels() < Camera.Position.X)
+            if (firstChunk.LastVertex.X.ToPixels() < Camera.TopLeft.X)
             {
                 firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
                 firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);

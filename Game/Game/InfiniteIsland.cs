@@ -3,6 +3,7 @@ using InfiniteIsland.Background;
 using InfiniteIsland.Debug;
 using InfiniteIsland.Entity;
 using InfiniteIsland.Terrain;
+using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,7 +17,7 @@ namespace InfiniteIsland
         private Player _player;
 
         private DebugComponent _debug;
-        private EntityComponent _entity;
+        private EntityComponent _entities;
         private TerrainComponent _terrain;
         private BackgroundComponent _background;
 
@@ -46,11 +47,12 @@ namespace InfiniteIsland
 
             _debug = new DebugComponent(this, _world, _spriteBatch);
             _player = new Player(_world, Content);
-            _entity = new EntityComponent(_player, this);
+            _entities = new EntityComponent(_player);
             _background = new BackgroundComponent(this);
             _terrain = new TerrainComponent(this, _world);
 
-            Camera.Setup(GraphicsDevice.Viewport.Bounds);
+            Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
+            Camera.BottomLimit = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
         }
 
         protected override void Update(GameTime gameTime)
@@ -64,10 +66,10 @@ namespace InfiniteIsland
                 _debugEnabled = !_debugEnabled;
 
             if (Input.Keyboard.IsKeyDown(Keys.Up))
-                Camera.Zoom += 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+                Camera.Zoom += Vector2.One * (gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Down))
-                Camera.Zoom -= 1f*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+                Camera.Zoom -= Vector2.One * (gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Left))
                 Camera.Rotation += MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
@@ -78,7 +80,7 @@ namespace InfiniteIsland
             _world.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
             _background.Update(gameTime);
             _terrain.Update(gameTime);
-            _entity.Update(gameTime);
+            _entities.Update(gameTime);
             _debug.Update(gameTime);
         }
 
@@ -88,10 +90,12 @@ namespace InfiniteIsland
 
             _background.Draw(_spriteBatch);
             _terrain.Draw(_spriteBatch);
-            _entity.Draw(_spriteBatch);
+            _entities.Draw(_spriteBatch);
 
             if (_debugEnabled)
                 _debug.Draw(_spriteBatch);
+
+            
         }
     }
 }

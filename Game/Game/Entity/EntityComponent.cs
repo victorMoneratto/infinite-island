@@ -6,17 +6,17 @@ namespace InfiniteIsland.Entity
 {
     public class EntityComponent : IUpdateable, IRenderable
     {
-        private readonly Player _player;
+        public readonly Player Player;
 
-        public EntityComponent(Player player, Game game)
+        public EntityComponent(Player player)
         {
-            _player = player;
+            Player = player;
         }
 
         public void Update(GameTime gameTime)
         {
-            _player.Update(gameTime);
-            Camera.LookAt(_player.Position.ToPixels() + (Vector2.UnitX * .3f*Camera.Dimensions));
+            Player.Update(gameTime);
+            Camera.Center = Player.Position.ToPixels();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -24,7 +24,7 @@ namespace InfiniteIsland.Entity
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
                                Camera.CalculateTransformMatrix(Vector2.One));
 
-            _player.Draw(spriteBatch);
+            Player.Draw(spriteBatch);
 
             spriteBatch.End();
         }
