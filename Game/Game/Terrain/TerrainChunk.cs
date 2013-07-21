@@ -1,50 +1,88 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Game.Util;
+using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Game.Terrain
+namespace InfiniteIsland.Terrain
 {
     internal class TerrainChunk
     {
+        public const int HeightCount = 10;
+        private const float VerticalPosition = 3f;
+        public static readonly Vector2 Dimensions = new Vector2(5000f.ToMeters(), 150f.ToMeters());
+
         private readonly Body _body;
+        private Fixture[] _fixtures;
 
-        private readonly float[] _heights;
-        private readonly RectangleF _rect;
+        private float[] _heights;
+        private readonly Texture2D _heightmap;
 
-        private Texture2D _heightmap;
+        private RectangleF _rect;
 
-        public TerrainChunk(Vector2 bodyPosition,
-                            float width,
-                            float height,
+        public TerrainChunk(float horizonalPosition,
                             float[] heights,
-                            GraphicsDevice graphicsDevice)
+                            GraphicsDevice graphicsDevice,
+                            World world,
+                            float? firstHeight = null)
         {
-            _heights = heights;
-            _rect = new RectangleF(bodyPosition, new Vector2(width, height));
-            _body = BodyFactory.CreateBody(InfiniteIsland.World, bodyPosition);
+            _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition));
+            _rect = new RectangleF(_body.Position, new Vector2(Dimensions.X, Dimensions.Y));
+            System.Diagnostics.Debug.WriteLine("W: " + _rect.Dimensions.X + " H: " + _rect.Dimensions.Y);
+            _heightmap = new Texture2D(graphicsDevice, HeightCount, 1, false, SurfaceFormat.Single);
 
-            for (int i = 1, length = _heights.Length; i < length; i++)
-            {
-                FixtureFactory.AttachEdge(
-                    start:
-                        new Vector2(
-                        x: (i - 1)/(length - 1f)*width,
-                        y: heights[i - 1]*height),
-                    end:
-                        new Vector2(
-                        x: (i)/(length - 1f)*width,
-                        y: heights[i]*height),
-                    body: _body);
-            }
-
-            BuildHeightmapTexture(graphicsDevice);
+            if (firstHeight.HasValue)
+                heights[0] = (firstHeight.Value - VerticalPosition)/Dimensions.Y;
+            Heights = heights;
         }
 
         public RectangleF Rect
         {
             get { return _rect; }
+        }
+
+        public Vector2 BodyPosition
+        {
+            get { return _body.Position; }
+            set
+            {
+                _body.Position = value;
+                _rect.TopLeft = value;
+            }
+        }
+
+        public float[] Heights
+        {
+            get { return _heights; }
+            set
+            {
+                _heights = value;
+
+                if (_fixtures != null)
+                {
+                    foreach (Fixture fixture in _fixtures)
+                    {
+                        _body.DestroyFixture(fixture);
+                    }
+                }
+
+                _fixtures = new Fixture[_heights.Length - 1];
+                for (int i = 1, length = _heights.Length; i < length; i++)
+                {
+                    _fixtures[i - 1] =
+                        FixtureFactory.AttachEdge(
+                            start:
+                                new Vector2(
+                                x: (i - 1)/(length - 1f)*Dimensions.X,
+                                y: _heights[i - 1]*Dimensions.Y),
+                            end:
+                                new Vector2(
+                                x: (i)/(length - 1f)*Dimensions.X,
+                                y: _heights[i]*Dimensions.Y),
+                            body: _body);
+                }
+                _heightmap.SetData(_heights);
+            }
         }
 
         public Vector2 LastVertex
@@ -64,17 +102,6 @@ namespace InfiniteIsland.Game.Terrain
         public int VerticesCount
         {
             get { return _heights.Length; }
-        }
-
-        private void BuildHeightmapTexture(GraphicsDevice graphicsDevice)
-        {
-            _heightmap = new Texture2D(graphicsDevice, _heights.Length, 1, false, SurfaceFormat.Single);
-            _heightmap.SetData(_heights);
-        }
-
-        public void RemoveFromWorld()
-        {
-            InfiniteIsland.World.RemoveBody(_body);
         }
     }
 }

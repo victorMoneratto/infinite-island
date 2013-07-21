@@ -1,29 +1,32 @@
 ﻿using FarseerPhysics.DebugViews;
-using InfiniteIsland.Game.Util;
+using FarseerPhysics.Dynamics;
+using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using XNAGameConsole;
 
-namespace InfiniteIsland.Game.Visual
+namespace InfiniteIsland.Debug
 {
-    public class Debug
+    public class DebugComponent : IUpdateable, IRenderable
     {
         private readonly DebugViewXNA _debugView;
         private Matrix _debugProjection;
+        
+        //public static? How ugly.
+        public static GameConsole Console;
 
         private Viewport _viewport;
 
-        public Debug()
+        public DebugComponent(Game game, World world, SpriteBatch spriteBatch)
         {
-            _debugView = new DebugViewXNA(InfiniteIsland.World);
-        }
-
-        public void LoadContent(Microsoft.Xna.Framework.Game game)
-        {
+            //Console = new GameConsole(game, spriteBatch);
+            _debugView = new DebugViewXNA(world);
             _debugView.LoadContent(game.GraphicsDevice, game.Content);
             _viewport = game.GraphicsDevice.Viewport;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             _debugProjection = Matrix.CreateOrthographicOffCenter(
                 left: Camera.Position.X.ToMeters(),
@@ -34,7 +37,7 @@ namespace InfiniteIsland.Game.Visual
                 zFarPlane: 1);
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
             _debugView.RenderDebugData(ref _debugProjection);
         }

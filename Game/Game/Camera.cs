@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace InfiniteIsland.Game
+namespace InfiniteIsland
 {
     //This class' atributes should be redesigned for duplicate data removal and matrix buffering
     public static class Camera
@@ -17,7 +17,7 @@ namespace InfiniteIsland.Game
             _center = new Vector2(_dimensions.X * .5f, _dimensions.Y * .5f);
 
             //TODO: this, but better
-            MaxBottom = 3 * 64 + 100;
+            MaxBottom = 3 * 64 + 150;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace InfiniteIsland.Game
         /// <param name="position">The position to center</param>
         public static void LookAt(Vector2 position)
         {
-            Camera.Position = position - new Vector2(_dimensions.X * .5f, _dimensions.Y * .5f);
+            Position = position - new Vector2(_dimensions.X * .5f, _dimensions.Y * .5f);
         }
     }
 }

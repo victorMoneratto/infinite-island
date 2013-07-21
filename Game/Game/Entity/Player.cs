@@ -1,14 +1,14 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Game.Util;
-using InfiniteIsland.Game.Visual;
+using InfiniteIsland.SpriteComponent;
+using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace InfiniteIsland.Game.Entity
+namespace InfiniteIsland.Entity
 {
     public class Player : Entity
     {
@@ -17,14 +17,14 @@ namespace InfiniteIsland.Game.Entity
         private readonly Sprite<State> _sprite;
         private readonly Body _torso;
 
-        public Player(ContentManager content)
+        public Player(World world, ContentManager content)
         {
-            float heightMeters = 150f.ToMeters();
+            float heightMeters = 140f.ToMeters();
             float widthMeters = 45f.ToMeters();
             float torsoHeight = heightMeters - widthMeters / 2f;
 
             _torso = BodyFactory.CreateRectangle(
-                world: InfiniteIsland.World,
+                world: world,
                 width: widthMeters,
                 height: torsoHeight,
                 density: 1f,
@@ -33,7 +33,7 @@ namespace InfiniteIsland.Game.Entity
             _torso.BodyType = BodyType.Dynamic;
 
             Body wheel = BodyFactory.CreateCircle(
-                world: InfiniteIsland.World,
+                world: world,
                 radius: widthMeters / 1.9f,
                 density: 1f,
                 position: _torso.Position + new Vector2(0, torsoHeight / 2));
@@ -42,9 +42,9 @@ namespace InfiniteIsland.Game.Entity
             wheel.Friction = float.MaxValue;
             wheel.Restitution = float.MinValue;
 
-            JointFactory.CreateFixedAngleJoint(InfiniteIsland.World, _torso);
+            JointFactory.CreateFixedAngleJoint(world, _torso);
 
-            _motor = JointFactory.CreateRevoluteJoint(InfiniteIsland.World, _torso, wheel, Vector2.Zero);
+            _motor = JointFactory.CreateRevoluteJoint(world, _torso, wheel, Vector2.Zero);
             _motor.MotorEnabled = true;
             _motor.MaxMotorTorque = 10;
 
@@ -86,7 +86,18 @@ namespace InfiniteIsland.Game.Entity
             if (_motor.MotorSpeed == 0)
                 _sprite.AnimationKey = State.Idle;
 
-            _sprite.Update(gameTime, _torso.Position.ToPixels());
+            if (Input.Keyboard.IsKeyDown(Keys.Q))
+            {
+                _sprite.Rotation += MathHelper.Pi*gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
+            }
+
+            if (Input.Keyboard.IsKeyDown(Keys.E))
+            {
+                _sprite.Rotation -= MathHelper.Pi * gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
+            }
+
+            _sprite.Update(gameTime);
+            _sprite.Position = _torso.Position.ToPixels();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

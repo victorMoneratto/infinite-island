@@ -1,8 +1,8 @@
-namespace InfiniteIsland.Game
+namespace InfiniteIsland
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             using (var game = new InfiniteIsland())
             {

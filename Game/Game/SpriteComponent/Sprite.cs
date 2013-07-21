@@ -2,9 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Game.Visual
+namespace InfiniteIsland.SpriteComponent
 {
-    internal class Sprite<T> where T : struct
+    public class Sprite<T> where T : struct
     {
         private readonly Dictionary<T?, Animation> _animations = new Dictionary<T?, Animation>();
         private readonly Vector2 _center;
@@ -14,6 +14,7 @@ namespace InfiniteIsland.Game.Visual
         private T? _animationKey;
         private Animation _currentAnimation;
         private Vector2 _position;
+        private float _rotation;
 
         public Sprite(Texture2D spriteSheet, Point dimensions)
         {
@@ -21,6 +22,18 @@ namespace InfiniteIsland.Game.Visual
             _spriteSheet = spriteSheet;
 
             _center = new Vector2(_dimensions.X/2f, _dimensions.Y/2f);
+        }
+
+        public Vector2 Position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
+
+        public float Rotation
+        {
+            get { return _rotation; }
+            set { _rotation = value; }
         }
 
         public T? AnimationKey
@@ -82,16 +95,15 @@ namespace InfiniteIsland.Game.Visual
             RegisterAnimation(key, points);
         }
 
-        public void Update(GameTime gameTime, Vector2 position)
+        public void Update(GameTime gameTime)
         {
             if (_currentAnimation != null)
             {
                 _currentAnimation.Update(gameTime);
             }
-            _position = position;
         }
 
-        public void Draw(SpriteBatch spriteBatch, bool flipHorizontal)
+        public void Draw(SpriteBatch spriteBatch, bool flipHorizontal = false)
         {
             if (_currentAnimation != null)
             {
@@ -100,7 +112,7 @@ namespace InfiniteIsland.Game.Visual
                     position: _position,
                     sourceRectangle: _currentAnimation.CurrentFrame,
                     color: Color.White,
-                    rotation: 0,
+                    rotation: _rotation,
                     origin: _center,
                     scale: 1,
                     effects: flipHorizontal ? SpriteEffects.FlipHorizontally : SpriteEffects.None,

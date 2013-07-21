@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace InfiniteIsland.Game.Util
+namespace InfiniteIsland.Util
 {
     internal static class Measure
     {

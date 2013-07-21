@@ -1,19 +1,26 @@
 using FarseerPhysics.Dynamics;
-using InfiniteIsland.Game.Entity;
-using InfiniteIsland.Game.Terrain;
-using InfiniteIsland.Game.Visual;
+using InfiniteIsland.Background;
+using InfiniteIsland.Debug;
+using InfiniteIsland.Entity;
+using InfiniteIsland.Terrain;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace InfiniteIsland.Game
+namespace InfiniteIsland
 {
-    public class InfiniteIsland : Microsoft.Xna.Framework.Game
+    public class InfiniteIsland : Game
     {
-        public static readonly World World = new World(new Vector2(0, 40));
+        
+        private readonly World _world = new World(new Vector2(0, 40));
+        private Player _player;
 
-        public static readonly Debug Debug = new Debug();
-        public static readonly EntitiesManager EntitiesManager = new EntitiesManager();
-        public static readonly TerrainManager TerrainManager = new TerrainManager();
+        private DebugComponent _debug;
+        private EntityComponent _entity;
+        private TerrainComponent _terrain;
+        private BackgroundComponent _background;
+
+        private SpriteBatch _spriteBatch;
 
 #if DEBUG
         private bool _debugEnabled = true;
@@ -23,6 +30,7 @@ namespace InfiniteIsland.Game
 
         public InfiniteIsland()
         {
+            Content.RootDirectory = "Content";
             new GraphicsDeviceManager(this)
                 {
                     PreferredBackBufferWidth = 1280,
@@ -30,22 +38,19 @@ namespace InfiniteIsland.Game
                     PreferMultiSampling = true,
                     SynchronizeWithVerticalRetrace = true,
                 };
-
-            Content.RootDirectory = "Content";
         }
 
         protected override void LoadContent()
         {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            _debug = new DebugComponent(this, _world, _spriteBatch);
+            _player = new Player(_world, Content);
+            _entity = new EntityComponent(_player, this);
+            _background = new BackgroundComponent(this);
+            _terrain = new TerrainComponent(this, _world);
+
             Camera.Setup(GraphicsDevice.Viewport.Bounds);
-
-            Debug.LoadContent(this);
-
-            EntitiesManager.LoadContent(this);
-
-            TerrainManager.LoadContent(this);
-            TerrainManager.Generate();
-
-            base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -70,24 +75,23 @@ namespace InfiniteIsland.Game
             if (Input.Keyboard.IsKeyDown(Keys.Right))
                 Camera.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
-            World.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
-            EntitiesManager.Update(gameTime);
-            Debug.Update();
-            TerrainManager.Update();
-            base.Update(gameTime);
+            _world.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
+            _background.Update(gameTime);
+            _terrain.Update(gameTime);
+            _entity.Update(gameTime);
+            _debug.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DeepSkyBlue);
 
-            TerrainManager.Draw();
-            EntitiesManager.Draw();
+            _background.Draw(_spriteBatch);
+            _terrain.Draw(_spriteBatch);
+            _entity.Draw(_spriteBatch);
 
             if (_debugEnabled)
-                Debug.Draw();
-
-            base.Draw(gameTime);
+                _debug.Draw(_spriteBatch);
         }
     }
 }
