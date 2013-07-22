@@ -10,15 +10,11 @@ namespace InfiniteIsland.Debug
     {
         private readonly DebugViewXNA _debugView;
         private Matrix _debugProjection;
-        
-        //public static? How ugly!
-        //public static GameConsole Console;
 
         private Viewport _viewport;
 
-        public DebugComponent(Game game, World world, SpriteBatch spriteBatch)
+        public DebugComponent(Game game, World world)
         {
-            //Console = new GameConsole(game, spriteBatch);
             _debugView = new DebugViewXNA(world);
             _debugView.LoadContent(game.GraphicsDevice, game.Content);
             _viewport = game.GraphicsDevice.Viewport;
@@ -27,10 +23,10 @@ namespace InfiniteIsland.Debug
         public void Update(GameTime gameTime)
         {
             _debugProjection = Matrix.CreateOrthographicOffCenter(
-                left: Camera.TopLeft.X.ToMeters(),
-                right: (Camera.TopLeft.X + _viewport.Width).ToMeters(),
-                bottom: (Camera.TopLeft.Y + _viewport.Height).ToMeters(),
-                top: Camera.TopLeft.Y.ToMeters(),
+                left: Camera.Viewport.TopLeft.X.ToMeters(),
+                right: (Camera.Viewport.TopLeft.X + _viewport.Width).ToMeters(),
+                bottom: (Camera.Viewport.TopLeft.Y + _viewport.Height).ToMeters(),
+                top: Camera.Viewport.TopLeft.Y.ToMeters(),
                 zNearPlane: 0,
                 zFarPlane: 1);
         }

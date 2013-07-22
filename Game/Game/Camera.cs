@@ -1,78 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InfiniteIsland.Util;
+using Microsoft.Xna.Framework;
 
 namespace InfiniteIsland
 {
     public static class Camera
     {
-        private static Vector2 _center;
-        private static Vector2 _halfDimensions;
+        public static BoundingLimits Limits = new BoundingLimits();
+        public static RotatableRectangleF Viewport { get; set; }
 
         public static void Setup(Vector2 dimensions)
         {
-            Dimensions = dimensions;
-            Pivot = _halfDimensions;
-            Zoom = Vector2.One;
+            Viewport = new RotatableRectangleF(dimensions);
         }
-
-        /// <summary>
-        ///     Camera's center coordinate
-        /// </summary>
-        public static Vector2 Center
-        {
-            get { return _center; }
-            set
-            {
-                if (BottomLimit.HasValue)
-                    if (value.Y + _halfDimensions.Y > BottomLimit)
-                        value = new Vector2(value.X, BottomLimit.Value - _halfDimensions.Y);
-                _center = value;
-            }
-        }
-
-        /// <summary>
-        ///     Camera's top-left coordinate
-        /// </summary>
-        public static Vector2 TopLeft
-        {
-            get { return _center - _halfDimensions; }
-        }
-
-        /// <summary>
-        ///     Camera's bottom-right position of camera
-        /// </summary>
-        public static Vector2 BottomRight
-        {
-            get { return Center + _halfDimensions; }
-        }
-
-        /// <summary>
-        ///     Camera's dimensions
-        /// </summary>
-        public static Vector2 Dimensions
-        {
-            get { return 2f*_halfDimensions; }
-            set { _halfDimensions = .5f*value; }
-        }
-
-        /// <summary>
-        /// Camera's pivot of rotation
-        /// </summary>
-        public static Vector2 Pivot { get; set; }
-
-        /// <summary>
-        ///     Camera's zoom factor
-        /// </summary>
-        public static Vector2 Zoom { get; set; }
-
-        /// <summary>
-        ///     Camera's rotation angle
-        /// </summary>
-        public static float Rotation { get; set; }
-
-        /// <summary>
-        /// Camera's bottom limit
-        /// </summary>
-        public static float? BottomLimit { get; set; }
 
         /// <summary>
         ///     Calculate the resulting camera matrix for translation, rotation and scale
@@ -81,11 +20,24 @@ namespace InfiniteIsland
         /// <returns>Camera transform matrix</returns>
         public static Matrix CalculateTransformMatrix(Vector2 parallax)
         {
-            return Matrix.CreateTranslation(new Vector3(-TopLeft*parallax, 0))*
-                   Matrix.CreateTranslation(new Vector3(-Pivot, 0))*
-                   Matrix.CreateRotationZ(Rotation)*
-                   Matrix.CreateScale(Zoom.X, Zoom.Y, 1)*
-                   Matrix.CreateTranslation(new Vector3(Pivot, 0));
+            RectangleF boundingBox = Viewport.Projection.BoundingBox;
+            if (Limits.Up.HasValue && boundingBox.Up < Limits.Up.Value)
+                Viewport.Center += Vector2.UnitY*(Limits.Up.Value - boundingBox.Up);
+
+            if (Limits.Down.HasValue && boundingBox.Down > Limits.Down.Value)
+                Viewport.Center -= Vector2.UnitY*(boundingBox.Down - Limits.Down.Value);
+
+            if (Limits.Left.HasValue && boundingBox.Left < Limits.Left.Value)
+                Viewport.Center += Vector2.UnitX*(Limits.Left.Value - boundingBox.Left);
+
+            if (Limits.Right.HasValue && boundingBox.Right > Limits.Right.Value)
+                Viewport.Center -= Vector2.UnitX*(boundingBox.Right - Limits.Right.Value);
+
+            return Matrix.CreateTranslation(new Vector3(-Viewport.TopLeft*parallax, 0))*
+                   Matrix.CreateTranslation(new Vector3(-Viewport.Pivot, 0))*
+                   Matrix.CreateRotationZ(Viewport.Rotation)*
+                   Matrix.CreateScale(Viewport.Scale.X, Viewport.Scale.Y, 1)*
+                   Matrix.CreateTranslation(new Vector3(Viewport.Pivot, 0));
         }
     }
 }

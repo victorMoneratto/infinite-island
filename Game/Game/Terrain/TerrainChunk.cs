@@ -18,7 +18,7 @@ namespace InfiniteIsland.Terrain
         private float[] _heights;
         private readonly Texture2D _heightmap;
 
-        private RectangleF _rect;
+        private RectangleF _bounds;
 
         public TerrainChunk(float horizonalPosition,
                             float[] heights,
@@ -27,7 +27,7 @@ namespace InfiniteIsland.Terrain
                             float? firstHeight = null)
         {
             _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition));
-            _rect = new RectangleF(Dimensions) { TopLeft = _body.Position };
+            _bounds = new RotatableRectangleF(Dimensions) { TopLeft = _body.Position };
             _heightmap = new Texture2D(graphicsDevice, HeightCount, 1, false, SurfaceFormat.Single);
 
             if (firstHeight.HasValue)
@@ -35,9 +35,9 @@ namespace InfiniteIsland.Terrain
             Heights = heights;
         }
 
-        public RectangleF Rect
+        public RectangleF Bounds
         {
-            get { return _rect; }
+            get { return _bounds; }
         }
 
         public Vector2 BodyPosition
@@ -46,7 +46,7 @@ namespace InfiniteIsland.Terrain
             set
             {
                 _body.Position = value;
-                _rect.TopLeft = value;
+                _bounds.TopLeft = value;
             }
         }
 
@@ -88,8 +88,8 @@ namespace InfiniteIsland.Terrain
         {
             get
             {
-                return new Vector2(_body.Position.X + _rect.Dimensions.X,
-                                   _body.Position.Y + _heights[_heights.Length - 1]*_rect.Dimensions.Y);
+                return new Vector2(_body.Position.X + _bounds.Dimensions.X,
+                                   _body.Position.Y + _heights[_heights.Length - 1]*_bounds.Dimensions.Y);
             }
         }
 

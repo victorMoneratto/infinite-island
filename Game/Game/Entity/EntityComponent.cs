@@ -16,7 +16,7 @@ namespace InfiniteIsland.Entity
         public void Update(GameTime gameTime)
         {
             Player.Update(gameTime);
-            Camera.Center = Player.Position.ToPixels();
+            Camera.Viewport.Center = Player.Position.ToPixels() + Vector2.UnitX * .3f*Camera.Viewport.Dimensions;
         }
 
         public void Draw(SpriteBatch spriteBatch)

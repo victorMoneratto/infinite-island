@@ -86,6 +86,7 @@
     <Compile Include="IRenderable.cs" />
     <Compile Include="IUpdateable.cs" />
     <Compile Include="Terrain\TerrainChunk.cs" />
+    <Compile Include="Util\BoundingLimits.cs" />
     <Compile Include="Util\Noise.cs" />
     <Compile Include="Util\RectangleF.cs" />
     <Compile Include="Background\BackgroundComponent.cs" />

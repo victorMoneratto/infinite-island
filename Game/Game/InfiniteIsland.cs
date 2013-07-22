@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
 using InfiniteIsland.Background;
 using InfiniteIsland.Debug;
@@ -45,14 +46,14 @@ namespace InfiniteIsland
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _debug = new DebugComponent(this, _world, _spriteBatch);
+            _debug = new DebugComponent(this, _world);
             _player = new Player(_world, Content);
             _entities = new EntityComponent(_player);
             _background = new BackgroundComponent(this);
             _terrain = new TerrainComponent(this, _world);
 
             Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
-            Camera.BottomLimit = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
+            Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
         }
 
         protected override void Update(GameTime gameTime)
@@ -66,18 +67,18 @@ namespace InfiniteIsland
                 _debugEnabled = !_debugEnabled;
 
             if (Input.Keyboard.IsKeyDown(Keys.Up))
-                Camera.Zoom += Vector2.One * (gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+                Camera.Viewport.Scale += Vector2.One * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Down))
-                Camera.Zoom -= Vector2.One * (gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+                Camera.Viewport.Scale -= Vector2.One * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Left))
-                Camera.Rotation += MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+                Camera.Viewport.Rotation += MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
             if (Input.Keyboard.IsKeyDown(Keys.Right))
-                Camera.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+                Camera.Viewport.Rotation -= MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            _world.Step(gameTime.ElapsedGameTime.Milliseconds*0.001f);
+            _world.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
             _background.Update(gameTime);
             _terrain.Update(gameTime);
             _entities.Update(gameTime);
@@ -94,7 +95,6 @@ namespace InfiniteIsland
 
             if (_debugEnabled)
                 _debug.Draw(_spriteBatch);
-
             
         }
     }

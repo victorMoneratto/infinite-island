@@ -38,7 +38,7 @@ namespace InfiniteIsland.Terrain
             {
                 _terrainEffect.Parameters["heightmap"].SetValue(chunk.Heightmap);
                 _terrainEffect.Parameters["verticesCount"].SetValue(chunk.VerticesCount);
-                spriteBatch.Draw(_blankTexture, chunk.Rect.ToPixels(), Color.White);
+                spriteBatch.Draw(_blankTexture, chunk.Bounds.ToPixels(), Color.White);
             }
 
             spriteBatch.End();
@@ -47,7 +47,7 @@ namespace InfiniteIsland.Terrain
         public void Update(GameTime gameTime)
         {
             TerrainChunk firstChunk = _chunks[0];
-            if (firstChunk.LastVertex.X.ToPixels() < Camera.TopLeft.X)
+            if (firstChunk.LastVertex.X.ToPixels() < Camera.Viewport.Projection.BoundingBox.TopLeft.X)
             {
                 firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
                 firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);
