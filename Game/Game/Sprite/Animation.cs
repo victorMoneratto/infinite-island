@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace InfiniteIsland.SpriteComponent
+namespace InfiniteIsland.Sprite
 {
     internal class Animation
     {

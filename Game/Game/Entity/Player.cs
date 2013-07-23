@@ -1,7 +1,7 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
-using InfiniteIsland.SpriteComponent;
+using InfiniteIsland.Sprite;
 using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -48,7 +48,7 @@ namespace InfiniteIsland.Entity
             _motor.MotorEnabled = true;
             _motor.MaxMotorTorque = 10;
 
-            _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Point(100, 176));
+            _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Vector2(100, 176));
             _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
             _sprite.RegisterAnimation(State.Moving, 28, 14);
         }
@@ -88,16 +88,16 @@ namespace InfiniteIsland.Entity
 
             if (Input.Keyboard.IsKeyDown(Keys.Q))
             {
-                _sprite.Rotation += MathHelper.Pi*gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
+                _sprite.Body.Rotation += MathHelper.Pi*gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
             }
 
             if (Input.Keyboard.IsKeyDown(Keys.E))
             {
-                _sprite.Rotation -= MathHelper.Pi * gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
+                _sprite.Body.Rotation -= MathHelper.Pi * gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
             }
 
             _sprite.Update(gameTime);
-            _sprite.Position = _torso.Position.ToPixels();
+            _sprite.Body.Center= _torso.Position.ToPixels();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

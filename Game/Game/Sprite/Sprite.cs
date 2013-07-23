@@ -1,39 +1,24 @@
 ﻿using System.Collections.Generic;
+using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.SpriteComponent
+namespace InfiniteIsland.Sprite
 {
     public class Sprite<T> where T : struct
     {
-        private readonly Dictionary<T?, Animation> _animations = new Dictionary<T?, Animation>();
-        private readonly Vector2 _center;
-        private readonly Point _dimensions;
         private readonly Texture2D _spriteSheet;
 
+        private readonly Dictionary<T?, Animation> _animations = new Dictionary<T?, Animation>();
         private T? _animationKey;
         private Animation _currentAnimation;
-        private Vector2 _position;
-        private float _rotation;
 
-        public Sprite(Texture2D spriteSheet, Point dimensions)
+        public RotatableRectangleF Body { get; set; }
+
+        public Sprite(Texture2D spriteSheet, Vector2 dimensions)
         {
-            _dimensions = dimensions;
+            Body = new RotatableRectangleF(dimensions);
             _spriteSheet = spriteSheet;
-
-            _center = new Vector2(_dimensions.X/2f, _dimensions.Y/2f);
-        }
-
-        public Vector2 Position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
-
-        public float Rotation
-        {
-            get { return _rotation; }
-            set { _rotation = value; }
         }
 
         public T? AnimationKey
@@ -63,10 +48,10 @@ namespace InfiniteIsland.SpriteComponent
             for (int i = 0; i < points.Length; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: points[i].X*_dimensions.X,
-                    y: points[i].Y*_dimensions.Y,
-                    width: _dimensions.X,
-                    height: _dimensions.Y);
+                    x: (int)(points[i].X*Body.Dimensions.X),
+                    y: (int)(points[i].Y*Body.Dimensions.Y),
+                    width: (int)Body.Dimensions.X,
+                    height: (int)Body.Dimensions.Y);
             }
             _animations.Add(key, new Animation(rectangles));
         }
@@ -74,7 +59,7 @@ namespace InfiniteIsland.SpriteComponent
         //TODO refactor function
         public void RegisterAnimation(T key, int firstSprite, int frameCount)
         {
-            int columns = _spriteSheet.Width/_dimensions.X;
+            int columns = (int)(_spriteSheet.Width / Body.Dimensions.X);
             var spritePoints = new Point[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
@@ -85,7 +70,7 @@ namespace InfiniteIsland.SpriteComponent
 
         public void RegisterAnimation(T key, int frameCount, Point first)
         {
-            int columns = _spriteSheet.Width/_dimensions.X;
+            int columns = (int)(_spriteSheet.Width / Body.Dimensions.X);
             var points = new Point[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
@@ -109,12 +94,12 @@ namespace InfiniteIsland.SpriteComponent
             {
                 spriteBatch.Draw(
                     texture: _spriteSheet,
-                    position: _position,
+                    position: Body.Center,
                     sourceRectangle: _currentAnimation.CurrentFrame,
                     color: Color.White,
-                    rotation: _rotation,
-                    origin: _center,
-                    scale: 1,
+                    rotation: Body.Rotation,
+                    origin: Body.Pivot,
+                    scale: Body.Scale,
                     effects: flipHorizontal ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                     layerDepth: 0);
             }
