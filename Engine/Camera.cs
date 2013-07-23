@@ -1,11 +1,14 @@
-namespace Engine
-{
-    public static class Camera
-    {
-        public static BoundingLimits Limits = new BoundingLimits();
-        public static RotatableRectangleF Viewport { get; set; }
+using InfiniteIsland.Engine.Math.Geometry;
+using Microsoft.Xna.Framework;
 
-        public static void Setup(Vector2 dimensions)
+namespace InfiniteIsland.Engine
+{
+    public class Camera
+    {
+        public BoundingLimits Limits = new BoundingLimits();
+        public RotatableRectangleF Viewport { get; set; }
+
+        public void Setup(Vector2 dimensions)
         {
             Viewport = new RotatableRectangleF(dimensions);
         }
@@ -15,7 +18,7 @@ namespace Engine
         /// </summary>
         /// <param name="parallax">Parallax factor, higher values result in higher velocities</param>
         /// <returns>Camera transform matrix</returns>
-        public static Matrix CalculateTransformMatrix(Vector2 parallax)
+        public Matrix CalculateTransformMatrix(Vector2 parallax)
         {
             RectangleF boundingBox = Viewport.Projection.BoundingBox;
             if (Limits.Up.HasValue && boundingBox.Up < Limits.Up.Value)
