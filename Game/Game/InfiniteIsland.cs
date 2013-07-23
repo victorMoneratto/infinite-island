@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
-using InfiniteIsland.Background;
-using InfiniteIsland.Debug;
+using InfiniteIsland.Components;
+using InfiniteIsland.Engine;
+using InfiniteIsland.Engine.Math;
+using InfiniteIsland.Engine.Terrain;
 using InfiniteIsland.Entity;
-using InfiniteIsland.Terrain;
-using InfiniteIsland.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,16 +12,17 @@ namespace InfiniteIsland
 {
     public class InfiniteIsland : Game
     {
-        
+        public static readonly Camera Camera = new Camera();
         private readonly World _world = new World(new Vector2(0, 40));
+        
+        private SpriteBatch _spriteBatch;
+
         private Player _player;
 
-        private DebugComponent _debug;
-        private EntityComponent _entities;
-        private TerrainComponent _terrain;
-        private BackgroundComponent _background;
-
-        private SpriteBatch _spriteBatch;
+        private Entities _entities;
+        private Debug _debug;
+        private Terrain _terrain;
+        private Background _background;
 
 #if DEBUG
         private bool _debugEnabled = true;
@@ -46,14 +46,15 @@ namespace InfiniteIsland
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _debug = new DebugComponent(this, _world);
+            _debug = new Debug(this, _world);
             _player = new Player(_world, Content);
-            _entities = new EntityComponent(_player);
-            _background = new BackgroundComponent(this);
-            _terrain = new TerrainComponent(this, _world);
+            _entities = new Entities(_player);
+            _background = new Background(this);
+            _terrain = new Terrain(this, _world);
 
             Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
             Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
+            Camera.Viewport.Pivot = Camera.Viewport.Dimensions*.3f;
         }
 
         protected override void Update(GameTime gameTime)

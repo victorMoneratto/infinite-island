@@ -1,8 +1,9 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Sprite;
-using InfiniteIsland.Util;
+using InfiniteIsland.Engine;
+using InfiniteIsland.Engine.Math;
+using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland.Entity
 {
-    public class Player : Entity
+    public class Player : Engine.Entity.Entity
     {
         private const float MaxSpeed = 80f;
         private readonly RevoluteJoint _motor;
@@ -85,6 +86,8 @@ namespace InfiniteIsland.Entity
 
             if (_motor.MotorSpeed == 0)
                 _sprite.AnimationKey = State.Idle;
+            else
+                _sprite.FlipHorizontally = _motor.MotorSpeed < 0;
 
             if (Input.Keyboard.IsKeyDown(Keys.Q))
             {
@@ -102,7 +105,7 @@ namespace InfiniteIsland.Entity
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _sprite.Draw(spriteBatch, _motor.MotorSpeed < 0);
+            _sprite.Draw(spriteBatch);
         }
 
         private enum State

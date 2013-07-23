@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Content", "Game\Conten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1026F91D-6648-4E7C-86E4-19ECC37D52FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{216C7BA5-1355-4213-90C9-AAFBBF4DA882}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,16 @@ Global
 		{1026F91D-6648-4E7C-86E4-19ECC37D52FC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1026F91D-6648-4E7C-86E4-19ECC37D52FC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1026F91D-6648-4E7C-86E4-19ECC37D52FC}.Release|x86.ActiveCfg = Release|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{216C7BA5-1355-4213-90C9-AAFBBF4DA882}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
