@@ -89,6 +89,7 @@
     <Compile Include="Components\Debug.cs" />
     <Compile Include="Components\Entities.cs" />
     <Compile Include="Components\Terrain.cs" />
+    <Compile Include="Console\CameraCommand.cs" />
     <Compile Include="Visual\RocksLayer.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Program.cs" />

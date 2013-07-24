@@ -1,5 +1,6 @@
 using FarseerPhysics.DebugViews;
 using FarseerPhysics.Dynamics;
+using InfiniteIsland.Console;
 using InfiniteIsland.Engine.Math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,7 @@ namespace InfiniteIsland.Components
             _physicsDebug.LoadContent(game.GraphicsDevice, game.Content);
 
             Console = new GameConsole(game, spriteBatch, new GameConsoleOptions {AnimationSpeed = .2f});
+            Console.AddCommand(new CameraCommand());
         }
 
         public bool PhysicsDebugEnabled { get; set; }
