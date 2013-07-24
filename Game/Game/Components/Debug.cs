@@ -1,42 +1,45 @@
 using FarseerPhysics.DebugViews;
 using FarseerPhysics.Dynamics;
-using InfiniteIsland.Engine;
-using InfiniteIsland.Engine.Math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using InfiniteIsland.Engine.Math;
 using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Debug : Engine.Interface.IUpdateable, Engine.Interface.IDrawable
+    public class Debug : IUpdateable, IDrawable
     {
         private readonly DebugViewXNA _debugView;
-        private Matrix _debugProjection;
-
-        private Viewport _viewport;
+        private Matrix _projection;
+        private Matrix _view;
 
         public Debug(Game game, World world)
         {
             _debugView = new DebugViewXNA(world);
             _debugView.LoadContent(game.GraphicsDevice, game.Content);
-            _viewport = game.GraphicsDevice.Viewport;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            _debugProjection = Matrix.CreateOrthographicOffCenter(
-                left: InfiniteIsland.Camera.Viewport.TopLeft.X.ToMeters(),
-                right: (InfiniteIsland.Camera.Viewport.TopLeft.X + _viewport.Width).ToMeters(),
-                bottom: (InfiniteIsland.Camera.Viewport.TopLeft.Y + _viewport.Height).ToMeters(),
-                top: InfiniteIsland.Camera.Viewport.TopLeft.Y.ToMeters(),
-                zNearPlane: 0,
-                zFarPlane: 1);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _debugView.RenderDebugData(ref _debugProjection);
+            _debugView.RenderDebugData(ref _projection, ref _view);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            _projection = Matrix.CreateOrthographicOffCenter(
+                left: 0,
+                right: InfiniteIsland.Camera.Viewport.Dimensions.X.ToMeters(),
+                bottom: InfiniteIsland.Camera.Viewport.Dimensions.Y.ToMeters(),
+                top: 0,
+                zNearPlane: 0,
+                zFarPlane: 1);
+
+            _view = Matrix.CreateTranslation(new Vector3(-InfiniteIsland.Camera.Viewport.TopLeft.ToMeters(), 0)) *
+                   Matrix.CreateTranslation(new Vector3(-InfiniteIsland.Camera.Viewport.Pivot.ToMeters(), 0)) *
+                   Matrix.CreateRotationZ(InfiniteIsland.Camera.Viewport.Rotation) *
+                   Matrix.CreateScale(InfiniteIsland.Camera.Viewport.Scale.X, InfiniteIsland.Camera.Viewport.Scale.Y, 1) *
+                   Matrix.CreateTranslation(new Vector3(InfiniteIsland.Camera.Viewport.Pivot.ToMeters(), 0));
         }
     }
 }
