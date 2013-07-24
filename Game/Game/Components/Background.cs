@@ -8,13 +8,13 @@ namespace InfiniteIsland.Components
 {
     public class Background : Engine.Interface.IUpdateable, Engine.Interface.IDrawable
     {
-        private readonly MountsLayer[] _parallaxLayers = new MountsLayer[3];
+        private readonly RocksLayer[] _parallaxLayers = new RocksLayer[3];
 
         public Background(Game game)
         {
             for (int i = 0; i < _parallaxLayers.Length; i++)
             {
-                _parallaxLayers[i] = new MountsLayer(new Vector2((float)i / _parallaxLayers.Length, 1f));
+                _parallaxLayers[i] = new RocksLayer(new Vector2((float)i / _parallaxLayers.Length, 1f));
                 _parallaxLayers[i].LoadContent(game);
             }
 
@@ -22,7 +22,7 @@ namespace InfiniteIsland.Components
 
         public void Update(GameTime gameTime)
         {
-            foreach (MountsLayer layer in _parallaxLayers)
+            foreach (RocksLayer layer in _parallaxLayers)
             {
                 layer.Update(gameTime);
             }
@@ -31,7 +31,7 @@ namespace InfiniteIsland.Components
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (MountsLayer layer in _parallaxLayers)
+            foreach (RocksLayer layer in _parallaxLayers)
             {
                 layer.Draw(spriteBatch, InfiniteIsland.Camera);
             }

@@ -1,4 +1,3 @@
-using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
@@ -31,7 +30,7 @@ namespace InfiniteIsland.Components
         {
             Player.Update(gameTime);
             InfiniteIsland.Camera.Viewport.Center =
-                Player.Position.ToPixels() + Vector2.UnitX*.3f*InfiniteIsland.Camera.Viewport.Dimensions;
+                Player.Position.ToPixels() + Vector2.UnitX * .3f * InfiniteIsland.Camera.Viewport.Dimensions;
         }
     }
 }

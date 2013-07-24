@@ -14,7 +14,7 @@ namespace InfiniteIsland
     {
         public static readonly Camera Camera = new Camera();
         private readonly World _world = new World(new Vector2(0, 40));
-        
+
         private SpriteBatch _spriteBatch;
 
         private Player _player;
@@ -23,12 +23,6 @@ namespace InfiniteIsland
         private Debug _debug;
         private Terrain _terrain;
         private Background _background;
-
-#if DEBUG
-        private bool _debugEnabled = true;
-#else
-        private bool _debugEnabled;
-#endif
 
         public InfiniteIsland()
         {
@@ -46,26 +40,29 @@ namespace InfiniteIsland
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _debug = new Debug(this, _world);
+            _debug = new Debug(this, _spriteBatch, _world);
             _player = new Player(_world, Content);
             _entities = new Entities(_player);
-            _background = new Background(this);
             _terrain = new Terrain(this, _world);
+            _background = new Background(this);
 
             Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
             Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
-            Camera.Viewport.Pivot = Camera.Viewport.Dimensions*.3f;
+            Camera.Viewport.Pivot = Camera.Viewport.Dimensions * .3f;
         }
 
         protected override void Update(GameTime gameTime)
         {
+            if (_debug.Console.Opened)
+                return;
+
             Input.Update();
 
             if (Input.Keyboard.IsKeyTyped(Keys.Escape))
                 Exit();
 
             if (Input.Keyboard.IsKeyTyped(Keys.F3))
-                _debugEnabled = !_debugEnabled;
+                _debug.PhysicsDebugEnabled = !_debug.PhysicsDebugEnabled;
 
             if (Input.Keyboard.IsKeyDown(Keys.Up))
                 Camera.Viewport.Scale += Vector2.One * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
@@ -79,11 +76,13 @@ namespace InfiniteIsland
             if (Input.Keyboard.IsKeyDown(Keys.Right))
                 Camera.Viewport.Rotation -= MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            _world.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
+            _world.Step(gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
             _background.Update(gameTime);
             _terrain.Update(gameTime);
             _entities.Update(gameTime);
             _debug.Update(gameTime);
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -93,10 +92,10 @@ namespace InfiniteIsland
             _background.Draw(_spriteBatch);
             _terrain.Draw(_spriteBatch);
             _entities.Draw(_spriteBatch);
+            _debug.Draw(_spriteBatch);
 
-            if (_debugEnabled)
-                _debug.Draw(_spriteBatch);
-            
+            base.Draw(gameTime);
+
         }
     }
 }

@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
-using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
+using InfiniteIsland.Engine.Terrain;
 using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Visual
 {
-    public class MountsLayer : ParallaxLayer<MountsLayer.Mount>
+    public class RocksLayer : ParallaxLayer<RocksLayer.Mount>
     {
         public enum Mount
         {
             Lonely
         }
 
-        public MountsLayer(Vector2 parallax)
+        public RocksLayer(Vector2 parallax)
         {
             Parallax = parallax;
         }
@@ -34,9 +34,11 @@ namespace InfiniteIsland.Visual
                         Body =
                             {
                                 Center = new Vector2(
-                                    x: ((10f + random.Next(11))*i).ToPixels(),
-                                    y: (3f + (float) random.NextDouble()).ToPixels()),
-                                Rotation = MathHelper.PiOver4*(float) random.NextDouble() - MathHelper.PiOver4/2
+                                    x: ((10f + random.Next(1001))*i),
+                                    y: (TerrainChunk.VerticalPosition + 1f + (float) random.NextDouble()).ToPixels()),
+                                Pivot = new Vector2(lonelyMount.Width/2f, lonelyMount.Height),
+                                Rotation = MathHelper.PiOver4/2 * (float)(random.NextDouble()-.5f),
+                                Scale = new Vector2(1 +5*(float)random.NextDouble(), 1+5*(float)random.NextDouble())
                             }
                     };
                 sprite.RegisterAnimation(Mount.Lonely, 0, 1);

@@ -79,13 +79,17 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="XNAGameConsole, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x86\Debug\XNAGameConsole.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Background.cs" />
     <Compile Include="Components\Debug.cs" />
     <Compile Include="Components\Entities.cs" />
     <Compile Include="Components\Terrain.cs" />
-    <Compile Include="Visual\MountsLayer.cs" />
+    <Compile Include="Visual\RocksLayer.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="InfiniteIsland.cs" />
