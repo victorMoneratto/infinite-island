@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland.Engine
@@ -20,6 +21,7 @@ namespace InfiniteIsland.Engine
 
             PreviousMouseState = CurrentMouseState;
             CurrentMouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
+            Mouse.Position = new Vector2(CurrentMouseState.X, CurrentMouseState.Y);
         }
 
         public static class Keyboard
@@ -63,6 +65,11 @@ namespace InfiniteIsland.Engine
 
         public static class Mouse
         {
+            /// <summary>
+            /// 
+            /// </summary>
+            public static Vector2 Position { get; set; }
+
             /// <summary>
             /// Check if the button is being pressed
             /// </summary>

@@ -5,12 +5,12 @@ using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
+using IDrawable = InfiniteIsland.Engine.IDrawable;
+using IUpdateable = InfiniteIsland.Engine.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Terrain : Engine.Interface.IUpdateable, Engine.Interface.IDrawable
+    public class Terrain : Engine.IUpdateable, Engine.IDrawable
     {
         private readonly Texture2D _blankTexture;
         private readonly TerrainChunk[] _chunks;

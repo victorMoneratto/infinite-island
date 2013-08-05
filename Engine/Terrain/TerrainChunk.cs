@@ -19,7 +19,7 @@ namespace InfiniteIsland.Engine.Terrain
         private float[] _heights;
         private readonly Texture2D _heightmap;
 
-        private RectangleF _bounds;
+        private readonly RectangleF _bounds;
 
         public TerrainChunk(float horizonalPosition,
                             float[] heights,

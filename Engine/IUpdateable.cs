@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace InfiniteIsland.Engine.Interface
+namespace InfiniteIsland.Engine
 {
     public interface IUpdateable
     {

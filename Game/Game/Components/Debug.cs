@@ -5,14 +5,13 @@ using InfiniteIsland.Engine.Math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNAGameConsole;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Debug : IUpdateable, IDrawable
+    public class Debug : Engine.IUpdateable, Engine.IDrawable
     {
-        public readonly GameConsole Console;
+        //static but needs initialization, yeah, I feel bad about it.
+        public static GameConsole Console;
         private readonly DebugViewXNA _physicsDebug;
         private Matrix _physicsProjection;
         private Matrix _physicsView;

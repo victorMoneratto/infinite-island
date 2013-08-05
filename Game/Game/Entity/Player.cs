@@ -29,7 +29,7 @@ namespace InfiniteIsland.Entity
                 width: widthMeters,
                 height: torsoHeight,
                 density: 1f,
-                position: Vector2.UnitX * 10);
+                position: Vector2.UnitX * 20);
 
             _torso.BodyType = BodyType.Dynamic;
 
@@ -81,7 +81,7 @@ namespace InfiniteIsland.Entity
 
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
-                _torso.ApplyLinearImpulse(new Vector2(0, -6));
+                _torso.ApplyLinearImpulse(new Vector2(0, -24));
             }
 
             if (_motor.MotorSpeed == 0)

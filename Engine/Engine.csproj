@@ -33,9 +33,9 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Entity\Entity.cs" />
+    <Compile Include="IDrawable.cs" />
     <Compile Include="Input.cs" />
-    <Compile Include="Interface\IDrawable.cs" />
-    <Compile Include="Interface\IUpdateable.cs" />
+    <Compile Include="IUpdateable.cs" />
     <Compile Include="Math\Geometry\BoundingLimits.cs" />
     <Compile Include="Math\Geometry\RectangleF.cs" />
     <Compile Include="Math\Geometry\RectangleProjection.cs" />

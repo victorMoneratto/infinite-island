@@ -1,12 +1,12 @@
 ﻿using InfiniteIsland.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
+using IDrawable = InfiniteIsland.Engine.IDrawable;
+using IUpdateable = InfiniteIsland.Engine.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Background : Engine.Interface.IUpdateable, Engine.Interface.IDrawable
+    public class Background : Engine.IUpdateable, Engine.IDrawable
     {
         private readonly RocksLayer[] _parallaxLayers = new RocksLayer[3];
 

@@ -13,7 +13,7 @@ namespace InfiniteIsland
     public class InfiniteIsland : Game
     {
         public static readonly Camera Camera = new Camera();
-        private readonly World _world = new World(new Vector2(0, 40));
+        public static readonly World World = new World(new Vector2(0, 40));
 
         private SpriteBatch _spriteBatch;
 
@@ -23,6 +23,7 @@ namespace InfiniteIsland
         private Debug _debug;
         private Terrain _terrain;
         private Background _background;
+        private Cursor _cursor;
 
         public InfiniteIsland()
         {
@@ -40,11 +41,12 @@ namespace InfiniteIsland
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _debug = new Debug(this, _spriteBatch, _world);
-            _player = new Player(_world, Content);
+            _debug = new Debug(this, _spriteBatch, World);
+            _player = new Player(World, Content);
             _entities = new Entities(_player);
-            _terrain = new Terrain(this, _world);
+            _terrain = new Terrain(this, World);
             _background = new Background(this);
+            _cursor = new Cursor(this);
 
             Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
             Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
@@ -53,7 +55,7 @@ namespace InfiniteIsland
 
         protected override void Update(GameTime gameTime)
         {
-            if (_debug.Console.Opened)
+            if (Debug.Console.Opened)
                 return;
 
             Input.Update();
@@ -76,7 +78,7 @@ namespace InfiniteIsland
             if (Input.Keyboard.IsKeyDown(Keys.Right))
                 Camera.Viewport.Rotation -= MathHelper.Pi * (gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
 
-            _world.Step(gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
+            World.Step(gameTime.ElapsedGameTime.Milliseconds * 1e-3f);
             _background.Update(gameTime);
             _terrain.Update(gameTime);
             _entities.Update(gameTime);
@@ -93,6 +95,7 @@ namespace InfiniteIsland
             _terrain.Draw(_spriteBatch);
             _entities.Draw(_spriteBatch);
             _debug.Draw(_spriteBatch);
+            _cursor.Draw(_spriteBatch);
 
             base.Draw(gameTime);
 
