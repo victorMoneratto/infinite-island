@@ -12,27 +12,26 @@ namespace InfiniteIsland.Engine.Physics
         public readonly Body Torso;
         public readonly Body Wheel;
 
-        public WalkerBody(World world)
+        public WalkerBody(World world, float width, float height, object userData)
         {
-            float heightMeters = 140f.ToMeters();
-            float widthMeters = 45f.ToMeters();
-            float torsoHeight = heightMeters - widthMeters/2f;
+            float torsoHeight = height - width/2f;
 
             Torso = BodyFactory.CreateRectangle(
                 world: world,
-                width: widthMeters,
+                width: width,
                 height: torsoHeight,
                 density: 1f,
                 position: Vector2.UnitX*20,
-                userData: this);
+                userData: userData);
 
             Torso.BodyType = BodyType.Dynamic;
 
             Wheel = BodyFactory.CreateCircle(
                 world: world,
-                radius: widthMeters/1.9f,
+                radius: width/1.9f,
                 density: 1f,
-                position: Torso.Position + new Vector2(0, torsoHeight/2));
+                position: Torso.Position + new Vector2(0, torsoHeight/2),
+                userData: userData);
 
             Wheel.BodyType = BodyType.Dynamic;
             Wheel.Friction = float.MaxValue;

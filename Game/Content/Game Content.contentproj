@@ -141,10 +141,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\zap1.mp3">
-      <Name>zap1</Name>
+    <Compile Include="sfx\coin.mp3">
+      <Name>coin</Name>
       <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sfx\jump.mp3">
+      <Name>jump</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

@@ -14,11 +14,12 @@ namespace InfiniteIsland
     {
         public static readonly Camera Camera = new Camera();
         public static readonly World World = new World(new Vector2(0, 40));
+        public static Entities Entities;
+        public bool IsPaused;
 
         private Background _background;
         private Cursor _cursor;
         private Debug _debug;
-        private Entities _entities;
         private Player _player;
         private SpriteBatch _spriteBatch;
         private Terrain _terrain;
@@ -42,7 +43,7 @@ namespace InfiniteIsland
 
             _debug = new Debug(this, _spriteBatch, World);
             _player = new Player(Content);
-            _entities = new Entities(_player, this);
+            Entities = new Entities(_player, this);
             _terrain = new Terrain(this, World);
             _background = new Background(this);
             _cursor = new Cursor(this);
@@ -54,10 +55,16 @@ namespace InfiniteIsland
 
         protected override void Update(GameTime gameTime)
         {
-            if (Debug.Console.Opened)
-                return;
-
             Input.Update();
+
+            if (Input.Keyboard.IsKeyTyped(Keys.Escape))
+                IsPaused = !IsPaused;
+
+            if (IsPaused)
+            {
+                base.Update(gameTime);
+                return;
+            }
 
             if (Input.Keyboard.IsKeyTyped(Keys.F3))
                 _debug.PhysicsDebugEnabled = !_debug.PhysicsDebugEnabled;
@@ -77,7 +84,7 @@ namespace InfiniteIsland
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
             _background.Update(gameTime);
             _terrain.Update(gameTime);
-            _entities.Update(gameTime);
+            Entities.Update(gameTime);
             _debug.Update(gameTime);
 
             base.Update(gameTime);
@@ -89,9 +96,18 @@ namespace InfiniteIsland
 
             _background.Draw(_spriteBatch);
             _terrain.Draw(_spriteBatch);
-            _entities.Draw(_spriteBatch);
+            Entities.Draw(_spriteBatch);
             _debug.Draw(_spriteBatch);
             _cursor.Draw(_spriteBatch);
+
+            if (IsPaused)
+            {
+                var pauseFill = new Texture2D(GraphicsDevice, 1, 1);
+                pauseFill.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
+                _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                _spriteBatch.Draw(pauseFill, GraphicsDevice.Viewport.Bounds, Color.White);
+                _spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }

@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>HJszI5JTFPS2PiqdTqnP6y76Nng=</dsig:DigestValue>
+        <dsig:DigestValue>ME68C7ZX9g5WbIf9Di2OHzIDqrY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ilhinfinita.exe" size="15872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ilhinfinita.exe" size="17408">
       <assemblyIdentity name="Ilhinfinita" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>bhaXwzI6l7iA12WnPEDrrkvxsfw=</dsig:DigestValue>
+        <dsig:DigestValue>UBQXrOFfH/2wgmXw6ZXwjTRu9Qk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -191,22 +191,22 @@
       <dsig:DigestValue>yVcWHkdxtn+aYLUoIdtJhqR5Yx8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\sfx\zap1.wma" size="31823">
+  <file name="Content\sfx\coin.xnb" size="89961">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>ZGSsFfnOGA+BEchgHHjmPhL0NE4=</dsig:DigestValue>
+      <dsig:DigestValue>JPdtrjbbePwPlOrT/9rI/yABTWI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\sfx\zap1.xnb" size="122">
+  <file name="Content\sfx\jump.xnb" size="83049">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>62bW6vIRKLft6cpzAKevQe5FElA=</dsig:DigestValue>
+      <dsig:DigestValue>IoSIW5I9Q9d9aLOHXnHN3t0XPeI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Terrain.xnb" size="3284">
@@ -215,7 +215,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>lo5i6LJ0FbLeGLMr6ebWUims4mc=</dsig:DigestValue>
+      <dsig:DigestValue>UKnmxJfn6nxgOuiynCg6ODVlLMQ=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -23,7 +23,7 @@ namespace InfiniteIsland.Components
             _physicsDebug = new DebugViewXNA(world);
             _physicsDebug.LoadContent(game.GraphicsDevice, game.Content);
 
-            Console = new GameConsole(game, spriteBatch, new GameConsoleOptions {AnimationSpeed = .2f});
+            Console = new GameConsole(game, spriteBatch, new GameConsoleOptions {AnimationSpeed = .2f, OpenOnWrite = false});
             Console.AddCommand(new CameraCommand());
         }
 

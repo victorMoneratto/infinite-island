@@ -1,17 +1,24 @@
-﻿using InfiniteIsland.Engine;
+﻿using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
+using InfiniteIsland.Engine;
+using InfiniteIsland.Engine.Interface;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Physics;
 using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland.Entity
 {
-    public class Player : Engine.Entity.Entity
+    public class Player : Engine.Entity.Entity, ICustomCollidable
     {
         private readonly Sprite<State> _sprite;
+        
+        private readonly SoundEffect _coinSound;
+        private readonly SoundEffect _jumpSound;
 
         public WalkerBody Body;
 
@@ -19,10 +26,31 @@ namespace InfiniteIsland.Entity
 
         public Player(ContentManager content)
         {
-            Body = new WalkerBody(InfiniteIsland.World);
-            _sprite = new Sprite<State>(content.Load<Texture2D>(@"img\alabama"), new Vector2(100, 176));
+            _coinSound = content.Load<SoundEffect>("sfx/coin");
+            _jumpSound = content.Load<SoundEffect>("sfx/jump");
+            Body = new WalkerBody(InfiniteIsland.World, 45f.ToMeters(), 140f.ToMeters(), this);
+            Body.Torso.OnCollision += OnCollision;
+
+            _sprite = new Sprite<State>(content.Load<Texture2D>("img/alabama"), new Vector2(100, 176));
             _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
             _sprite.RegisterAnimation(State.Moving, 28, 14);
+        }
+
+        public bool OnCollision(Fixture f1, Fixture f2, Contact contact)
+        {
+            var entity = f2.UserData as Engine.Entity.Entity;
+            if (entity == null)
+                return false;
+
+            if (entity is Coin)
+            {
+                _coinSound.Play();
+                InfiniteIsland.World.RemoveBody((entity as Coin).Body);
+                InfiniteIsland.Entities.EntitiesList.Remove(entity);
+                return false;
+            }
+
+            return true;
         }
 
         public override void Update(GameTime gameTime)
@@ -43,6 +71,7 @@ namespace InfiniteIsland.Entity
 
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
+                _jumpSound.Play();
                 Body.Torso.ApplyLinearImpulse(new Vector2(0, -24));
             }
 

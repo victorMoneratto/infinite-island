@@ -22,7 +22,8 @@ namespace InfiniteIsland.Entity
                 world: InfiniteIsland.World,
                 radius: (texture.Width/2f).ToMeters(),
                 density: 1f,
-                position: position);
+                position: position,
+                userData: this);
             Body.BodyType = BodyType.Dynamic;
             Body.Restitution = 1.1f;
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Entity;
@@ -14,7 +15,7 @@ namespace InfiniteIsland.Components
     {
         public readonly Player Player;
         private readonly Game _game;
-        private Coin _coin;
+        public readonly List<Engine.Entity.Entity> EntitiesList = new List<Engine.Entity.Entity>();
 
         //Factor is the % of 'completition'
         private float _factor = 1f;
@@ -25,8 +26,6 @@ namespace InfiniteIsland.Components
         {
             Player = player;
             _game = game;
-
-            _coin = new Coin(_game, Vector2.UnitX*19);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -35,7 +34,10 @@ namespace InfiniteIsland.Components
                               InfiniteIsland.Camera.CalculateTransformMatrix(Vector2.One));
 
             Player.Draw(spriteBatch);
-            _coin.Draw(spriteBatch);
+            foreach (Engine.Entity.Entity entity in EntitiesList)
+            {
+                entity.Draw(spriteBatch);
+            }
 
             spriteBatch.End();
         }
@@ -62,16 +64,19 @@ namespace InfiniteIsland.Components
 
             if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
             {
-                InfiniteIsland.World.RemoveBody(_coin.Body);
                 Vector2 mousePos =
                     Vector2.Transform(
                         position:
                             Input.Mouse.Position,
                         matrix:
                             Matrix.Invert(InfiniteIsland.Camera.CalculateTransformMatrix(Vector2.One))).ToMeters();
-                _coin = new Coin(_game, mousePos);
+                EntitiesList.Add(new Coin(_game, mousePos));
             }
-            _coin.Update(gameTime);
+
+            foreach (Engine.Entity.Entity entity in EntitiesList)
+            {
+                entity.Update(gameTime);
+            }
         }
     }
 }
