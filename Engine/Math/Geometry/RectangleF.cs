@@ -51,25 +51,25 @@ namespace InfiniteIsland.Engine.Math.Geometry
         public float Up
         {
             get { return Center.Y - HalfDimensions.Y; }
-            set { Center += Vector2.UnitY * (value + HalfDimensions.Y); }
+            set { Center += Vector2.UnitY*(value + HalfDimensions.Y); }
         }
 
         public float Down
         {
             get { return Center.Y + HalfDimensions.Y; }
-            set { Center += Vector2.UnitY * (value - HalfDimensions.Y); }
+            set { Center += Vector2.UnitY*(value - HalfDimensions.Y); }
         }
 
         public float Left
         {
             get { return Center.X - HalfDimensions.X; }
-            set { Center += Vector2.UnitX * (value + HalfDimensions.X); }
+            set { Center += Vector2.UnitX*(value + HalfDimensions.X); }
         }
 
         public float Right
         {
             get { return Center.X + HalfDimensions.X; }
-            set { Center += Vector2.UnitX * (value - HalfDimensions.Y); }
+            set { Center += Vector2.UnitX*(value - HalfDimensions.Y); }
         }
 
         public RectangleProjection Projection

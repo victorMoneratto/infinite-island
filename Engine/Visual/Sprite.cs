@@ -7,15 +7,10 @@ namespace InfiniteIsland.Engine.Visual
 {
     public class Sprite<T> where T : struct
     {
-        private readonly Texture2D _spriteSheet;
-
         private readonly Dictionary<T?, Animation> _animations = new Dictionary<T?, Animation>();
+        private readonly Texture2D _spriteSheet;
         private T? _animationKey;
         private Animation _currentAnimation;
-
-        public RotatableRectangleF Body { get; set; }
-        public bool FlipHorizontally { get; set; }
-        public Color Tint { get; set; }
 
         public Sprite(Texture2D spriteSheet, Vector2 dimensions)
         {
@@ -23,6 +18,10 @@ namespace InfiniteIsland.Engine.Visual
             _spriteSheet = spriteSheet;
             Tint = Color.White;
         }
+
+        public RotatableRectangleF Body { get; set; }
+        public bool FlipHorizontally { get; set; }
+        public Color Tint { get; set; }
 
         public T? AnimationKey
         {
@@ -51,10 +50,10 @@ namespace InfiniteIsland.Engine.Visual
             for (int i = 0; i < points.Length; i++)
             {
                 rectangles[i] = new Rectangle(
-                    x: (int)(points[i].X*Body.Dimensions.X),
-                    y: (int)(points[i].Y*Body.Dimensions.Y),
-                    width: (int)Body.Dimensions.X,
-                    height: (int)Body.Dimensions.Y);
+                    x: (int) (points[i].X*Body.Dimensions.X),
+                    y: (int) (points[i].Y*Body.Dimensions.Y),
+                    width: (int) Body.Dimensions.X,
+                    height: (int) Body.Dimensions.Y);
             }
             _animations.Add(key, new Animation(rectangles));
         }
@@ -62,7 +61,7 @@ namespace InfiniteIsland.Engine.Visual
         //TODO refactor function
         public void RegisterAnimation(T key, int firstSprite, int frameCount)
         {
-            int columns = (int)(_spriteSheet.Width / Body.Dimensions.X);
+            var columns = (int) (_spriteSheet.Width/Body.Dimensions.X);
             var spritePoints = new Point[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
@@ -73,7 +72,7 @@ namespace InfiniteIsland.Engine.Visual
 
         public void RegisterAnimation(T key, int frameCount, Point first)
         {
-            int columns = (int)(_spriteSheet.Width / Body.Dimensions.X);
+            var columns = (int) (_spriteSheet.Width/Body.Dimensions.X);
             var points = new Point[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
@@ -109,7 +108,7 @@ namespace InfiniteIsland.Engine.Visual
         }
     }
 
-    public static class SpriteExtension<T> where T : struct 
+    public static class SpriteExtension<T> where T : struct
     {
         public static void Draw(SpriteBatch spriteBatch, Sprite<T> sprite)
         {

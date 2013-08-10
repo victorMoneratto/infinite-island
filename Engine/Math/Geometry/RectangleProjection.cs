@@ -38,7 +38,7 @@ namespace InfiniteIsland.Engine.Math.Geometry
                             dimensions.Y = distance;
                     }
                 }
-                return new RectangleF(dimensions){TopLeft = topLeft};
+                return new RectangleF(dimensions) {TopLeft = topLeft};
             }
         }
     }

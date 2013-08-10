@@ -32,10 +32,13 @@ namespace InfiniteIsland.Console
 
         public string Description
         {
-            get { return "Change camera settings.\n" +
-                         "   camera rotation [deg]\n" +
-                         "   camera pivot [x y]\n" +
-                         "   camera scale [x y]"; }
+            get
+            {
+                return "Change camera settings.\n" +
+                       "   camera rotation [deg]\n" +
+                       "   camera pivot [x y]\n" +
+                       "   camera scale [x y]";
+            }
         }
     }
 }

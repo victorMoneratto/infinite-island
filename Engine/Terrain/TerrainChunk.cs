@@ -14,12 +14,11 @@ namespace InfiniteIsland.Engine.Terrain
         public static readonly Vector2 Dimensions = new Vector2(5000f.ToMeters(), 150f.ToMeters());
 
         private readonly Body _body;
+        private readonly RectangleF _bounds;
+        private readonly Texture2D _heightmap;
         private Fixture[] _fixtures;
 
         private float[] _heights;
-        private readonly Texture2D _heightmap;
-
-        private readonly RectangleF _bounds;
 
         public TerrainChunk(float horizonalPosition,
                             float[] heights,
@@ -28,7 +27,7 @@ namespace InfiniteIsland.Engine.Terrain
                             float? firstHeight = null)
         {
             _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition));
-            _bounds = new RotatableRectangleF(Dimensions) { TopLeft = _body.Position };
+            _bounds = new RotatableRectangleF(Dimensions) {TopLeft = _body.Position};
             _heightmap = new Texture2D(graphicsDevice, HeightCount, 1, false, SurfaceFormat.Single);
 
             if (firstHeight.HasValue)

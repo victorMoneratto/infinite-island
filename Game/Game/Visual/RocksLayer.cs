@@ -37,8 +37,9 @@ namespace InfiniteIsland.Visual
                                     x: ((10f + random.Next(1001))*i),
                                     y: (TerrainChunk.VerticalPosition + 1f + (float) random.NextDouble()).ToPixels()),
                                 Pivot = new Vector2(lonelyMount.Width/2f, lonelyMount.Height),
-                                Rotation = MathHelper.PiOver4/2 * (float)(random.NextDouble()-.5f),
-                                Scale = new Vector2(1 +5*(float)random.NextDouble(), 1+5*(float)random.NextDouble())
+                                Rotation = MathHelper.PiOver4/2*(float) (random.NextDouble() - .5f),
+                                Scale =
+                                    new Vector2(1 + 5*(float) random.NextDouble(), 1 + 5*(float) random.NextDouble())
                             }
                     };
                 sprite.RegisterAnimation(Mount.Lonely, 0, 1);

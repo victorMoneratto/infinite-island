@@ -5,10 +5,12 @@ using InfiniteIsland.Engine.Math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNAGameConsole;
+using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
+using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Debug : Engine.IUpdateable, Engine.IDrawable
+    public class Debug : IUpdateable, IDrawable
     {
         //static but needs initialization, yeah, I feel bad about it.
         public static GameConsole Console;

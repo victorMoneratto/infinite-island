@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 
-namespace InfiniteIsland.Engine
+namespace InfiniteIsland.Engine.Interface
 {
     public interface IDrawable
     {

@@ -66,12 +66,32 @@ namespace InfiniteIsland.Engine
         public static class Mouse
         {
             /// <summary>
-            /// 
+            ///     Defines mouse button
+            /// </summary>
+            public enum MouseButton
+            {
+                /// <summary>
+                ///     Left mouse button
+                /// </summary>
+                Left,
+
+                /// <summary>
+                ///     Right mouse button
+                /// </summary>
+                Middle,
+
+                /// <summary>
+                ///     Middle mouse button
+                /// </summary>
+                Right
+            }
+
+            /// <summary>
             /// </summary>
             public static Vector2 Position { get; set; }
 
             /// <summary>
-            /// Check if the button is being pressed
+            ///     Check if the button is being pressed
             /// </summary>
             /// <param name="mouseButton">Button to check</param>
             /// <param name="mouseState">State to check</param>
@@ -95,7 +115,7 @@ namespace InfiniteIsland.Engine
             }
 
             /// <summary>
-            /// Check if button is been pressed
+            ///     Check if button is been pressed
             /// </summary>
             /// <param name="mouseButton">Button to check</param>
             /// <returns>True if button is down, false otherwise</returns>
@@ -105,7 +125,7 @@ namespace InfiniteIsland.Engine
             }
 
             /// <summary>
-            /// Check if button is not been pressed
+            ///     Check if button is not been pressed
             /// </summary>
             /// <param name="mouseButton">Button to check</param>
             /// <returns>True if button is up, false otherwise</returns>
@@ -115,32 +135,13 @@ namespace InfiniteIsland.Engine
             }
 
             /// <summary>
-            /// Check if button has just been pressed
+            ///     Check if button has just been pressed
             /// </summary>
             /// <param name="mouseButton"></param>
             /// <returns></returns>
             public static bool IsButtonClicked(MouseButton mouseButton)
             {
                 return IsButtonDown(mouseButton, CurrentMouseState) && !IsButtonDown(mouseButton, PreviousMouseState);
-            }
-
-            /// <summary>
-            /// Defines mouse button
-            /// </summary>
-            public enum MouseButton
-            {
-                /// <summary>
-                /// Left mouse button
-                /// </summary>
-                Left,
-                /// <summary>
-                /// Right mouse button
-                /// </summary>
-                Middle,
-                /// <summary>
-                /// Middle mouse button
-                /// </summary>
-                Right
             }
         }
     }

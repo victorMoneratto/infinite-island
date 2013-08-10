@@ -6,7 +6,7 @@ namespace InfiniteIsland.Engine.Math
     public static class Measure
     {
         /// <summary>
-        /// Ratio of 1meter/1pixel
+        ///     Ratio of 1meter/1pixel
         /// </summary>
         public const int PixelsPerMeter = 64;
 

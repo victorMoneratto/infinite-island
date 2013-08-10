@@ -15,16 +15,16 @@ namespace InfiniteIsland.Engine
             {
                 RectangleF boundingBox = _viewport.Projection.BoundingBox;
                 if (Limits.Up.HasValue && boundingBox.Up < Limits.Up.Value)
-                    _viewport.Center += Vector2.UnitY * (Limits.Up.Value - boundingBox.Up);
+                    _viewport.Center += Vector2.UnitY*(Limits.Up.Value - boundingBox.Up);
 
                 if (Limits.Down.HasValue && boundingBox.Down > Limits.Down.Value)
-                    _viewport.Center -= Vector2.UnitY * (boundingBox.Down - Limits.Down.Value);
+                    _viewport.Center -= Vector2.UnitY*(boundingBox.Down - Limits.Down.Value);
 
                 if (Limits.Left.HasValue && boundingBox.Left < Limits.Left.Value)
-                    _viewport.Center += Vector2.UnitX * (Limits.Left.Value - boundingBox.Left);
+                    _viewport.Center += Vector2.UnitX*(Limits.Left.Value - boundingBox.Left);
 
                 if (Limits.Right.HasValue && boundingBox.Right > Limits.Right.Value)
-                    _viewport.Center -= Vector2.UnitX * (boundingBox.Right - Limits.Right.Value);
+                    _viewport.Center -= Vector2.UnitX*(boundingBox.Right - Limits.Right.Value);
 
                 return _viewport;
             }

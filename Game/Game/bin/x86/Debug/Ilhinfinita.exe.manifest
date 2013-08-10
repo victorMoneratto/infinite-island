@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>g5aU4LkJpNhhBvtRg6N1Vpj/ESM=</dsig:DigestValue>
+        <dsig:DigestValue>mEwcr24m5TCvVgb9QSDBo+s0910=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ilhinfinita.exe" size="15872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ilhinfinita.exe" size="16896">
       <assemblyIdentity name="Ilhinfinita" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>MgALsTBILf2YGXF5E9e8NsmYv+I=</dsig:DigestValue>
+        <dsig:DigestValue>16y+/jF+jEqy7uKNDzB7jiSkMt0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -146,6 +146,15 @@
       <dsig:DigestValue>gNWed5JSa/aUa8ukoB7nDM4HIzA=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\img\coin.xnb" size="5371">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>nbHs6BxljAEI8rvfihi7e83wQhw=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\img\cursor.xnb" size="4283">
     <hash>
       <dsig:Transforms>
@@ -188,7 +197,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>hWU2VhFUMva8wN2LP8aVNBRTHYE=</dsig:DigestValue>
+      <dsig:DigestValue>eeyH4CCO/U53bSn+zQZODnUgDac=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -1,12 +1,12 @@
 ﻿using InfiniteIsland.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.IUpdateable;
+using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
+using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Background : Engine.IUpdateable, Engine.IDrawable
+    public class Background : IUpdateable, IDrawable
     {
         private readonly RocksLayer[] _parallaxLayers = new RocksLayer[3];
 
@@ -14,19 +14,9 @@ namespace InfiniteIsland.Components
         {
             for (int i = 0; i < _parallaxLayers.Length; i++)
             {
-                _parallaxLayers[i] = new RocksLayer(new Vector2((float)i / _parallaxLayers.Length, 1f));
+                _parallaxLayers[i] = new RocksLayer(new Vector2((float) i/_parallaxLayers.Length, 1f));
                 _parallaxLayers[i].LoadContent(game);
             }
-
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            foreach (RocksLayer layer in _parallaxLayers)
-            {
-                layer.Update(gameTime);
-            }
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -34,6 +24,14 @@ namespace InfiniteIsland.Components
             foreach (RocksLayer layer in _parallaxLayers)
             {
                 layer.Draw(spriteBatch, InfiniteIsland.Camera);
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            foreach (RocksLayer layer in _parallaxLayers)
+            {
+                layer.Update(gameTime);
             }
         }
     }

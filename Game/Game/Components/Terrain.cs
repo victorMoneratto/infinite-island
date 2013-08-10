@@ -1,16 +1,15 @@
 using System;
 using FarseerPhysics.Dynamics;
-using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.IUpdateable;
+using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
+using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Terrain : Engine.IUpdateable, Engine.IDrawable
+    public class Terrain : IUpdateable, IDrawable
     {
         private readonly Texture2D _blankTexture;
         private readonly TerrainChunk[] _chunks;

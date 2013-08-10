@@ -15,7 +15,7 @@ namespace InfiniteIsland.Engine.Math.Geometry
         public float Rotation
         {
             get { return _rotation; }
-            set { _rotation = value % MathHelper.TwoPi; }
+            set { _rotation = value%MathHelper.TwoPi; }
         }
 
         public new RectangleProjection Projection

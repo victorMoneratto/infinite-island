@@ -18,34 +18,35 @@ namespace InfiniteIsland.Entity
         private readonly Sprite<State> _sprite;
         private readonly Body _torso;
 
-        public Player(World world, ContentManager content)
+        public Player(ContentManager content)
         {
             float heightMeters = 140f.ToMeters();
             float widthMeters = 45f.ToMeters();
-            float torsoHeight = heightMeters - widthMeters / 2f;
+            float torsoHeight = heightMeters - widthMeters/2f;
 
             _torso = BodyFactory.CreateRectangle(
-                world: world,
+                world: InfiniteIsland.World,
                 width: widthMeters,
                 height: torsoHeight,
                 density: 1f,
-                position: Vector2.UnitX * 20);
+                position: Vector2.UnitX*20,
+                userData: this);
 
             _torso.BodyType = BodyType.Dynamic;
 
             Body wheel = BodyFactory.CreateCircle(
-                world: world,
-                radius: widthMeters / 1.9f,
+                world: InfiniteIsland.World,
+                radius: widthMeters/1.9f,
                 density: 1f,
-                position: _torso.Position + new Vector2(0, torsoHeight / 2));
+                position: _torso.Position + new Vector2(0, torsoHeight/2));
 
             wheel.BodyType = BodyType.Dynamic;
             wheel.Friction = float.MaxValue;
             wheel.Restitution = float.MinValue;
 
-            JointFactory.CreateFixedAngleJoint(world, _torso);
+            JointFactory.CreateFixedAngleJoint(InfiniteIsland.World, _torso);
 
-            _motor = JointFactory.CreateRevoluteJoint(world, _torso, wheel, Vector2.Zero);
+            _motor = JointFactory.CreateRevoluteJoint(InfiniteIsland.World, _torso, wheel, Vector2.Zero);
             _motor.MotorEnabled = true;
             _motor.MaxMotorTorque = 10;
 
@@ -91,16 +92,16 @@ namespace InfiniteIsland.Entity
 
             if (Input.Keyboard.IsKeyDown(Keys.Q))
             {
-                _sprite.Body.Rotation += MathHelper.Pi*gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
+                _sprite.Body.Rotation += MathHelper.Pi*gameTime.ElapsedGameTime.Milliseconds*1e-3f;
             }
 
             if (Input.Keyboard.IsKeyDown(Keys.E))
             {
-                _sprite.Body.Rotation -= MathHelper.Pi * gameTime.ElapsedGameTime.Milliseconds * 1e-3f;
+                _sprite.Body.Rotation -= MathHelper.Pi*gameTime.ElapsedGameTime.Milliseconds*1e-3f;
             }
 
             _sprite.Update(gameTime);
-            _sprite.Body.Center= _torso.Position.ToPixels();
+            _sprite.Body.Center = _torso.Position.ToPixels();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

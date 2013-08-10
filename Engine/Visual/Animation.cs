@@ -4,6 +4,7 @@ namespace InfiniteIsland.Engine.Visual
 {
     internal class Animation
     {
+        private const int DefaultFps = 20;
         private readonly Rectangle[] _animationFrames;
         private readonly int _frames;
 
@@ -11,8 +12,6 @@ namespace InfiniteIsland.Engine.Visual
         private int _currentIndex;
         private int _millisPerFrame;
         private int _millisSinceLastFrame;
-
-        private const int DefaultFps = 20;
 
         public Animation(params Rectangle[] frames)
         {

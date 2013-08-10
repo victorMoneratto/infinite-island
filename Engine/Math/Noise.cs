@@ -8,7 +8,7 @@ namespace InfiniteIsland.Engine.Math
 
         public static float[] Generate(int count)
         {
-            float[] values = new float[count];
+            var values = new float[count];
 
             //TODO: Replace with simplex noise
             for (int i = 0; i < count; i++)
