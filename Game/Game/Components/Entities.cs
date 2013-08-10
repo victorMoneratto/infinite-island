@@ -57,7 +57,7 @@ namespace InfiniteIsland.Components
 
             Player.Update(gameTime);
             InfiniteIsland.Camera.Viewport.Center =
-                Player.Position.ToPixels() -
+                Player.Body.Torso.Position.ToPixels() -
                 Vector2.UnitX*.4f*(2f*_factor - 1)*InfiniteIsland.Camera.Viewport.Dimensions;
 
             if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
