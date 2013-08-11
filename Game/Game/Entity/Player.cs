@@ -90,7 +90,7 @@ namespace InfiniteIsland.Entity
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
 
             _alabama = content.Load<Texture2D>("img/alabama");
-            _sprite = new Sprite<State>(_alabama, new Vector2(100, 176));
+            _sprite = new Sprite<State>(_alabama, new Vector2(100, 177));
             _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
             _sprite.RegisterAnimation(State.Moving, 28, 14);
         }

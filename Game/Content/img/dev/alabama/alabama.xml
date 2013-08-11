@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:1e54b489aafd681814ab7e5e6d17f6fb$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="alabama.png" width="1024" height="1024">
+    <sprite n="00.png" x="0" y="0" w="100" h="176"/>
+    <sprite n="000.png" x="100" y="0" w="100" h="176"/>
+    <sprite n="01.png" x="200" y="0" w="100" h="176"/>
+    <sprite n="02.png" x="300" y="0" w="100" h="176"/>
+    <sprite n="03.png" x="400" y="0" w="100" h="176"/>
+    <sprite n="04.png" x="500" y="0" w="100" h="176"/>
+    <sprite n="05.png" x="600" y="0" w="100" h="176"/>
+    <sprite n="06.png" x="700" y="0" w="100" h="176"/>
+    <sprite n="07.png" x="800" y="0" w="100" h="176"/>
+    <sprite n="08.png" x="900" y="0" w="100" h="176"/>
+    <sprite n="09.png" x="0" y="176" w="100" h="176"/>
+    <sprite n="10.png" x="100" y="176" w="100" h="176"/>
+    <sprite n="11.png" x="200" y="176" w="100" h="176"/>
+    <sprite n="12.png" x="300" y="176" w="100" h="176"/>
+    <sprite n="13.png" x="400" y="176" w="100" h="176"/>
+    <sprite n="14.png" x="500" y="176" w="100" h="176"/>
+    <sprite n="15.png" x="600" y="176" w="100" h="176"/>
+    <sprite n="16.png" x="700" y="176" w="100" h="176"/>
+    <sprite n="17.png" x="800" y="176" w="100" h="176"/>
+    <sprite n="18.png" x="900" y="176" w="100" h="176"/>
+    <sprite n="19.png" x="0" y="352" w="100" h="176"/>
+    <sprite n="20.png" x="100" y="352" w="100" h="176"/>
+    <sprite n="21.png" x="200" y="352" w="100" h="176"/>
+    <sprite n="22.png" x="300" y="352" w="100" h="176"/>
+    <sprite n="23.png" x="400" y="352" w="100" h="176"/>
+    <sprite n="24.png" x="500" y="352" w="100" h="176"/>
+    <sprite n="25.png" x="600" y="352" w="100" h="176"/>
+    <sprite n="26.png" x="700" y="352" w="100" h="176"/>
+    <sprite n="27.png" x="800" y="352" w="100" h="176"/>
+    <sprite n="28.png" x="900" y="352" w="100" h="176"/>
+    <sprite n="29.png" x="0" y="528" w="100" h="176"/>
+    <sprite n="30.png" x="100" y="528" w="100" h="176"/>
+    <sprite n="31.png" x="200" y="528" w="100" h="176"/>
+    <sprite n="32.png" x="300" y="528" w="100" h="176"/>
+    <sprite n="33.png" x="400" y="528" w="100" h="176"/>
+    <sprite n="34.png" x="500" y="528" w="100" h="176"/>
+    <sprite n="35.png" x="600" y="528" w="100" h="176"/>
+    <sprite n="36.png" x="700" y="528" w="100" h="176"/>
+    <sprite n="37.png" x="800" y="528" w="100" h="176"/>
+    <sprite n="38.png" x="900" y="528" w="100" h="176"/>
+    <sprite n="39.png" x="0" y="704" w="100" h="176"/>
+    <sprite n="40.png" x="100" y="704" w="100" h="176"/>
+    <sprite n="41.png" x="200" y="704" w="100" h="176"/>
+</TextureAtlas>
