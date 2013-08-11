@@ -1,3 +1,4 @@
+using System;
 using FarseerPhysics.Dynamics;
 using InfiniteIsland.Components;
 using InfiniteIsland.Engine;
@@ -12,7 +13,8 @@ namespace InfiniteIsland
     internal class InfiniteIsland : Game
     {
         public static World World = new World(new Vector2(0, 40));
-        
+        public static Random Random = new Random();
+
         public static Debug Debug;
         public static Terrain Terrain;
         public static Entities Entities;
@@ -112,7 +114,6 @@ namespace InfiniteIsland
             Terrain.Draw(_spriteBatch);
             Entities.Draw(_spriteBatch);
             Debug.Draw(_spriteBatch);
-            Cursor.Draw(_spriteBatch);
 
             if (IsPaused)
             {
@@ -120,6 +121,8 @@ namespace InfiniteIsland
                 _spriteBatch.Draw(_pauseFilter, GraphicsDevice.Viewport.Bounds, Color.White);
                 _spriteBatch.End();
             }
+
+            Cursor.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

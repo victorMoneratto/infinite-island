@@ -58,7 +58,6 @@ namespace InfiniteIsland.Engine.Visual
             _animations.Add(key, new Animation(rectangles));
         }
 
-        //TODO refactor function
         public void RegisterAnimation(T key, int firstSprite, int frameCount)
         {
             var columns = (int) (_spriteSheet.Width/Body.Dimensions.X);

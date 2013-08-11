@@ -15,10 +15,10 @@ namespace InfiniteIsland.Entity
 {
     public class Player : Engine.Entity.Entity, ICustomCollidable
     {
+        private static Texture2D _alabama;
         private static Sprite<State> _sprite;
 
         private static SoundEffect _coinSound, _jumpSound;
-        private static Texture2D _alabama;
 
         public WalkerBody Body;
 

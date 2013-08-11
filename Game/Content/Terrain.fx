@@ -32,7 +32,7 @@ float4 PixelShaderFunction(float2 texCoords :TEXCOORD0) : COLOR0
     float delta = (texCoords.x % verticesFrequency) * verticesCount;
     float height = lerp(lastHeight, nextHeight, delta);
 
-    //TODO: Replace with texture or something
+    //TODO Replace with texture or something
     float4 color0 = float4(1, 1, 0, 1);
     float4 color1 = float4(0, .5, 0, 1);
     float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y - texCoords.y % .04) - (height - height % .04));

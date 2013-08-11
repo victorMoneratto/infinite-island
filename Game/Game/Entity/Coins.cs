@@ -2,6 +2,7 @@
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using InfiniteIsland.Engine.Math;
+using InfiniteIsland.Engine.Math.Geometry;
 using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -36,11 +37,16 @@ namespace InfiniteIsland.Entity
             if (_milis > 1f)
             {
                 --_milis;
+                
+                RotatableRectangleF cameraViewport = InfiniteIsland.Camera.Viewport;
+                //too tired to properly name it for now
+                float factor = (float) InfiniteIsland.Random.NextDouble();
+
                 _coins.Add(
                     new Coin(
                         texture: _coinTexture,
-                        position: InfiniteIsland.Camera.Viewport.Center.ToMeters(),
-                        velocity: InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
+                        position: (cameraViewport.TopLeft + factor * new Vector2(cameraViewport.Dimensions.X, 0)).ToMeters(),
+                        velocity: (2 - 2*factor) * InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
             }
         }
 

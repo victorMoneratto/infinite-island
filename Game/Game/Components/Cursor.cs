@@ -25,15 +25,17 @@ namespace InfiniteIsland.Components
             set { _scale = new Vector2(value/_cursorTexture.Width); }
         }
 
+        public float Alpha = .75f;
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
             spriteBatch.Draw(
                 texture: _cursorTexture,
                 position: Input.Mouse.Position,
                 sourceRectangle: null,
-                color: Color.Black,
+                color: new Color(0f, 0, 0f, Alpha),
                 rotation: 0,
                 origin: _cursorCenter,
                 scale: _scale,
@@ -44,7 +46,7 @@ namespace InfiniteIsland.Components
                 texture: _cursorTexture,
                 position: Input.Mouse.Position,
                 sourceRectangle: null,
-                color: Color.White,
+                color: new Color(1f, 1f, 1f, Alpha),
                 rotation: 0,
                 origin: _cursorCenter,
                 scale: .8f*_scale,
