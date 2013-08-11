@@ -36,6 +36,20 @@ namespace InfiniteIsland.Engine
             Viewport = new RotatableRectangleF(dimensions);
         }
 
+        public Vector2 PositionOnWorld(Vector2 position)
+        {
+            return Vector2.Transform(
+                position: position,
+                matrix: Matrix.Invert(CalculateTransformMatrix(Vector2.One)));
+        }
+
+        public Vector2 PositionOnScreen(Vector2 position)
+        {
+            return Vector2.Transform(
+                position: position,
+                matrix: CalculateTransformMatrix(Vector2.One));
+        }
+
         /// <summary>
         ///     Calculate the resulting camera matrix for translation, rotation and scale
         /// </summary>

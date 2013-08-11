@@ -102,6 +102,7 @@ namespace InfiniteIsland
             Entities.Update(gameTime);
             Terrain.Update(gameTime);
             Background.Update(gameTime);
+            Cursor.Update(gameTime);
 
             base.Update(gameTime);
         }
