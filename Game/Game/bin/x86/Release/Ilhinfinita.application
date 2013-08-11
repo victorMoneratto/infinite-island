@@ -8,14 +8,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Ilhinfinita.exe.manifest" size="10898">
+    <dependentAssembly dependencyType="install" codebase="Ilhinfinita.exe.manifest" size="10901">
       <assemblyIdentity name="Ilhinfinita.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>HSggGJlJ8wGH9EZVFfmYfEcbSwI=</dsig:DigestValue>
+        <dsig:DigestValue>eTZaqvVRXI7EpN2p4atnLL5A2lE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

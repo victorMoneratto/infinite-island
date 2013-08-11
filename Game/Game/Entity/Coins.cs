@@ -15,7 +15,7 @@ namespace InfiniteIsland.Entity
 {
     internal class Coins : IUpdateable, IDrawable
     {
-        private readonly List<Coin> _coins = new List<Coin>();
+        private readonly List<Coin> _coins = new List<Coin>(10);
         private float _milis;
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
@@ -40,13 +40,22 @@ namespace InfiniteIsland.Entity
 
                 RotatableRectangleF cameraViewport = InfiniteIsland.CameraOperator.Camera.Viewport;
                 //too tired to properly name it for now
-                float factor = (float)InfiniteIsland.Random.NextDouble();
-
+                var factor = (float) InfiniteIsland.Random.NextDouble();
+                if (_coins.Count == _coins.Capacity)
+                    Remove(_coins[0]);
                 _coins.Add(
                     new Coin(
-                        position: (cameraViewport.TopLeft + factor * new Vector2(cameraViewport.Dimensions.X, 0)).ToMeters(),
-                        linearVelocity: (2 - 2.5f * factor) * InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
+                        position:
+                            (cameraViewport.TopLeft + factor*new Vector2(cameraViewport.Dimensions.X, 0)).ToMeters(),
+                        linearVelocity:
+                            (2 - 2.5f*factor)*InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
             }
+        }
+
+        public void Remove(Coin coin)
+        {
+            InfiniteIsland.World.RemoveBody(coin.Body);
+            _coins.Remove(coin);
         }
 
         public static void LoadContent(ContentManager content)
@@ -57,11 +66,11 @@ namespace InfiniteIsland.Entity
 
     internal class Coin : Engine.Entity.Entity
     {
-        public readonly Body Body;
-        private readonly Sprite<CoinEnum> _sprite;
         private const float Scale = 2f;
 
         private static Texture2D _coinTexture;
+        public readonly Body Body;
+        private readonly Sprite<CoinEnum> _sprite;
 
         public Coin(Vector2 position, Vector2 linearVelocity)
         {
@@ -71,7 +80,7 @@ namespace InfiniteIsland.Entity
             _sprite.Body.Scale = new Vector2(Scale);
             Body = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
-                radius: (_coinTexture.Width / 2f).ToMeters() * Scale,
+                radius: (_coinTexture.Width/2f).ToMeters()*Scale,
                 density: 1f,
                 position: position,
                 userData: this);

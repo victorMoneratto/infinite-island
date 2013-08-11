@@ -103,6 +103,7 @@
     <Compile Include="Components\Cursor.cs" />
     <Compile Include="Components\Debug.cs" />
     <Compile Include="Components\Entities.cs" />
+    <Compile Include="Components\Hud.cs" />
     <Compile Include="Components\Terrain.cs" />
     <Compile Include="Console\CameraCommand.cs" />
     <Compile Include="Entity\Coins.cs" />

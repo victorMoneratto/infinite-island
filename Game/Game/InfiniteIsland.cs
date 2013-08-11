@@ -15,12 +15,14 @@ namespace InfiniteIsland
         public static Random Random = new Random();
 
         public static Debug Debug;
-        public static Terrain Terrain;
         public static Entities Entities;
+        public static Terrain Terrain;
         public static CameraOperator CameraOperator;
+        public static Hud Hud;
         public static Cursor Cursor;
         public static Background Background;
 
+        public static int Coins;
         public static float Factor = 1f;
         public static bool IsPaused;
 
@@ -53,11 +55,12 @@ namespace InfiniteIsland
                 };
 
             Debug = new Debug(this, _spriteBatch);
-            Terrain = new Terrain(GraphicsDevice);
             Entities = new Entities();
+            Terrain = new Terrain(GraphicsDevice);
+            CameraOperator = new CameraOperator(GraphicsDevice.Viewport.Bounds);
+            Hud = new Hud();
             Cursor = new Cursor();
             Background = new Background();
-            CameraOperator = new CameraOperator(GraphicsDevice.Viewport.Bounds);
 
             base.Initialize();
         }
@@ -65,12 +68,14 @@ namespace InfiniteIsland
         protected override void LoadContent()
         {
             Entities.LoadContent(Content);
+            Terrain.LoadContent(Content);
+            Hud.LoadContent(Content);
             Background.LoadContent(Content);
             Cursor.LoadContent(Content);
-            Terrain.LoadContent(Content);
 
             _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
             _pauseFilter.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
+
             base.LoadContent();
         }
 
@@ -92,9 +97,10 @@ namespace InfiniteIsland
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             Debug.Update(gameTime);
-            CameraOperator.Update(gameTime);
             Entities.Update(gameTime);
             Terrain.Update(gameTime);
+            CameraOperator.Update(gameTime);
+            Hud.Update(gameTime);
             Background.Update(gameTime);
             Cursor.Update(gameTime);
 
@@ -108,6 +114,7 @@ namespace InfiniteIsland
             Background.Draw(_spriteBatch, CameraOperator.Camera);
             Terrain.Draw(_spriteBatch, CameraOperator.Camera);
             Entities.Draw(_spriteBatch, CameraOperator.Camera);
+            Hud.Draw(_spriteBatch, CameraOperator.Camera);
             Debug.Draw(_spriteBatch, CameraOperator.Camera);
 
             if (IsPaused)
