@@ -9,18 +9,18 @@ namespace InfiniteIsland.Console
         {
             switch (arguments[0])
             {
-                case "pivot":
-                    InfiniteIsland.Camera.Viewport.Pivot =
-                        new Vector2(float.Parse(arguments[1]), float.Parse(arguments[2]))*
-                        InfiniteIsland.Camera.Viewport.Dimensions;
-                    break;
-                case "rotation":
-                    InfiniteIsland.Camera.Viewport.Rotation = float.Parse(arguments[1])*MathHelper.Pi/180f;
-                    break;
-                case "scale":
-                    InfiniteIsland.Camera.Viewport.Scale =
-                        new Vector2(float.Parse(arguments[1]), float.Parse(arguments[2]));
-                    break;
+                //case "pivot":
+                //    InfiniteIsland.Camera.Viewport.Pivot =
+                //        new Vector2(float.Parse(arguments[1]), float.Parse(arguments[2]))*
+                //        InfiniteIsland.Camera.Viewport.Dimensions;
+                //    break;
+                //case "rotation":
+                //    InfiniteIsland.Camera.Viewport.Rotation = float.Parse(arguments[1])*MathHelper.Pi/180f;
+                //    break;
+                //case "scale":
+                //    InfiniteIsland.Camera.Viewport.Scale =
+                //        new Vector2(float.Parse(arguments[1]), float.Parse(arguments[2]));
+                //    break;
             }
             return string.Empty;
         }

@@ -1,4 +1,5 @@
-﻿using InfiniteIsland.Visual;
+﻿using InfiniteIsland.Engine;
+using InfiniteIsland.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,11 +20,11 @@ namespace InfiniteIsland.Components
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             foreach (RocksLayer layer in _parallaxLayers)
             {
-                layer.Draw(spriteBatch, InfiniteIsland.Camera);
+                layer.Draw(spriteBatch, camera);
             }
         }
 

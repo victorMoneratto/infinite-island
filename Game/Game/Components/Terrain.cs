@@ -1,4 +1,5 @@
 using System;
+using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
 using Microsoft.Xna.Framework;
@@ -31,10 +32,10 @@ namespace InfiniteIsland.Components
             _blankTexture.SetData(new[] {Color.White});
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _terrainEffect,
-                              InfiniteIsland.Camera.CalculateTransformMatrix(Vector2.One));
+                              camera.CalculateTransformMatrix(Vector2.One));
 
             foreach (TerrainChunk chunk in _chunks)
             {
@@ -49,14 +50,14 @@ namespace InfiniteIsland.Components
         public void Update(GameTime gameTime)
         {
             TerrainChunk firstChunk = _chunks[0];
-            if (firstChunk.LastVertex.X.ToPixels() < InfiniteIsland.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
-            {
-                firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
-                firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);
+            //if (firstChunk.LastVertex.X.ToPixels() < InfiniteIsland.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
+            //{
+            //    firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
+            //    firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);
 
-                Array.Copy(_chunks, 1, _chunks, 0, _chunks.Length - 1);
-                _chunks[_chunks.Length - 1] = firstChunk;
-            }
+            //    Array.Copy(_chunks, 1, _chunks, 0, _chunks.Length - 1);
+            //    _chunks[_chunks.Length - 1] = firstChunk;
+            //}
         }
 
         public static void LoadContent(ContentManager content)

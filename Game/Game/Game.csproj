@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Background.cs" />
+    <Compile Include="Components\CameraOperator.cs" />
     <Compile Include="Components\Cursor.cs" />
     <Compile Include="Components\Debug.cs" />
     <Compile Include="Components\Entities.cs" />

@@ -1,4 +1,6 @@
+using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland.Engine
@@ -21,7 +23,20 @@ namespace InfiniteIsland.Engine
 
             PreviousMouseState = CurrentMouseState;
             CurrentMouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
-            Mouse.Position = new Vector2(CurrentMouseState.X, CurrentMouseState.Y);
+
+            float x = CurrentMouseState.X;
+            float y = CurrentMouseState.Y;
+
+            if (Mouse.Limits.Left.HasValue)
+                x = MathHelper.Max(x, Mouse.Limits.Left.Value);
+            if (Mouse.Limits.Right.HasValue)
+                x = MathHelper.Min(x, Mouse.Limits.Right.Value);
+            if (Mouse.Limits.Up.HasValue)
+                y = MathHelper.Max(y, Mouse.Limits.Up.Value);
+            if (Mouse.Limits.Down.HasValue)
+                y = MathHelper.Min(y, Mouse.Limits.Down.Value);
+
+            Mouse.Position = new Vector2(x, y);
         }
 
         public static class Keyboard
@@ -86,9 +101,20 @@ namespace InfiniteIsland.Engine
                 Right
             }
 
+            private static Vector2 _position;
+            public static BoundingLimits Limits { get; set; }
+
             /// <summary>
             /// </summary>
-            public static Vector2 Position { get; set; }
+            public static Vector2 Position
+            {
+                get { return _position; }
+                set
+                {
+                    _position = value;
+                    Microsoft.Xna.Framework.Input.Mouse.SetPosition((int) _position.X, (int) _position.Y);
+                }
+            }
 
             /// <summary>
             ///     Check if the button is being pressed

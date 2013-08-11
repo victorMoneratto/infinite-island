@@ -4,6 +4,6 @@ namespace InfiniteIsland.Engine.Interface
 {
     public interface IDrawable
     {
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(SpriteBatch spriteBatch, Camera camera);
     }
 }

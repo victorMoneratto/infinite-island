@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Math.Geometry;
 using InfiniteIsland.Engine.Visual;
@@ -14,11 +15,10 @@ namespace InfiniteIsland.Entity
 {
     internal class Coins : IUpdateable, IDrawable
     {
-        private static Texture2D _coinTexture;
         private readonly List<Coin> _coins = new List<Coin>();
         private float _milis;
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             foreach (Coin coin in _coins)
             {
@@ -37,22 +37,21 @@ namespace InfiniteIsland.Entity
             if (_milis > 1f)
             {
                 --_milis;
-                
-                RotatableRectangleF cameraViewport = InfiniteIsland.Camera.Viewport;
+
+                RotatableRectangleF cameraViewport = InfiniteIsland.CameraOperator.Camera.Viewport;
                 //too tired to properly name it for now
-                float factor = (float) InfiniteIsland.Random.NextDouble();
+                float factor = (float)InfiniteIsland.Random.NextDouble();
 
                 _coins.Add(
                     new Coin(
-                        texture: _coinTexture,
                         position: (cameraViewport.TopLeft + factor * new Vector2(cameraViewport.Dimensions.X, 0)).ToMeters(),
-                        velocity: (2 - 2*factor) * InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
+                        linearVelocity: (2 - 2.5f * factor) * InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
             }
         }
 
         public static void LoadContent(ContentManager content)
         {
-            _coinTexture = content.Load<Texture2D>("img/coin");
+            Coin.LoadContent(content);
         }
     }
 
@@ -60,21 +59,25 @@ namespace InfiniteIsland.Entity
     {
         public readonly Body Body;
         private readonly Sprite<CoinEnum> _sprite;
+        private const float Scale = 2f;
 
-        public Coin(Texture2D texture, Vector2 position, Vector2 velocity)
+        private static Texture2D _coinTexture;
+
+        public Coin(Vector2 position, Vector2 linearVelocity)
         {
-            _sprite = new Sprite<CoinEnum>(texture, new Vector2(texture.Width));
+            _sprite = new Sprite<CoinEnum>(_coinTexture, new Vector2(_coinTexture.Width));
             _sprite.RegisterAnimation(CoinEnum.Coin, 0, 1);
             _sprite.AnimationKey = CoinEnum.Coin;
+            _sprite.Body.Scale = new Vector2(Scale);
             Body = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
-                radius: (texture.Width/2f).ToMeters(),
+                radius: (_coinTexture.Width / 2f).ToMeters() * Scale,
                 density: 1f,
                 position: position,
                 userData: this);
             Body.BodyType = BodyType.Dynamic;
-            Body.Restitution = 1.1f;
-            Body.LinearVelocity = velocity;
+            Body.Restitution = 1f;
+            Body.LinearVelocity = linearVelocity;
         }
 
         public override void Update(GameTime gameTime)
@@ -86,6 +89,11 @@ namespace InfiniteIsland.Entity
         public override void Draw(SpriteBatch spriteBatch)
         {
             _sprite.Draw(spriteBatch);
+        }
+
+        public static void LoadContent(ContentManager content)
+        {
+            _coinTexture = content.Load<Texture2D>("img/coin");
         }
 
         private enum CoinEnum

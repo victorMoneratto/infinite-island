@@ -2,8 +2,7 @@ using System;
 using FarseerPhysics.Dynamics;
 using InfiniteIsland.Components;
 using InfiniteIsland.Engine;
-using InfiniteIsland.Engine.Math;
-using InfiniteIsland.Engine.Terrain;
+using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,14 +17,15 @@ namespace InfiniteIsland
         public static Debug Debug;
         public static Terrain Terrain;
         public static Entities Entities;
-        public static Camera Camera;
+        public static CameraOperator CameraOperator;
         public static Cursor Cursor;
         public static Background Background;
 
+        public static float Factor = 1f;
         public static bool IsPaused;
 
-        private SpriteBatch _spriteBatch;
         private Texture2D _pauseFilter;
+        private SpriteBatch _spriteBatch;
 
         public InfiniteIsland()
         {
@@ -44,16 +44,20 @@ namespace InfiniteIsland
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Input.Mouse.Limits = new BoundingLimits
+                {
+                    Left = 2f,
+                    Right = GraphicsDevice.Viewport.Width - 2f,
+                    Up = 2f,
+                    Down = GraphicsDevice.Viewport.Height - 2f
+                };
+
             Debug = new Debug(this, _spriteBatch);
             Terrain = new Terrain(GraphicsDevice);
             Entities = new Entities();
             Cursor = new Cursor();
             Background = new Background();
-
-            Camera = new Camera();
-            Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
-            Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
-            Camera.Viewport.Pivot = Camera.Viewport.Dimensions*.3f;
+            CameraOperator = new CameraOperator(GraphicsDevice.Viewport.Bounds);
 
             base.Initialize();
         }
@@ -66,8 +70,7 @@ namespace InfiniteIsland
             Terrain.LoadContent(Content);
 
             _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
-            _pauseFilter.SetData(new[] { new Color(0f, 0f, 0f, .4f) });
-
+            _pauseFilter.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
             base.LoadContent();
         }
 
@@ -76,6 +79,8 @@ namespace InfiniteIsland
             Input.Update();
 
             if (Input.Keyboard.IsKeyTyped(Keys.Escape))
+                Exit();
+            if (Input.Keyboard.IsKeyTyped(Keys.Z))
                 IsPaused = !IsPaused;
 
             if (IsPaused)
@@ -84,21 +89,10 @@ namespace InfiniteIsland
                 return;
             }
 
-            if (Input.Keyboard.IsKeyDown(Keys.Up))
-                Camera.Viewport.Scale += Vector2.One*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
-
-            if (Input.Keyboard.IsKeyDown(Keys.Down))
-                Camera.Viewport.Scale -= Vector2.One*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
-
-            if (Input.Keyboard.IsKeyDown(Keys.Left))
-                Camera.Viewport.Rotation += MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
-
-            if (Input.Keyboard.IsKeyDown(Keys.Right))
-                Camera.Viewport.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
-
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             Debug.Update(gameTime);
+            CameraOperator.Update(gameTime);
             Entities.Update(gameTime);
             Terrain.Update(gameTime);
             Background.Update(gameTime);
@@ -111,10 +105,10 @@ namespace InfiniteIsland
         {
             GraphicsDevice.Clear(Color.DeepSkyBlue);
 
-            Background.Draw(_spriteBatch);
-            Terrain.Draw(_spriteBatch);
-            Entities.Draw(_spriteBatch);
-            Debug.Draw(_spriteBatch);
+            Background.Draw(_spriteBatch, CameraOperator.Camera);
+            Terrain.Draw(_spriteBatch, CameraOperator.Camera);
+            Entities.Draw(_spriteBatch, CameraOperator.Camera);
+            Debug.Draw(_spriteBatch, CameraOperator.Camera);
 
             if (IsPaused)
             {
@@ -123,7 +117,7 @@ namespace InfiniteIsland
                 _spriteBatch.End();
             }
 
-            Cursor.Draw(_spriteBatch);
+            Cursor.Draw(_spriteBatch, CameraOperator.Camera);
 
             base.Draw(gameTime);
         }

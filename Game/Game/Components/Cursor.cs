@@ -1,4 +1,5 @@
-﻿using InfiniteIsland.Engine;
+﻿using FarseerPhysics.Dynamics.Joints;
+using InfiniteIsland.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +13,8 @@ namespace InfiniteIsland.Components
         private static Vector2 _cursorCenter;
         private static Texture2D _cursorTexture;
 
-        public float Alpha = .75f;
+        private readonly Color _fillColor = Color.White;
+        //private FixedMouseJoint _mouseJoint;
         private Vector2 _scale = Vector2.One;
 
         public float Radius
@@ -21,7 +23,7 @@ namespace InfiniteIsland.Components
             set { _scale = new Vector2(value/_cursorTexture.Width); }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
@@ -29,7 +31,7 @@ namespace InfiniteIsland.Components
                 texture: _cursorTexture,
                 position: Input.Mouse.Position,
                 sourceRectangle: null,
-                color: new Color(0f, 0, 0f, Alpha),
+                color: Color.Black,
                 rotation: 0,
                 origin: _cursorCenter,
                 scale: _scale,
@@ -40,7 +42,7 @@ namespace InfiniteIsland.Components
                 texture: _cursorTexture,
                 position: Input.Mouse.Position,
                 sourceRectangle: null,
-                color: new Color(1f, 1f, 1f, Alpha),
+                color: _fillColor,
                 rotation: 0,
                 origin: _cursorCenter,
                 scale: .8f*_scale,
@@ -52,14 +54,13 @@ namespace InfiniteIsland.Components
 
         public void Update(GameTime gameTime)
         {
-            Vector2 mousePosition = InfiniteIsland.Camera.PositionOnWorld(Input.Mouse.Position);
-            float diff = (InfiniteIsland.Camera.Viewport.Center.X -
-                            mousePosition.X)/
-                           (2*InfiniteIsland.Camera.Viewport.Dimensions.X);
-            InfiniteIsland.Camera.Viewport.Rotation = diff * MathHelper.PiOver4 / 5f;
-
-            float diff1 = (mousePosition.Y/InfiniteIsland.Camera.Viewport.Center.Y);
-            InfiniteIsland.Camera.Viewport.Scale = new Vector2(1 + diff1*5e-4f);
+            //if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
+            //{
+            //    Fixture fixture;
+            //    if ((fixture = InfiniteIsland.World.TestPoint(mousePosition)) != null)
+            //    {
+            //    }
+            //}
         }
 
         public static void LoadContent(ContentManager content)

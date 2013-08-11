@@ -73,7 +73,7 @@ namespace InfiniteIsland.Entity
 
             if (entity is Coin)
             {
-                _coinSound.Play();
+                _coinSound.Play(1f,1f,0f);
             }
 
             return true;

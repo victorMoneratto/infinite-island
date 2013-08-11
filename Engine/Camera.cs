@@ -1,3 +1,4 @@
+using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
 
@@ -40,7 +41,7 @@ namespace InfiniteIsland.Engine
         {
             return Vector2.Transform(
                 position: position,
-                matrix: Matrix.Invert(CalculateTransformMatrix(Vector2.One)));
+                matrix: Matrix.Invert(CalculateTransformMatrix(Vector2.One))).ToMeters();
         }
 
         public Vector2 PositionOnScreen(Vector2 position)
