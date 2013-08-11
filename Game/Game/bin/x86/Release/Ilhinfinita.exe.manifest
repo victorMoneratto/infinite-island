@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>LwKZG65omCM8dK1Z5XOD0ZJd+pA=</dsig:DigestValue>
+        <dsig:DigestValue>fNSxiHyF1FXJRIhoTp1Sfj7X2rE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ilhinfinita.exe" size="16896">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ilhinfinita.exe" size="16384">
       <assemblyIdentity name="Ilhinfinita" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>UPKvl+NAtPoFzAh13LWIgrGyiM8=</dsig:DigestValue>
+        <dsig:DigestValue>61f6O81SYzhvnkuTQfDw+ne0Gc8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -215,7 +215,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>KhEEtR9G/8SerDPZzDdxNmm/ZZI=</dsig:DigestValue>
+      <dsig:DigestValue>BmTRdFXkBdcagfXBCZRAGnyaGqM=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

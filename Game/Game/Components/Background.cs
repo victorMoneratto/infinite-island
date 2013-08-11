@@ -1,5 +1,6 @@
 ﻿using InfiniteIsland.Visual;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
@@ -10,12 +11,11 @@ namespace InfiniteIsland.Components
     {
         private readonly RocksLayer[] _parallaxLayers = new RocksLayer[3];
 
-        public Background(Game game)
+        public Background()
         {
             for (int i = 0; i < _parallaxLayers.Length; i++)
             {
                 _parallaxLayers[i] = new RocksLayer(new Vector2((float) i/_parallaxLayers.Length, 1f));
-                _parallaxLayers[i].LoadContent(game);
             }
         }
 
@@ -33,6 +33,11 @@ namespace InfiniteIsland.Components
             {
                 layer.Update(gameTime);
             }
+        }
+
+        public static void LoadContent(ContentManager content)
+        {
+            RocksLayer.LoadContent(content);
         }
     }
 }

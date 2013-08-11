@@ -1,5 +1,6 @@
 ﻿using InfiniteIsland.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
 
@@ -7,15 +8,15 @@ namespace InfiniteIsland.Components
 {
     internal class Cursor : IDrawable
     {
-        private readonly Vector2 _cursorCenter;
-        private readonly Texture2D _cursorTexture;
+        private static Vector2 _cursorCenter;
+        private static Texture2D _cursorTexture;
 
         private Vector2 _scale = Vector2.One;
 
-        public Cursor(Game game)
+        public static void LoadContent(ContentManager content)
         {
-            _cursorTexture = game.Content.Load<Texture2D>("img/cursor");
-            _cursorCenter = new Vector2(_cursorTexture.Width/2f, _cursorTexture.Height/2f);
+            _cursorTexture = content.Load<Texture2D>("img/cursor");
+            _cursorCenter = new Vector2(_cursorTexture.Width / 2f, _cursorTexture.Height / 2f);
         }
 
         public float Radius
@@ -27,6 +28,7 @@ namespace InfiniteIsland.Components
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
             spriteBatch.Draw(
                 texture: _cursorTexture,
                 position: Input.Mouse.Position,

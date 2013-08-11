@@ -9,8 +9,6 @@ namespace InfiniteIsland.Engine.Visual
         public List<Sprite<T>> Sprites;
         public Vector2 Parallax { get; set; }
 
-        public abstract void LoadContent(Game game);
-
         public abstract void Update(GameTime gameTime);
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)

@@ -3,26 +3,27 @@ using InfiniteIsland.Components;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
-using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland
 {
-    public class InfiniteIsland : Game
+    internal class InfiniteIsland : Game
     {
-        public static readonly Camera Camera = new Camera();
-        public static readonly World World = new World(new Vector2(0, 40));
+        public static World World = new World(new Vector2(0, 40));
+        
+        public static Debug Debug;
+        public static Terrain Terrain;
         public static Entities Entities;
-        public bool IsPaused;
+        public static Camera Camera;
+        public static Cursor Cursor;
+        public static Background Background;
 
-        private Background _background;
-        private Cursor _cursor;
-        private Debug _debug;
-        private Player _player;
+        public static bool IsPaused;
+
         private SpriteBatch _spriteBatch;
-        private Terrain _terrain;
+        private Texture2D _pauseFilter;
 
         public InfiniteIsland()
         {
@@ -37,20 +38,35 @@ namespace InfiniteIsland
                 };
         }
 
-        protected override void LoadContent()
+        protected override void Initialize()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _debug = new Debug(this, _spriteBatch, World);
-            _player = new Player(Content);
-            Entities = new Entities(_player, this);
-            _terrain = new Terrain(this, World);
-            _background = new Background(this);
-            _cursor = new Cursor(this);
+            Debug = new Debug(this, _spriteBatch);
+            Terrain = new Terrain(GraphicsDevice);
+            Entities = new Entities();
+            Cursor = new Cursor();
+            Background = new Background();
 
+            Camera = new Camera();
             Camera.Setup(new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height));
             Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
             Camera.Viewport.Pivot = Camera.Viewport.Dimensions*.3f;
+
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            Entities.LoadContent(Content);
+            Background.LoadContent(Content);
+            Cursor.LoadContent(Content);
+            Terrain.LoadContent(Content);
+
+            _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
+            _pauseFilter.SetData(new[] { new Color(0f, 0f, 0f, .4f) });
+
+            base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -66,9 +82,6 @@ namespace InfiniteIsland
                 return;
             }
 
-            if (Input.Keyboard.IsKeyTyped(Keys.F3))
-                _debug.PhysicsDebugEnabled = !_debug.PhysicsDebugEnabled;
-
             if (Input.Keyboard.IsKeyDown(Keys.Up))
                 Camera.Viewport.Scale += Vector2.One*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
@@ -82,10 +95,11 @@ namespace InfiniteIsland
                 Camera.Viewport.Rotation -= MathHelper.Pi*(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
-            _background.Update(gameTime);
-            _terrain.Update(gameTime);
+
+            Debug.Update(gameTime);
             Entities.Update(gameTime);
-            _debug.Update(gameTime);
+            Terrain.Update(gameTime);
+            Background.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -94,18 +108,16 @@ namespace InfiniteIsland
         {
             GraphicsDevice.Clear(Color.DeepSkyBlue);
 
-            _background.Draw(_spriteBatch);
-            _terrain.Draw(_spriteBatch);
+            Background.Draw(_spriteBatch);
+            Terrain.Draw(_spriteBatch);
             Entities.Draw(_spriteBatch);
-            _debug.Draw(_spriteBatch);
-            _cursor.Draw(_spriteBatch);
+            Debug.Draw(_spriteBatch);
+            Cursor.Draw(_spriteBatch);
 
             if (IsPaused)
             {
-                var pauseFill = new Texture2D(GraphicsDevice, 1, 1);
-                pauseFill.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-                _spriteBatch.Draw(pauseFill, GraphicsDevice.Viewport.Bounds, Color.White);
+                _spriteBatch.Draw(_pauseFilter, GraphicsDevice.Viewport.Bounds, Color.White);
                 _spriteBatch.End();
             }
 

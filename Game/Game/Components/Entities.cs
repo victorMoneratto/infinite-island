@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
@@ -11,21 +11,20 @@ using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    public class Entities : IUpdateable, IDrawable
+    internal class Entities : IUpdateable, IDrawable
     {
+        public readonly Coins Coins;
         public readonly Player Player;
-        private readonly Game _game;
-        public readonly List<Engine.Entity.Entity> EntitiesList = new List<Engine.Entity.Entity>();
 
         //Factor is the % of 'completition'
         private float _factor = 1f;
         //There should be something (a class, maybe?) to update this Tweening.
         private float? _nextFactor;
 
-        public Entities(Player player, Game game)
+        public Entities()
         {
-            Player = player;
-            _game = game;
+            Player = new Player();
+            Coins = new Coins();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -33,11 +32,8 @@ namespace InfiniteIsland.Components
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
                               InfiniteIsland.Camera.CalculateTransformMatrix(Vector2.One));
 
+            Coins.Draw(spriteBatch);
             Player.Draw(spriteBatch);
-            foreach (Engine.Entity.Entity entity in EntitiesList)
-            {
-                entity.Draw(spriteBatch);
-            }
 
             spriteBatch.End();
         }
@@ -57,26 +53,18 @@ namespace InfiniteIsland.Components
                 }
             }
 
+            Coins.Update(gameTime);
             Player.Update(gameTime);
+
             InfiniteIsland.Camera.Viewport.Center =
                 Player.Body.Torso.Position.ToPixels() -
                 Vector2.UnitX*.4f*(2f*_factor - 1)*InfiniteIsland.Camera.Viewport.Dimensions;
+        }
 
-            if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
-            {
-                Vector2 mousePos =
-                    Vector2.Transform(
-                        position:
-                            Input.Mouse.Position,
-                        matrix:
-                            Matrix.Invert(InfiniteIsland.Camera.CalculateTransformMatrix(Vector2.One))).ToMeters();
-                EntitiesList.Add(new Coin(_game, mousePos));
-            }
-
-            foreach (Engine.Entity.Entity entity in EntitiesList)
-            {
-                entity.Update(gameTime);
-            }
+        public static void LoadContent(ContentManager content)
+        {
+            Coins.LoadContent(content);
+            Player.LoadContent(content);
         }
     }
 }
