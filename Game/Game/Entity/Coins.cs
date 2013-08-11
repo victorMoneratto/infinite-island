@@ -48,7 +48,7 @@ namespace InfiniteIsland.Entity
                         position:
                             (cameraViewport.TopLeft + factor*new Vector2(cameraViewport.Dimensions.X, 0)).ToMeters(),
                         linearVelocity:
-                            (2 - 2.5f*factor)*InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
+                            (2 - 2 * factor)*InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
             }
         }
 
@@ -85,7 +85,7 @@ namespace InfiniteIsland.Entity
                 position: position,
                 userData: this);
             Body.BodyType = BodyType.Dynamic;
-            Body.Restitution = 1f;
+            Body.Restitution = 1.1f;
             Body.LinearVelocity = linearVelocity;
         }
 

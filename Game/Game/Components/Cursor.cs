@@ -1,5 +1,7 @@
-﻿using FarseerPhysics.Dynamics.Joints;
+﻿using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Joints;
 using InfiniteIsland.Engine;
+using InfiniteIsland.Engine.Math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +16,7 @@ namespace InfiniteIsland.Components
         private static Texture2D _cursorTexture;
 
         private readonly Color _fillColor = Color.White;
-        //private FixedMouseJoint _mouseJoint;
+        private FixedMouseJoint _mouseJoint;
         private Vector2 _scale = Vector2.One;
 
         public float Radius
@@ -54,13 +56,40 @@ namespace InfiniteIsland.Components
 
         public void Update(GameTime gameTime)
         {
-            //if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
-            //{
-            //    Fixture fixture;
-            //    if ((fixture = InfiniteIsland.World.TestPoint(mousePosition)) != null)
-            //    {
-            //    }
-            //}
+            if (_mouseJoint != null)
+            {
+                if (Input.Mouse.IsButtonDown(Input.Mouse.MouseButton.Left))
+                {
+                    _mouseJoint.WorldAnchorB = InfiniteIsland.CameraOperator.Camera.PositionOnWorld(Input.Mouse.Position);
+                }
+                else
+                {
+                    InfiniteIsland.World.RemoveJoint(_mouseJoint);
+                    _mouseJoint = null;
+                }
+            }
+            else
+            {
+                Vector2 cursorWorldPosition = InfiniteIsland.CameraOperator.Camera.PositionOnWorld(Input.Mouse.Position);
+                if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
+                {
+                    Fixture fixture;
+                    float radiusMeters = Radius.ToMeters();
+                    if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition + new Vector2(radiusMeters))) != null){}
+                    else if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition + new Vector2(radiusMeters, -radiusMeters))) != null) { }
+                    else if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition - new Vector2(radiusMeters))) != null){}
+                    else if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition - new Vector2(radiusMeters, -radiusMeters))) != null) { }
+                    
+                    if(fixture != null)
+                    {
+                        _mouseJoint = new FixedMouseJoint(fixture.Body, cursorWorldPosition)
+                            {
+                                MaxForce = 1000*fixture.Body.Mass
+                            };
+                        InfiniteIsland.World.AddJoint(_mouseJoint);
+                    }
+                }
+            }
         }
 
         public static void LoadContent(ContentManager content)

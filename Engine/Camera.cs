@@ -48,7 +48,7 @@ namespace InfiniteIsland.Engine
         {
             return Vector2.Transform(
                 position: position,
-                matrix: CalculateTransformMatrix(Vector2.One));
+                matrix: CalculateTransformMatrix(Vector2.One)).ToPixels();
         }
 
         /// <summary>

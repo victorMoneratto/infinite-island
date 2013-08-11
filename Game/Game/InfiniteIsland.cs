@@ -11,7 +11,7 @@ namespace InfiniteIsland
 {
     internal class InfiniteIsland : Game
     {
-        public static World World = new World(new Vector2(0, 40));
+        public static World World = new World(new Vector2(0, 20));
         public static Random Random = new Random();
 
         public static Debug Debug;
