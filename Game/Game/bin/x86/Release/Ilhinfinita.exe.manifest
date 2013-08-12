@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>89L5qt4wAOGGTTpzRcctq3N2R4Y=</dsig:DigestValue>
+        <dsig:DigestValue>F7VhKFEtAVb7icrfJUNb2fpTBZo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>NgMk0mpUZjedoin9uTEicHxGLzM=</dsig:DigestValue>
+        <dsig:DigestValue>ymHpJtqNuJTHLO5rICF8c6rDyXU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -218,13 +218,13 @@
       <dsig:DigestValue>IoSIW5I9Q9d9aLOHXnHN3t0XPeI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Terrain.xnb" size="954">
+  <file name="Content\Terrain.xnb" size="952">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>BmTRdFXkBdcagfXBCZRAGnyaGqM=</dsig:DigestValue>
+      <dsig:DigestValue>RJUhMcuoRsEJsbdSJMz6Pf2TN3c=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

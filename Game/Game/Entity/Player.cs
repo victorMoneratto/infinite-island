@@ -63,8 +63,8 @@ namespace InfiniteIsland.Entity
 
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
-                _jumpSound.Play();
-                Body.Torso.ApplyLinearImpulse(new Vector2(0, -24));
+                _jumpSound.Play(1f, 1f, 0f);
+                Body.Torso.ApplyLinearImpulse(new Vector2(0, -20));
             }
 
             if (Body.Motor.MotorSpeed == 0)

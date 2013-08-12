@@ -84,7 +84,7 @@ namespace InfiniteIsland.Components
                     {
                         _mouseJoint = new FixedMouseJoint(fixture.Body, cursorWorldPosition)
                             {
-                                MaxForce = 1000*fixture.Body.Mass
+                                MaxForce = 200*fixture.Body.Mass
                             };
                         InfiniteIsland.World.AddJoint(_mouseJoint);
                     }

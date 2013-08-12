@@ -15,7 +15,7 @@ namespace InfiniteIsland.Entity
 {
     internal class Coins : IUpdateable, IDrawable
     {
-        private readonly List<Coin> _coins = new List<Coin>(10);
+        private readonly List<Coin> _coins = new List<Coin>(20);
         private float _milis;
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
@@ -34,21 +34,43 @@ namespace InfiniteIsland.Entity
             }
 
             _milis += gameTime.ElapsedGameTime.Milliseconds*1e-3f;
-            if (_milis > 1f)
+            if (_milis > .5f)
             {
                 --_milis;
 
                 RotatableRectangleF cameraViewport = InfiniteIsland.CameraOperator.Camera.Viewport;
-                //too tired to properly name it for now
-                var factor = (float) InfiniteIsland.Random.NextDouble();
                 if (_coins.Count == _coins.Capacity)
                     Remove(_coins[0]);
-                _coins.Add(
-                    new Coin(
-                        position:
-                            (cameraViewport.TopLeft + factor*new Vector2(cameraViewport.Dimensions.X, 0)).ToMeters(),
-                        linearVelocity:
-                            (2 - 2 * factor)*InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity));
+
+                //select a way to launch
+                if (InfiniteIsland.Random.Next(2) == 0)
+                {
+                    //Launch from the left
+                    _coins.Add(new Coin(
+                                   position:
+                                       (cameraViewport.TopLeft +
+                                        new Vector2(0,
+                                                    (float) InfiniteIsland.Random.NextDouble()*
+                                                    cameraViewport.Dimensions.Y*.75f)).ToMeters(),
+                                   linearVelocity:
+                                       InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity *
+                                       new Vector2(1.5f + (float)InfiniteIsland.Random.NextDouble()/2.5f, -2*(float)InfiniteIsland.Random.NextDouble())
+                                   ));
+                }
+                else
+                {
+                    //Launch from the right
+                    _coins.Add(new Coin(
+                                   position:
+                                       (cameraViewport.TopRight+
+                                        new Vector2(0,
+                                                    (float) InfiniteIsland.Random.NextDouble()*
+                                                    cameraViewport.Dimensions.Y*.75f)).ToMeters(),
+                                   linearVelocity:
+                                       InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity *
+                                       (new Vector2(1.5f + (float)InfiniteIsland.Random.NextDouble()/2.5f, -2*(float)InfiniteIsland.Random.NextDouble()) - Vector2.UnitX)
+                                   ));
+                }
             }
         }
 
