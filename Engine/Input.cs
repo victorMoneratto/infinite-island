@@ -16,7 +16,7 @@ namespace InfiniteIsland.Engine
         public static MouseState PreviousMouseState { get; set; }
         public static MouseState CurrentMouseState { get; set; }
 
-        public static void Update()
+        public static void Update(bool limitMouse)
         {
             PreviousKeyboardState = CurrentKeyboardState;
             CurrentKeyboardState = Microsoft.Xna.Framework.Input.Keyboard.GetState();
@@ -24,19 +24,22 @@ namespace InfiniteIsland.Engine
             PreviousMouseState = CurrentMouseState;
             CurrentMouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
-            float x = CurrentMouseState.X;
-            float y = CurrentMouseState.Y;
+            if (limitMouse)
+            {
+                float x = CurrentMouseState.X;
+                float y = CurrentMouseState.Y;
 
-            if (Mouse.Limits.Left.HasValue)
-                x = MathHelper.Max(x, Mouse.Limits.Left.Value);
-            if (Mouse.Limits.Right.HasValue)
-                x = MathHelper.Min(x, Mouse.Limits.Right.Value);
-            if (Mouse.Limits.Up.HasValue)
-                y = MathHelper.Max(y, Mouse.Limits.Up.Value);
-            if (Mouse.Limits.Down.HasValue)
-                y = MathHelper.Min(y, Mouse.Limits.Down.Value);
+                if (Mouse.Limits.Left.HasValue)
+                    x = MathHelper.Max(x, Mouse.Limits.Left.Value);
+                if (Mouse.Limits.Right.HasValue)
+                    x = MathHelper.Min(x, Mouse.Limits.Right.Value);
+                if (Mouse.Limits.Up.HasValue)
+                    y = MathHelper.Max(y, Mouse.Limits.Up.Value);
+                if (Mouse.Limits.Down.HasValue)
+                    y = MathHelper.Min(y, Mouse.Limits.Down.Value);
 
-            Mouse.Position = new Vector2(x, y);
+                Mouse.Position = new Vector2(x, y);
+            }
         }
 
         public static class Keyboard
@@ -120,8 +123,8 @@ namespace InfiniteIsland.Engine
             ///     Check if the button is being pressed
             /// </summary>
             /// <param name="mouseButton">Button to check</param>
-            /// <param name="mouseState">State to check</param>
-            /// <returns>True if button is down on the given State, false otherwise</returns>
+            /// <param name="mouseState">TweenState to check</param>
+            /// <returns>True if button is down on the given TweenState, false otherwise</returns>
             private static bool IsButtonDown(MouseButton mouseButton, MouseState mouseState)
             {
                 switch (mouseButton)

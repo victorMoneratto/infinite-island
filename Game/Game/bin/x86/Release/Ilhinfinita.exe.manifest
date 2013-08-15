@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Engine.dll" size="19456">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Engine.dll" size="20992">
       <assemblyIdentity name="Engine" version="0.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>F7VhKFEtAVb7icrfJUNb2fpTBZo=</dsig:DigestValue>
+        <dsig:DigestValue>Z7wUuvWuF0Ot/bQa6+SGzf+cP/I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ymHpJtqNuJTHLO5rICF8c6rDyXU=</dsig:DigestValue>
+        <dsig:DigestValue>nStRFNvo9darQm7m2vza4lt19a4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -191,6 +191,15 @@
       <dsig:DigestValue>eURhmTpYK9HYEBezHU+4PGyoPb8=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\img\p2.xnb" size="23440">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>GekwoPMCOVPT94F+iKW55J5ZHCU=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\img\rock.xnb" size="1008">
     <hash>
       <dsig:Transforms>
@@ -218,13 +227,13 @@
       <dsig:DigestValue>IoSIW5I9Q9d9aLOHXnHN3t0XPeI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Terrain.xnb" size="952">
+  <file name="Content\Terrain.xnb" size="838">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>RJUhMcuoRsEJsbdSJMz6Pf2TN3c=</dsig:DigestValue>
+      <dsig:DigestValue>5gG4a6zdhJfjjGRV9f1v2asL5qI=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

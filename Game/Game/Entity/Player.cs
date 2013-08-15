@@ -15,7 +15,6 @@ namespace InfiniteIsland.Entity
     public class Player : Engine.Entity.Entity
     {
         private const float MaxSpeed = 80f;
-        private static Texture2D _alabama;
         private static Sprite<State> _sprite;
 
         private static SoundEffect _coinConsumeSound, _jumpSound;
@@ -90,8 +89,8 @@ namespace InfiniteIsland.Entity
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
 
-            _alabama = content.Load<Texture2D>("img/alabama");
-            _sprite = new Sprite<State>(_alabama, new Vector2(100, 177));
+            Texture2D alabama = content.Load<Texture2D>("img/alabama");
+            _sprite = new Sprite<State>(alabama, new Vector2(100, 177));
             _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
             _sprite.RegisterAnimation(State.Moving, 28, 14);
         }

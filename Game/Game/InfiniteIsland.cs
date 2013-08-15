@@ -81,7 +81,7 @@ namespace InfiniteIsland
 
         protected override void Update(GameTime gameTime)
         {
-            Input.Update();
+            Input.Update(IsActive);
 
             if (Input.Keyboard.IsKeyTyped(Keys.Escape))
                 Exit();
