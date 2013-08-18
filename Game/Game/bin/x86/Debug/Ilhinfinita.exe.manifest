@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>44idR6JxYE1BpLa0jSUMrgqNmnI=</dsig:DigestValue>
+        <dsig:DigestValue>iibOljk7HylEYZPhNT0DwsCAy9U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>E7UKRCYcdVNR1NwuWoWRLn1gcLc=</dsig:DigestValue>
+        <dsig:DigestValue>pNZVkv41BXNfXHSWUmhPCVY+RQ0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -209,6 +209,15 @@
       <dsig:DigestValue>yVcWHkdxtn+aYLUoIdtJhqR5Yx8=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\Post.xnb" size="1544">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>kxzUbUes90zd3f/RZqrIYrlTgU4=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\sfx\coin.xnb" size="89961">
     <hash>
       <dsig:Transforms>
@@ -233,7 +242,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>A4CizdUJPKPZ2E/VmVDEwWPF5Po=</dsig:DigestValue>
+      <dsig:DigestValue>Yp0/bgE7f1l3GzK8UO++8YzrBmc=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

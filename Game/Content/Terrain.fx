@@ -35,14 +35,18 @@ float4 PixelShaderFunction(float2 texCoords :TEXCOORD0) : COLOR0
     //TODO Replace with texture or something
     float4 color0 = float4(1, 1, 0, 1);
     float4 color1 = float4(0, .5, 0, 1);
+
     float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y) - (height));
-    if(height < texCoords.y){return finalColor;}
+    if(height < texCoords.y)
+	{
+		return finalColor;
+	}
+
     return float4(0, 0, 0, 0);
 
     //Replace with this for pixely terrain
     /*float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y - texCoords.y % .04) - (height - height % .04));
-    if(height - height %.05 < texCoords.y){return finalColor;}*/
-
+    if(height - height %.01 < texCoords.y){return finalColor;}*/
 }
 
 technique Technique1
