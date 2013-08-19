@@ -1,7 +1,6 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Engine.Math;
 using Microsoft.Xna.Framework;
 
 namespace InfiniteIsland.Engine.Physics
@@ -12,13 +11,16 @@ namespace InfiniteIsland.Engine.Physics
         public readonly Body Torso;
         public readonly Body Wheel;
 
-        public WalkerBody(World world, float width, float height, object userData)
+        private readonly float _wheelRadius;
+
+        public WalkerBody(World world, Vector2 dimensions, object userData)
         {
-            float torsoHeight = height - width/2f;
+            _wheelRadius = dimensions.X/1.9f;
+            float torsoHeight = dimensions.Y - dimensions.X/2f;
 
             Torso = BodyFactory.CreateRectangle(
                 world: world,
-                width: width,
+                width: dimensions.X,
                 height: torsoHeight,
                 density: 1f,
                 position: Vector2.UnitX*20,
@@ -28,7 +30,7 @@ namespace InfiniteIsland.Engine.Physics
 
             Wheel = BodyFactory.CreateCircle(
                 world: world,
-                radius: width/1.9f,
+                radius: _wheelRadius,
                 density: 1f,
                 position: Torso.Position + new Vector2(0, torsoHeight/2),
                 userData: userData);
@@ -43,5 +45,10 @@ namespace InfiniteIsland.Engine.Physics
             Motor.MotorEnabled = true;
             Motor.MaxMotorTorque = 10;
         }
+
+        public Vector2 Position
+        {
+            get { return Wheel.Position + new Vector2(_wheelRadius, _wheelRadius); }
+            }
     }
 }

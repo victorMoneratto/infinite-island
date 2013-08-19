@@ -1,117 +1,96 @@
-using System.Collections.Generic;
 using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Engine.Visual
 {
-    public class Sprite<T> where T : struct
+    public class Sprite
     {
-        private readonly Dictionary<T?, Animation> _animations = new Dictionary<T?, Animation>();
-        private readonly Texture2D _spriteSheet;
-        private T? _animationKey;
-        private Animation _currentAnimation;
+        public Animation Animation;
+        public RotatableRectangleF Body;
+        public SpriteEffects Flip;
+        public Color Tint;
 
-        public Sprite(Texture2D spriteSheet, Vector2 dimensions)
+        private Rectangle[] _frames;
+        private int _index;
+        private string _key;
+
+        private int _millisPerFrame;
+        private int _millisSinceLastFrame;
+
+        private Vector2 _centerOffset;
+
+        public Sprite(Animation animation)
         {
-            Body = new RotatableRectangleF(dimensions);
-            _spriteSheet = spriteSheet;
+            Animation = animation;
+            Body = new RotatableRectangleF(Animation.MaxDimensions);
+
+            Flip = SpriteEffects.None;
             Tint = Color.White;
+            FramesPerSecond = 30;
+
+            if (Animation.Animations.Count == 1)
+            {
+                string[] keys = new string[1];
+                Animation.Animations.Keys.CopyTo(keys, 0);
+                Key = keys[0];
+            }
         }
 
-        public RotatableRectangleF Body { get; set; }
-        public bool FlipHorizontally { get; set; }
-        public Color Tint { get; set; }
-
-        public T? AnimationKey
+        public string Key
         {
-            get { return _animationKey; }
+            get { return _key; }
             set
             {
-                if (value == null
-                    || (_animationKey != null && _animationKey.Equals(value))) return;
-
-                Animation animation;
-
-                if (!_animations.TryGetValue(value, out animation))
+                if (value != _key)
                 {
-                    _currentAnimation = null;
-                    return;
+                    _key = value;
+                    _frames = Animation.Animations[_key];
+                    _index = 0;
+                    CalculateOffset();
                 }
-
-                _animationKey = value;
-                _currentAnimation = animation;
             }
         }
 
-        public void RegisterAnimation(T key, params Point[] points)
+        public int FramesPerSecond
         {
-            var rectangles = new Rectangle[points.Length];
-            for (int i = 0; i < points.Length; i++)
+            get { return 1000/_millisPerFrame; }
+            set
             {
-                rectangles[i] = new Rectangle(
-                    x: (int) (points[i].X*Body.Dimensions.X),
-                    y: (int) (points[i].Y*Body.Dimensions.Y),
-                    width: (int) Body.Dimensions.X,
-                    height: (int) Body.Dimensions.Y);
+                if (value != 0)
+                    _millisPerFrame = 1000/value;
             }
-            _animations.Add(key, new Animation(rectangles));
-        }
-
-        public void RegisterAnimation(T key, int firstSprite, int frameCount)
-        {
-            var columns = (int) (_spriteSheet.Width/Body.Dimensions.X);
-            var spritePoints = new Point[frameCount];
-            for (int i = 0; i < frameCount; i++)
-            {
-                spritePoints[i] = new Point((firstSprite + i)%columns, (firstSprite + i)/columns);
-            }
-            RegisterAnimation(key, spritePoints);
-        }
-
-        public void RegisterAnimation(T key, int frameCount, Point first)
-        {
-            var columns = (int) (_spriteSheet.Width/Body.Dimensions.X);
-            var points = new Point[frameCount];
-            for (int i = 0; i < frameCount; i++)
-            {
-                points[i] = new Point((first.X + i)%columns, first.Y + (first.X + i)/columns);
-            }
-
-            RegisterAnimation(key, points);
         }
 
         public void Update(GameTime gameTime)
         {
-            if (_currentAnimation != null)
+            _millisSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (_millisSinceLastFrame >= _millisPerFrame)
             {
-                _currentAnimation.Update(gameTime);
+                _millisSinceLastFrame -= _millisPerFrame;
+                _index = (_index + 1)%_frames.Length;
+                CalculateOffset();
             }
+        }
+
+        private void CalculateOffset()
+        {
+            _centerOffset = (Animation.MaxDimensions - new Vector2(_frames[_index].Width,_frames[_index].Height))/2f;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_currentAnimation != null)
-            {
-                spriteBatch.Draw(
-                    texture: _spriteSheet,
-                    position: Body.Center,
-                    sourceRectangle: _currentAnimation.CurrentFrame,
-                    color: Tint,
-                    rotation: Body.Rotation,
-                    origin: Body.Pivot,
-                    scale: Body.Scale,
-                    effects: FlipHorizontally ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-                    layerDepth: 0);
-            }
-        }
-    }
-
-    public static class SpriteExtension<T> where T : struct
-    {
-        public static void Draw(SpriteBatch spriteBatch, Sprite<T> sprite)
-        {
-            sprite.Draw(spriteBatch);
+            //if (_frames != null)
+            spriteBatch.Draw(
+                texture: Animation.Texture,
+                position: Body.Center + _centerOffset,
+                color: Tint,
+                sourceRectangle: _frames[_index],
+                rotation: Body.Rotation,
+                origin: Body.Pivot,
+                scale: Body.Scale,
+                effects: Flip,
+                layerDepth: 0f);
         }
     }
 }

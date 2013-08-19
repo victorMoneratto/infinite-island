@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using InfiniteIsland.Engine;
+using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ namespace InfiniteIsland.Components
 {
     internal class Hud : IUpdateable, IDrawable
     {
-        private static Texture2D _scoreTexture;
+        private static Sprite _scoreSprite;
         private static SpriteFont _scoreFont;
         private static Vector2 _scoreTextPosition;
 
@@ -20,16 +21,7 @@ namespace InfiniteIsland.Components
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(
-                texture: _scoreTexture,
-                position: Vector2.Zero,
-                sourceRectangle: null,
-                color: Color.White*.8f,
-                rotation: 0f,
-                origin: Vector2.Zero,
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
+            _scoreSprite.Draw(spriteBatch);
 
             spriteBatch.DrawString(
                 spriteFont:_scoreFont,
@@ -46,10 +38,13 @@ namespace InfiniteIsland.Components
 
         public static void LoadContent(ContentManager content)
         {
-            _scoreTexture = content.Load<Texture2D>("img/coin");
             _scoreFont = content.Load<SpriteFont>("Bauhaus");
 
-            _scoreTextPosition = new Vector2(_scoreTexture.Width, 0);
+            _scoreSprite = new Sprite(content.Load<Animation>("sprite/coin"));
+            _scoreSprite.Body.Pivot = Vector2.Zero;
+            _scoreSprite.Tint = Color.White*.8f;
+
+            _scoreTextPosition = new Vector2(_scoreSprite.Animation.MaxDimensions.X, 0);
         }
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Engine.Visual
 {
-    public abstract class ParallaxLayer<T> where T : struct
+    public abstract class ParallaxLayer
     {
-        public List<Sprite<T>> Sprites;
+        public List<Sprite> Sprites;
         public Vector2 Parallax { get; set; }
 
         public abstract void Update(GameTime gameTime);
@@ -15,7 +15,7 @@ namespace InfiniteIsland.Engine.Visual
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
                               camera.CalculateTransformMatrix(Parallax));
-            foreach (var sprite in Sprites)
+            foreach (Sprite sprite in Sprites)
             {
                 sprite.Draw(spriteBatch);
             }

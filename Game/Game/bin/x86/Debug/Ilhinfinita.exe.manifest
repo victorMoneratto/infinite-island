@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Engine.dll" size="22016">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Engine.dll" size="20992">
       <assemblyIdentity name="Engine" version="0.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>iibOljk7HylEYZPhNT0DwsCAy9U=</dsig:DigestValue>
+        <dsig:DigestValue>9T6EKi+6KqKWDLBQw+7avlqtVZ8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>pNZVkv41BXNfXHSWUmhPCVY+RQ0=</dsig:DigestValue>
+        <dsig:DigestValue>qXucnC6qnCu3dEttP1Z4mNkND0A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -153,15 +153,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>gNWed5JSa/aUa8ukoB7nDM4HIzA=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\img\coin.xnb" size="5371">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>nbHs6BxljAEI8rvfihi7e83wQhw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\img\cursor.xnb" size="4283">
@@ -236,13 +227,31 @@
       <dsig:DigestValue>IoSIW5I9Q9d9aLOHXnHN3t0XPeI=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\sprite\coin.xnb" size="6280">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>cd9NSdgchhrjiYO3pbB/QnnfNck=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\sprite\p3.xnb" size="586609">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>sfm4+/iS5CwvPJnWbGMLLfjDP4g=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\Terrain.xnb" size="3104">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>Yp0/bgE7f1l3GzK8UO++8YzrBmc=</dsig:DigestValue>
+      <dsig:DigestValue>7c2Nuaw/8kf+t8vj87+U/xw4m7k=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

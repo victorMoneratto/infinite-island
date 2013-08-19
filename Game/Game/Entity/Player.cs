@@ -15,7 +15,7 @@ namespace InfiniteIsland.Entity
     public class Player : Engine.Entity.Entity
     {
         private const float MaxSpeed = 80f;
-        private static Sprite<State> _sprite;
+        private static Sprite _sprite;
 
         private static SoundEffect _coinConsumeSound, _jumpSound;
 
@@ -23,7 +23,7 @@ namespace InfiniteIsland.Entity
 
         public Player()
         {
-            Body = new WalkerBody(InfiniteIsland.World, 45f.ToMeters(), 140f.ToMeters(), this);
+            Body = new WalkerBody(InfiniteIsland.World, new Vector2(70f, 85f).ToMeters(), this);
             Body.Torso.OnCollision += OnCollision;
         }
 
@@ -51,32 +51,32 @@ namespace InfiniteIsland.Entity
             if (Input.Keyboard.IsKeyDown(Keys.D))
             {
                 Body.Motor.MotorSpeed += MaxSpeed;
-                _sprite.AnimationKey = State.Moving;
+                _sprite.Key = AnimationKey.Walk;
             }
 
             if (Input.Keyboard.IsKeyDown(Keys.A))
             {
                 Body.Motor.MotorSpeed -= MaxSpeed;
-                _sprite.AnimationKey = State.Moving;
+                _sprite.Key = AnimationKey.Walk;
             }
 
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
                 _jumpSound.Play(1f, 1f, 0f);
-                Body.Torso.ApplyLinearImpulse(new Vector2(0, -20));
+                Body.Torso.ApplyLinearImpulse(new Vector2(0, -15));
             }
 
             if (Body.Motor.MotorSpeed == 0)
             {
-                _sprite.AnimationKey = State.Idle;
+                _sprite.Key = AnimationKey.Stand;
             }
             else
             {
-                _sprite.FlipHorizontally = Body.Motor.MotorSpeed < 0;
+                _sprite.Flip = (Body.Motor.MotorSpeed < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             }
 
             _sprite.Update(gameTime);
-            _sprite.Body.Center = Body.Torso.Position.ToPixels();
+            _sprite.Body.BottomRight = Body.Position.ToPixels() + new Vector2(0, 10);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -89,16 +89,14 @@ namespace InfiniteIsland.Entity
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
 
-            Texture2D alabama = content.Load<Texture2D>("img/alabama");
-            _sprite = new Sprite<State>(alabama, new Vector2(100, 177));
-            _sprite.RegisterAnimation(State.Idle, new Point(0, 0));
-            _sprite.RegisterAnimation(State.Moving, 28, 14);
+            _sprite = new Sprite(content.Load<Animation>("sprite/p3")) {Key = AnimationKey.Walk};
         }
 
-        private enum State
+        private struct AnimationKey
         {
-            Idle,
-            Moving
-        };
+            public const string Walk = "walk";
+            public const string Stand = "stand";
+            public const string Jump = "jump";
+        }
     }
 }

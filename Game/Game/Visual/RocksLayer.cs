@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using InfiniteIsland.Engine.Math;
-using InfiniteIsland.Engine.Terrain;
 using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -9,20 +7,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Visual
 {
-    public class RocksLayer : ParallaxLayer<RocksLayer.Mount>
+    public class RocksLayer : ParallaxLayer
     {
-        public enum Mount
-        {
-            Lonely
-        }
-
         private static Texture2D _rock;
 
         public RocksLayer(Vector2 parallax)
         {
             Parallax = parallax;
             var random = new Random();
-            Sprites = new List<Sprite<Mount>>();
+            Sprites = new List<Sprite>();
 
             const int mountCounts = 20;
             for (int i = 0; i < mountCounts; i++)
@@ -31,7 +24,7 @@ namespace InfiniteIsland.Visual
                 //    {
                 //        Body =
                 //            {
-                //                Center = new Vector2(
+                //                Position = new Vector2(
                 //                    x: ((10f + random.Next(1001))*i),
                 //                    y: (TerrainChunk.VerticalPosition + 1f + (float) random.NextDouble()).ToPixels()),
                 //                Pivot = new Vector2(_rock.Width/2f, _rock.Height),

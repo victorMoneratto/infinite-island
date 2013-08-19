@@ -53,8 +53,9 @@ namespace InfiniteIsland.Entity
                                                     (float) InfiniteIsland.Random.NextDouble()*
                                                     cameraViewport.Dimensions.Y*.75f)).ToMeters(),
                                    linearVelocity:
-                                       InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity *
-                                       new Vector2(1.5f + (float)InfiniteIsland.Random.NextDouble()/2.5f, -2*(float)InfiniteIsland.Random.NextDouble())
+                                       InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity*
+                                       new Vector2(1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
+                                                   -2*(float) InfiniteIsland.Random.NextDouble())
                                    ));
                 }
                 else
@@ -62,13 +63,14 @@ namespace InfiniteIsland.Entity
                     //Launch from the right
                     _coins.Add(new Coin(
                                    position:
-                                       (cameraViewport.TopRight+
+                                       (cameraViewport.TopRight +
                                         new Vector2(0,
                                                     (float) InfiniteIsland.Random.NextDouble()*
                                                     cameraViewport.Dimensions.Y*.75f)).ToMeters(),
                                    linearVelocity:
-                                       InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity *
-                                       (new Vector2(1.5f + (float)InfiniteIsland.Random.NextDouble()/2.5f, -2*(float)InfiniteIsland.Random.NextDouble()) - Vector2.UnitX)
+                                       InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity*
+                                       (new Vector2(1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
+                                                    -2*(float) InfiniteIsland.Random.NextDouble()) - Vector2.UnitX)
                                    ));
                 }
             }
@@ -89,26 +91,27 @@ namespace InfiniteIsland.Entity
     internal class Coin : Engine.Entity.Entity
     {
         private const float Scale = 2f;
-
-        private static Texture2D _coinTexture;
+        private static Animation _animation;
         public readonly Body Body;
-        private readonly Sprite<CoinEnum> _sprite;
+        private readonly Sprite _sprite;
 
         public Coin(Vector2 position, Vector2 linearVelocity)
         {
-            _sprite = new Sprite<CoinEnum>(_coinTexture, new Vector2(_coinTexture.Width));
-            _sprite.RegisterAnimation(CoinEnum.Coin, 0, 1);
-            _sprite.AnimationKey = CoinEnum.Coin;
-            _sprite.Body.Scale = new Vector2(Scale);
             Body = BodyFactory.CreateCircle(
                 world: InfiniteIsland.World,
-                radius: (_coinTexture.Width/2f).ToMeters()*Scale,
+                radius: (_animation.MaxDimensions.X/2f).ToMeters()*Scale,
                 density: 1f,
                 position: position,
                 userData: this);
             Body.BodyType = BodyType.Dynamic;
             Body.Restitution = 1.1f;
             Body.LinearVelocity = linearVelocity;
+
+            _sprite = new Sprite(_animation)
+                {
+                    Key = "coin",
+                    Body = {Scale = new Vector2(Scale)}
+                };
         }
 
         public override void Update(GameTime gameTime)
@@ -124,12 +127,7 @@ namespace InfiniteIsland.Entity
 
         public static void LoadContent(ContentManager content)
         {
-            _coinTexture = content.Load<Texture2D>("img/coin");
-        }
-
-        private enum CoinEnum
-        {
-            Coin
+            _animation = content.Load<Animation>("sprite/coin");
         }
     }
 }

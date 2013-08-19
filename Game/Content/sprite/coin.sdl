@@ -1,0 +1,9 @@
+image "sprite/coin.png"
+
+animation {
+	
+	coin {
+		frame left=0 top=0 width=36 height=36
+	}
+
+}

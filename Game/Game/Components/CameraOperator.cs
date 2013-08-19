@@ -1,6 +1,7 @@
 ﻿using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
+using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
