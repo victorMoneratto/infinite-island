@@ -155,13 +155,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="img\p2.png">
-      <Name>p2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Post.fx">
       <Name>Post</Name>
       <Importer>EffectImporter</Importer>
@@ -171,6 +164,16 @@
   <ItemGroup>
     <Compile Include="sprite\coin.sdl">
       <Name>coin</Name>
+      <Importer>SDLImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+    </Compile>
+    <Compile Include="sprite\p1.sdl">
+      <Name>p1</Name>
+      <Importer>SDLImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+    </Compile>
+    <Compile Include="sprite\p2.sdl">
+      <Name>p2</Name>
       <Importer>SDLImporter</Importer>
       <Processor>AnimationProcessor</Processor>
     </Compile>
@@ -196,6 +199,18 @@
   <ItemGroup>
     <None Include="sprite\coin.png">
       <Name>coin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sprite\p1.png">
+      <Name>p1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="sprite\p2.png">
+      <Name>p2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>

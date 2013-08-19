@@ -1,0 +1,39 @@
+image "sprite/p2.png"
+
+animation {
+	
+	front {
+		frame left=0 top=190 width=66 height=92
+	}
+	
+	hurt {
+		frame left=426 top=0 width=67 height=92
+	}
+	
+	stand {
+		frame left=67 top=190 width=66 height=92
+	}
+	
+	duck {
+		frame left=355 top=95 width=67 height=72
+	}
+	
+	jump {
+		frame left=423 top=95 width=66 height=94
+	}
+	
+	walk {
+		frame left=0	top=0 	width=70 height=94
+		frame left=71	top=0 	width=70 height=94
+		frame left=142	top=0 	width=70 height=94
+		frame left=0	top=95 	width=70 height=94
+		frame left=71 	top=95 	width=70 height=94
+		frame left=142 	top=95 	width=70 height=94
+		frame left=213 	top=0 	width=70 height=94
+		frame left=284 	top=0 	width=70 height=94
+		frame left=213 	top=95 	width=70 height=94
+		frame left=355 	top=0 	width=70 height=94
+		frame left=284 	top=95 	width=70 height=94
+	}
+
+}

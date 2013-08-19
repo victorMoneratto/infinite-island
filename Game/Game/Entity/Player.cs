@@ -89,7 +89,7 @@ namespace InfiniteIsland.Entity
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
 
-            _sprite = new Sprite(content.Load<Animation>("sprite/p3")) {Key = AnimationKey.Walk};
+            _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
         }
 
         private struct AnimationKey
