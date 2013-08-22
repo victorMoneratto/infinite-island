@@ -1,0 +1,14 @@
+image "sprite/slime.png"
+
+animation {
+	
+	dead {
+		frame left=2 top=2 width=59 height=12
+	}
+
+	walk {
+		frame left=63 top=2 width=50 height=28
+		frame left=115 top=2 width=51 height=26
+	}
+
+}

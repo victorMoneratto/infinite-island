@@ -1,3 +1,4 @@
+using FarseerPhysics;
 using FarseerPhysics.DebugViews;
 using InfiniteIsland.Console;
 using InfiniteIsland.Engine;
@@ -21,6 +22,7 @@ namespace InfiniteIsland.Components
         {
             _physicsDebug = new DebugViewXNA(InfiniteIsland.World);
             _physicsDebug.LoadContent(game.GraphicsDevice, game.Content);
+            _physicsDebug.AppendFlags(DebugViewFlags.DebugPanel);
 
             Console = new GameConsole(
                 game,

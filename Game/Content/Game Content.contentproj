@@ -182,6 +182,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
+    <Compile Include="sprite\slime.sdl">
+      <Name>slime</Name>
+      <Importer>SDLImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="sprite\p3.sdl">
@@ -211,6 +216,13 @@
     </None>
     <None Include="sprite\p2.png">
       <Name>p2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sprite\slime.png">
+      <Name>slime</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>

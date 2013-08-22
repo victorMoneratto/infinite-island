@@ -30,7 +30,7 @@ float4 PixelShaderFunction(float2 texCoords :TEXCOORD0) : COLOR0
     float nextHeight = tex2D(heightmap_sampler, float2(texCoords.x + verticesFrequency, texCoords.y));
 
     float delta = (texCoords.x % verticesFrequency) * verticesCount;
-    float height = lerp(lastHeight, nextHeight, delta);
+    float height = smoothInterpolate(lastHeight, nextHeight, delta);
 
     //TODO Replace with texture or something
     float4 color0 = float4(1, 1, 0, 1);

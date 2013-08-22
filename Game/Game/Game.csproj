@@ -107,6 +107,7 @@
     <Compile Include="Components\Terrain.cs" />
     <Compile Include="Console\CameraCommand.cs" />
     <Compile Include="Entity\Coins.cs" />
+    <Compile Include="Entity\Slimes.cs" />
     <Compile Include="Visual\RocksLayer.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Program.cs" />

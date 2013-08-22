@@ -12,11 +12,13 @@ namespace InfiniteIsland.Components
     {
         public readonly Coins Coins;
         public readonly Player Player;
+        public readonly Slimes Slimes;
 
         public Entities()
         {
             Player = new Player();
             Coins = new Coins();
+            Slimes = new Slimes();
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
@@ -24,8 +26,9 @@ namespace InfiniteIsland.Components
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
                               camera.CalculateTransformMatrix(Vector2.One));
 
-            Coins.Draw(spriteBatch, camera);
             Player.Draw(spriteBatch);
+            Coins.Draw(spriteBatch, camera);
+            Slimes.Draw(spriteBatch, camera);
 
             spriteBatch.End();
         }
@@ -45,14 +48,16 @@ namespace InfiniteIsland.Components
             //    }
             //}
 
-            Coins.Update(gameTime);
             Player.Update(gameTime);
+            Coins.Update(gameTime);
+            Slimes.Update(gameTime);
         }
 
         public static void LoadContent(ContentManager content)
         {
             Coins.LoadContent(content);
             Player.LoadContent(content);
+            Slimes.LoadContent(content);
         }
     }
 }

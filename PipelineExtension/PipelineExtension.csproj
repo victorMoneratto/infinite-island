@@ -42,7 +42,7 @@
       <SpecificVersion>true</SpecificVersion>
     </Reference>
     <Reference Include="SDL">
-      <HintPath>..\..\..\..\Desktop\sdl_v1.0.0_dotnet\SDL\bin\Release\SDL.dll</HintPath>
+      <HintPath>lib\$(Configuration)\SDL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />

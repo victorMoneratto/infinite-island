@@ -60,7 +60,7 @@
     <Compile Include="Math\Measure.cs" />
     <Compile Include="Math\Noise.cs" />
     <Compile Include="Math\Tween.cs" />
-    <Compile Include="Physics\WalkerBody.cs" />
+    <Compile Include="Physics\HumanoidBody.cs" />
     <Compile Include="Terrain\TerrainChunk.cs" />
     <Compile Include="Visual\Animation.cs" />
     <Compile Include="Visual\ParallaxLayer.cs" />

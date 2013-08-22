@@ -5,23 +5,22 @@ using Microsoft.Xna.Framework;
 
 namespace InfiniteIsland.Engine.Physics
 {
-    public class WalkerBody
+    public class HumanoidBody
     {
         public readonly RevoluteJoint Motor;
         public readonly Body Torso;
         public readonly Body Wheel;
 
-        private readonly float _wheelRadius;
+        private readonly float _torsoHeight;
 
-        public WalkerBody(World world, Vector2 dimensions, object userData)
+        public HumanoidBody(World world, Vector2 dimensions, object userData)
         {
-            _wheelRadius = dimensions.X/1.9f;
-            float torsoHeight = dimensions.Y - dimensions.X/2f;
+            _torsoHeight = dimensions.Y - dimensions.X/2f;
 
             Torso = BodyFactory.CreateRectangle(
                 world: world,
                 width: dimensions.X,
-                height: torsoHeight,
+                height: _torsoHeight,
                 density: 1f,
                 position: Vector2.UnitX*20,
                 userData: userData);
@@ -30,9 +29,9 @@ namespace InfiniteIsland.Engine.Physics
 
             Wheel = BodyFactory.CreateCircle(
                 world: world,
-                radius: _wheelRadius,
+                radius: dimensions.X/2f,
                 density: 1f,
-                position: Torso.Position + new Vector2(0, torsoHeight/2),
+                position: Torso.Position + new Vector2(0, _torsoHeight/2),
                 userData: userData);
 
             Wheel.BodyType = BodyType.Dynamic;
@@ -46,9 +45,9 @@ namespace InfiniteIsland.Engine.Physics
             Motor.MaxMotorTorque = 10;
         }
 
-        public Vector2 Position
+        public Vector2 TopMiddle
         {
-            get { return Wheel.Position + new Vector2(_wheelRadius, _wheelRadius); }
-            }
+            get { return Wheel.Position - Vector2.UnitY * _torsoHeight; }
+        }
     }
 }

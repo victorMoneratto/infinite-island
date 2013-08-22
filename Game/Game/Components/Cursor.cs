@@ -75,12 +75,14 @@ namespace InfiniteIsland.Components
                 {
                     Fixture fixture;
                     float radiusMeters = Radius.ToMeters();
-                    if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition + new Vector2(radiusMeters))) != null){}
-                    else if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition + new Vector2(radiusMeters, -radiusMeters))) != null) { }
-                    else if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition - new Vector2(radiusMeters))) != null){}
-                    else if ((fixture = InfiniteIsland.World.TestPoint(cursorWorldPosition - new Vector2(radiusMeters, -radiusMeters))) != null) { }
-                    
-                    if(fixture != null)
+                    if ((fixture =
+                         InfiniteIsland.World.TestPoint(cursorWorldPosition - new Vector2(radiusMeters))) != null ||
+                        (fixture =
+                         InfiniteIsland.World.TestPoint(cursorWorldPosition + new Vector2(radiusMeters))) != null ||
+                        (fixture =
+                         InfiniteIsland.World.TestPoint(cursorWorldPosition + new Vector2(radiusMeters, -radiusMeters))) != null ||
+                        (fixture =
+                         InfiniteIsland.World.TestPoint(cursorWorldPosition - new Vector2(radiusMeters, -radiusMeters))) != null)
                     {
                         _mouseJoint = new FixedMouseJoint(fixture.Body, cursorWorldPosition)
                             {

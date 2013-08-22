@@ -44,10 +44,9 @@ namespace InfiniteIsland
                 };
         }
 
-        protected override void Initialize()
+        //Replacement for Initialize method, it is so that we can call it after LoadContent
+        protected void Setup()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             Input.Mouse.Limits = new BoundingLimits
                 {
                     Left = 2f,
@@ -63,8 +62,6 @@ namespace InfiniteIsland
             Hud = new Hud();
             Cursor = new Cursor();
             Background = new Background();
-
-            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -74,6 +71,8 @@ namespace InfiniteIsland
             Hud.LoadContent(Content);
             Background.LoadContent(Content);
             Cursor.LoadContent(Content);
+
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _renderTarget = new RenderTarget2D(
                 graphicsDevice: GraphicsDevice,
@@ -86,6 +85,8 @@ namespace InfiniteIsland
 
             _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
             _pauseFilter.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
+
+            Setup();
 
             base.LoadContent();
         }

@@ -19,11 +19,14 @@ namespace InfiniteIsland.Entity
 
         private static SoundEffect _coinConsumeSound, _jumpSound;
 
-        public WalkerBody Body;
+        public HumanoidBody Body;
 
         public Player()
         {
-            Body = new WalkerBody(InfiniteIsland.World, new Vector2(70f, 85f).ToMeters(), this);
+            Body = new HumanoidBody(
+                world: InfiniteIsland.World,
+                dimensions: _sprite.Animation.MaxDimensions.ToMeters() * .9f,
+                userData: this);
             Body.Torso.OnCollision += OnCollision;
         }
 
@@ -76,7 +79,7 @@ namespace InfiniteIsland.Entity
             }
 
             _sprite.Update(gameTime);
-            _sprite.Body.BottomRight = Body.Position.ToPixels() + new Vector2(0, 10);
+            _sprite.Body.TopRight = Body.TopMiddle.ToPixels() + Vector2.UnitX * _sprite.Body.Dimensions.X/2f;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -89,7 +92,7 @@ namespace InfiniteIsland.Entity
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
 
-            _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
+            _sprite = new Sprite(content.Load<Animation>("sprite/p2"));
         }
 
         private struct AnimationKey
