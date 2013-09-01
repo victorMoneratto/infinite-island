@@ -13,12 +13,12 @@ using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Entity
 {
-    internal class Coins : IUpdateable, IDrawable
+    internal class Coins : IUpdateable
     {
         private readonly List<Coin> _coins = new List<Coin>(20);
         private float _milis;
 
-        public void Draw(SpriteBatch spriteBatch, Camera camera)
+        public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Coin coin in _coins)
             {

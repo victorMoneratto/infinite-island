@@ -1,0 +1,9 @@
+image "sprite/cursor.bmp"
+
+animation {
+	
+	cursor {
+		frame left=0 top=0 width=32 height=32
+	}
+
+}

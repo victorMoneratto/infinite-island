@@ -14,23 +14,33 @@ namespace InfiniteIsland.Entity
 {
     public class Player : Engine.Entity.Entity
     {
-        private const float MaxSpeed = 80f;
+        private const float MaxSpeed = 40f;
         private static Sprite _sprite;
 
         private static SoundEffect _coinConsumeSound, _jumpSound;
 
-        public HumanoidBody Body;
+        public readonly HumanoidBody Body;
 
         public Player()
         {
             Body = new HumanoidBody(
                 world: InfiniteIsland.World,
-                dimensions: _sprite.Animation.MaxDimensions.ToMeters() * .9f,
+                dimensions: _sprite.Animation.MaxDimensions.ToMeters()*.9f,
                 userData: this);
+            
             Body.Torso.OnCollision += OnCollision;
+            
+            Body.Wheel.OnCollision += (a, b, contact) =>
+                {
+                    _sprite.Key = AnimationKey.Walk;
+                    return true;
+                };
+
+            Body.Motor.MotorSpeed = MaxSpeed;
+            _sprite.Key = AnimationKey.Walk;
         }
 
-        public bool OnCollision(Fixture f1, Fixture f2, Contact contact)
+        private bool OnCollision(Fixture f1, Fixture f2, Contact contact)
         {
             var entity = f2.UserData as Engine.Entity.Entity;
             if (entity == null)
@@ -49,37 +59,14 @@ namespace InfiniteIsland.Entity
 
         public override void Update(GameTime gameTime)
         {
-            Body.Motor.MotorSpeed = 0;
-
-            if (Input.Keyboard.IsKeyDown(Keys.D))
-            {
-                Body.Motor.MotorSpeed += MaxSpeed;
-                _sprite.Key = AnimationKey.Walk;
-            }
-
-            if (Input.Keyboard.IsKeyDown(Keys.A))
-            {
-                Body.Motor.MotorSpeed -= MaxSpeed;
-                _sprite.Key = AnimationKey.Walk;
-            }
-
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
                 _jumpSound.Play(1f, 1f, 0f);
                 Body.Torso.ApplyLinearImpulse(new Vector2(0, -15));
             }
 
-            if (Body.Motor.MotorSpeed == 0)
-            {
-                _sprite.Key = AnimationKey.Stand;
-            }
-            else
-            {
-                _sprite.Flip = (Body.Motor.MotorSpeed < 0) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            }
-
             _sprite.Update(gameTime);
-            _sprite.Body.TopRight = Body.TopMiddle.ToPixels() + Vector2.UnitX * _sprite.Body.Dimensions.X/2f;
+            _sprite.Body.TopRight = Body.TopMiddle.ToPixels() + new Vector2(_sprite.Body.Dimensions.X/2f, 0);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -92,7 +79,7 @@ namespace InfiniteIsland.Entity
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
 
-            _sprite = new Sprite(content.Load<Animation>("sprite/p2"));
+            _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
         }
 
         private struct AnimationKey

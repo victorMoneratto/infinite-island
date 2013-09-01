@@ -1,4 +1,3 @@
-using System;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
@@ -12,14 +11,13 @@ namespace InfiniteIsland.Components
 {
     public class Terrain : IUpdateable, IDrawable
     {
+        private static Effect _terrainEffect;
         private readonly Texture2D _blankTexture;
         private readonly TerrainChunk[] _chunks;
 
-        private static Effect _terrainEffect;
-
         public Terrain(GraphicsDevice graphics)
         {
-            _chunks = new TerrainChunk[graphics.Viewport.Width / (int)TerrainChunk.Dimensions.X + 1];
+            _chunks = new TerrainChunk[graphics.Viewport.Width/TerrainChunk.Dimensions.X.ToPixels() + 1];
             _chunks[0] = new TerrainChunk(0, Noise.Generate(TerrainChunk.HeightCount), graphics,
                                           InfiniteIsland.World);
             for (int i = 1; i < _chunks.Length; i++)

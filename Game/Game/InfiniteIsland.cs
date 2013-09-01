@@ -11,7 +11,7 @@ namespace InfiniteIsland
 {
     internal class InfiniteIsland : Game
     {
-        public static readonly World World = new World(new Vector2(0, 20));
+        public static readonly World World = new World(new Vector2(0, 30));
         public static readonly Random Random = new Random();
 
         public static Debug Debug;
@@ -27,9 +27,11 @@ namespace InfiniteIsland
         public static bool IsPaused;
 
         private Texture2D _pauseFilter;
-        private SpriteBatch _spriteBatch;
-        private RenderTarget2D _renderTarget;
         private Effect _postFx;
+        private RenderTarget2D _renderTarget;
+        private SpriteBatch _spriteBatch;
+        //To be removed as soon as default values are set
+        private float k = -.12f, kcube = +.2f;
 
         public InfiniteIsland()
         {
@@ -45,7 +47,7 @@ namespace InfiniteIsland
         }
 
         //Replacement for Initialize method, it is so that we can call it after LoadContent
-        protected void Setup()
+        private void Setup()
         {
             Input.Mouse.Limits = new BoundingLimits
                 {
@@ -79,7 +81,7 @@ namespace InfiniteIsland
                 width: GraphicsDevice.PresentationParameters.BackBufferWidth,
                 height: GraphicsDevice.PresentationParameters.BackBufferHeight,
                 mipMap: false,
-                preferredFormat: SurfaceFormat.Color, 
+                preferredFormat: SurfaceFormat.Color,
                 preferredDepthFormat: DepthFormat.None);
             _postFx = Content.Load<Effect>("Post");
 
@@ -122,15 +124,32 @@ namespace InfiniteIsland
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(_renderTarget);
-            GraphicsDevice.Clear(Color.DeepSkyBlue);
-
+            GraphicsDevice.Clear(Background.SkyColor);
+            
             Background.Draw(_spriteBatch, CameraOperator.Camera);
             Terrain.Draw(_spriteBatch, CameraOperator.Camera);
             Entities.Draw(_spriteBatch, CameraOperator.Camera);
 
+            _spriteBatch.Begin();
+            SpriteFont font = Content.Load<SpriteFont>("Bauhaus");
+            _spriteBatch.DrawString(font, "K: " + k, 100 * Vector2.UnitX, Color.White);
+            _spriteBatch.DrawString(font, "KCube: " + kcube, 500 * Vector2.UnitX, Color.White);
+            _spriteBatch.End();
+
             GraphicsDevice.SetRenderTarget(null);
 
+            if (Input.Keyboard.IsKeyDown(Keys.Up))
+                k += gameTime.TotalGameTime.Milliseconds*1e-5f;
+            if (Input.Keyboard.IsKeyDown(Keys.Down))
+                k -= gameTime.TotalGameTime.Milliseconds*1e-5f;
+            if (Input.Keyboard.IsKeyDown(Keys.Left))
+                kcube += gameTime.TotalGameTime.Milliseconds*1e-5f;
+            if (Input.Keyboard.IsKeyDown(Keys.Right))
+                kcube -= gameTime.TotalGameTime.Milliseconds*1e-5f;
+
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _postFx);
+            _postFx.Parameters["k"].SetValue(k);
+            _postFx.Parameters["kcube"].SetValue(kcube);
             _spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
             _spriteBatch.End();
 

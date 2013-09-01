@@ -10,35 +10,29 @@ namespace InfiniteIsland.Components
 {
     public class Background : IUpdateable, IDrawable
     {
-        private readonly RocksLayer[] _parallaxLayers = new RocksLayer[3];
+        private static Effect _blur;
+        private readonly MoonLayer _moon;
+        public Color SkyColor = Color.DarkCyan;
 
         public Background()
         {
-            for (int i = 0; i < _parallaxLayers.Length; i++)
-            {
-                _parallaxLayers[i] = new RocksLayer(new Vector2((float) i/_parallaxLayers.Length, 1f));
-            }
+            _moon = new MoonLayer();
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            foreach (RocksLayer layer in _parallaxLayers)
-            {
-                layer.Draw(spriteBatch, camera);
-            }
+            _moon.Draw(spriteBatch, camera, _blur);
         }
 
         public void Update(GameTime gameTime)
         {
-            foreach (RocksLayer layer in _parallaxLayers)
-            {
-                layer.Update(gameTime);
-            }
+            _moon.Update(gameTime);
         }
 
         public static void LoadContent(ContentManager content)
         {
-            RocksLayer.LoadContent(content);
+            MoonLayer.LoadContent(content);
+            _blur = content.Load<Effect>("Blur");
         }
     }
 }

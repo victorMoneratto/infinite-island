@@ -1,34 +1,22 @@
 ﻿using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Entity
 {
-    internal class Slimes : IUpdateable, IDrawable
+    internal class Slimes : IUpdateable
     {
         private readonly List<Slime> _slimes;
-        private float _milis;
 
         public Slimes()
         {
-            _slimes = new List<Slime>();
-            _slimes.Add(new Slime());
-        }
-
-        public void Draw(SpriteBatch spriteBatch, Camera camera)
-        {
-            foreach (Slime slime in _slimes)
-            {
-                slime.Draw(spriteBatch);
-            }
+            _slimes = new List<Slime> {new Slime()};
         }
 
         public void Update(GameTime gameTime)
@@ -36,6 +24,14 @@ namespace InfiniteIsland.Entity
             foreach (Slime slime in _slimes)
             {
                 slime.Update(gameTime);
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (Slime slime in _slimes)
+            {
+                slime.Draw(spriteBatch);
             }
         }
 
@@ -47,12 +43,11 @@ namespace InfiniteIsland.Entity
 
     internal class Slime : Engine.Entity.Entity
     {
+        private const float Scale = 2f;
         private static Animation _animation;
 
         private readonly Body _body;
         private readonly Sprite _sprite;
-
-        private float _scale = 2f;
 
         public Slime()
         {
@@ -60,23 +55,36 @@ namespace InfiniteIsland.Entity
                 {
                     FramesPerSecond = 10,
                     Flip = SpriteEffects.FlipHorizontally,
-                    Body = {Scale = new Vector2(_scale)}
+                    Body = {Scale = new Vector2(Scale)},
+                    Key = "walk"
                 };
-            _sprite.Key = "walk";
 
-            _body = BodyFactory.CreateRectangle(
-                world: InfiniteIsland.World,
-                width: _sprite.Animation.MaxDimensions.X.ToMeters() * _scale * .7f,
-                height: _sprite.Animation.MaxDimensions.Y.ToMeters() * _scale * .7f,
-                density: 1f,
-                position: new Vector2(19, 0));
+            //_body = BodyFactory.CreateRectangle(
+            //    world: InfiniteIsland.World,
+            //    width: _sprite.Body.Dimensions.X.ToMeters() * _sprite.Body.Scale.X,
+            //    height: _sprite.Body.Dimensions.Y.ToMeters() * _sprite.Body.Scale.Y,
+            //    density: 1f,
+            //    position: new Vector2(10, 0));
+
+            _body = BodyFactory.CreateCircle(world: InfiniteIsland.World, radius: _sprite.Body.Dimensions.X.ToMeters()*.75f, density:.5f,
+                                             position:new Vector2(10, 0));
+
             _body.BodyType = BodyType.Dynamic;
+
+            _body.OnCollision += (a, b, contact) =>
+                {
+                    //Engine.Entity.Entity player = b.UserData as Player;
+                    //if (player != null)
+                    //    _body.ApplyAngularImpulse(-1);
+                    return true;
+                };
         }
 
         public override void Update(GameTime gameTime)
         {
+            _body.ApplyLinearImpulse(.1f*Vector2.UnitX);
             _sprite.Body.Center = _body.Position.ToPixels();
-            _sprite.Body.Rotation = _body.Rotation;
+            //_sprite.Body.Rotation = _body.Rotation;
             _sprite.Update(gameTime);
         }
 

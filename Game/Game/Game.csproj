@@ -107,8 +107,9 @@
     <Compile Include="Components\Terrain.cs" />
     <Compile Include="Console\CameraCommand.cs" />
     <Compile Include="Entity\Coins.cs" />
+    <Compile Include="Entity\Singularity.cs" />
     <Compile Include="Entity\Slimes.cs" />
-    <Compile Include="Visual\RocksLayer.cs" />
+    <Compile Include="Visual\MoonLayer.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="InfiniteIsland.cs" />

@@ -9,13 +9,14 @@ namespace InfiniteIsland.Engine.Math.Geometry
         public RectangleF(Vector2 dimensions)
         {
             Dimensions = dimensions;
-            Pivot = HalfDimensions;
             Scale = Vector2.One;
+            Pivot = HalfDimensions;
         }
 
         public Vector2 Center { get; set; }
 
         public Vector2 Pivot { get; set; }
+
         public Vector2 Scale { get; set; }
 
         public Vector2 Dimensions

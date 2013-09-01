@@ -1,0 +1,9 @@
+image "sprite/moon.png"
+
+animation {
+	
+	moon {
+		frame left=10 top=10 width=236 height=236
+	}
+
+}

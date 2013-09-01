@@ -1,0 +1,14 @@
+image "sprite/fire.png"
+
+animation {
+	fire {
+		frame left=2 top=2 width=92 height=167
+		frame left=96 top=2 width=92 height=167
+		frame left=190 top=2 width=92 height=167
+		frame left=284 top=2 width=92 height=167
+		frame left=378 top=2 width=92 height=167
+		frame left=2 top=171 width=92 height=167
+		frame left=96 top=171 width=92 height=167
+		frame left=190 top=171 width=92 height=167
+	}
+}

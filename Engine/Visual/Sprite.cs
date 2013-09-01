@@ -1,3 +1,4 @@
+using System;
 using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +11,7 @@ namespace InfiniteIsland.Engine.Visual
         public RotatableRectangleF Body;
         public SpriteEffects Flip;
         public Color Tint;
+        private Vector2 _centerOffset;
 
         private Rectangle[] _frames;
         private int _index;
@@ -17,8 +19,6 @@ namespace InfiniteIsland.Engine.Visual
 
         private int _millisPerFrame;
         private int _millisSinceLastFrame;
-
-        private Vector2 _centerOffset;
 
         public Sprite(Animation animation)
         {
@@ -31,7 +31,7 @@ namespace InfiniteIsland.Engine.Visual
 
             if (Animation.Animations.Count == 1)
             {
-                string[] keys = new string[1];
+                var keys = new string[1];
                 Animation.Animations.Keys.CopyTo(keys, 0);
                 Key = keys[0];
             }
@@ -75,12 +75,13 @@ namespace InfiniteIsland.Engine.Visual
 
         private void CalculateOffset()
         {
-            _centerOffset = (Animation.MaxDimensions - new Vector2(_frames[_index].Width,_frames[_index].Height))/2f;
+            _centerOffset = (Animation.MaxDimensions - new Vector2(_frames[_index].Width, _frames[_index].Height))/2f;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //if (_frames != null)
+            if (_frames == null)
+                throw new Exception("A valid animation key must be set");
             spriteBatch.Draw(
                 texture: Animation.Texture,
                 position: Body.Center + _centerOffset,

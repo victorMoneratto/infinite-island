@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Engine.Visual
@@ -11,9 +12,9 @@ namespace InfiniteIsland.Engine.Visual
 
         public abstract void Update(GameTime gameTime);
 
-        public void Draw(SpriteBatch spriteBatch, Camera camera)
+        public void Draw(SpriteBatch spriteBatch, Camera camera, Effect effect=null)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, effect,
                               camera.CalculateTransformMatrix(Parallax));
             foreach (Sprite sprite in Sprites)
             {
@@ -21,5 +22,6 @@ namespace InfiniteIsland.Engine.Visual
             }
             spriteBatch.End();
         }
+
     }
 }
