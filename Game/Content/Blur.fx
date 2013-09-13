@@ -2,7 +2,7 @@ sampler s0 : register(s0);
 
 float4 BlurFunction3x3(float2 texcoords :TEXCOORD0) : COLOR0
 {
-	float factor = 1.0f / 80;
+	float factor = 1.0f / 100;
   // TOP ROW
   float4 s11 = tex2D(s0, texcoords + float2(-factor, -factor));    // LEFT
   float4 s12 = tex2D(s0, texcoords + float2(0, -factor));              // MIDDLE

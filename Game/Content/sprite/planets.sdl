@@ -1,0 +1,20 @@
+image "sprite/planets.png"
+
+animation {
+	blue {
+		frame top=2 left=2 width=800 height=800
+	}
+
+	brown {
+		frame top=804 left=2 width=800 height=800
+	}
+
+	green {
+		frame top=2 left=804 width=800 height=800
+	}
+
+	dusty {
+		frame top=804 left=804 width=800 height=800
+	}
+}
+

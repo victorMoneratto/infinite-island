@@ -1,3 +1,4 @@
+using System;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
@@ -17,9 +18,10 @@ namespace InfiniteIsland.Components
 
         public Terrain(GraphicsDevice graphics)
         {
-            _chunks = new TerrainChunk[graphics.Viewport.Width/TerrainChunk.Dimensions.X.ToPixels() + 1];
-            _chunks[0] = new TerrainChunk(0, Noise.Generate(TerrainChunk.HeightCount), graphics,
-                                          InfiniteIsland.World);
+            //T_T SAD it doesn't work yet T_T
+            _chunks = new TerrainChunk[graphics.Viewport.Width/TerrainChunk.Dimensions.X.ToPixels() + 20];
+            _chunks[0] = new TerrainChunk(0, Noise.Generate(TerrainChunk.HeightCount), graphics, InfiniteIsland.World);
+
             for (int i = 1; i < _chunks.Length; i++)
             {
                 _chunks[i] = new TerrainChunk(_chunks[i - 1].LastVertex.X, Noise.Generate(TerrainChunk.HeightCount),
@@ -48,14 +50,15 @@ namespace InfiniteIsland.Components
         public void Update(GameTime gameTime)
         {
             TerrainChunk firstChunk = _chunks[0];
-            //if (firstChunk.LastVertex.X.ToPixels() < InfiniteIsland.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
-            //{
-            //    firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
-            //    firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);
+            if (firstChunk.LastVertex.X.ToPixels() <
+                InfiniteIsland.CameraOperator.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
+            {
+                firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
+                firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);
 
-            //    Array.Copy(_chunks, 1, _chunks, 0, _chunks.Length - 1);
-            //    _chunks[_chunks.Length - 1] = firstChunk;
-            //}
+                Array.Copy(_chunks, 1, _chunks, 0, _chunks.Length - 1);
+                _chunks[_chunks.Length - 1] = firstChunk;
+            }
         }
 
         public static void LoadContent(ContentManager content)

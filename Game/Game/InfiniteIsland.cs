@@ -63,7 +63,7 @@ namespace InfiniteIsland
             CameraOperator = new CameraOperator(GraphicsDevice.Viewport.Bounds);
             Hud = new Hud();
             Cursor = new Cursor();
-            Background = new Background();
+            Background = new Background(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
         }
 
         protected override void LoadContent()

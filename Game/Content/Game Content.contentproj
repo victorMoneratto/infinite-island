@@ -184,6 +184,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="sprite\planets.sdl">
+      <Name>planets</Name>
+      <Importer>SDLImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+    </Compile>
     <None Include="sprite\slime.png">
       <Name>slime</Name>
       <Importer>TextureImporter</Importer>
@@ -228,6 +233,13 @@
   <ItemGroup>
     <None Include="sprite\singularity.png">
       <Name>singularity</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sprite\planets.png">
+      <Name>planets</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>

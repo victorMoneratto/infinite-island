@@ -14,9 +14,9 @@ namespace InfiniteIsland.Components
         private readonly MoonLayer _moon;
         public Color SkyColor = Color.DarkCyan;
 
-        public Background()
+        public Background(Vector2 screenDimensions)
         {
-            _moon = new MoonLayer();
+            _moon = new MoonLayer(screenDimensions/2f);
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
