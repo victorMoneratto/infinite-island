@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Visual;
+using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,9 +41,12 @@ namespace InfiniteIsland.Components
         {
             _scoreFont = content.Load<SpriteFont>("Bauhaus");
 
-            _scoreSprite = new Sprite(content.Load<Animation>("sprite/coin"));
-            _scoreSprite.Body.Pivot = Vector2.Zero;
-            _scoreSprite.Tint = Color.White*.8f;
+            _scoreSprite = new Sprite(content.Load<Animation>("sprite/coin"))
+                {
+                    Key= Coin.AnimationKeys.Good,
+                    Body = {Pivot = Vector2.Zero},
+                    Tint = Color.White*.8f
+                };
 
             _scoreTextPosition = new Vector2(_scoreSprite.Animation.MaxDimensions.X, 0);
         }

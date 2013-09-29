@@ -12,16 +12,7 @@ namespace InfiniteIsland.Engine.Visual
 
         public abstract void Update(GameTime gameTime);
 
-        public void Draw(SpriteBatch spriteBatch, Camera camera, Effect effect=null)
-        {
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, effect,
-                              camera.CalculateTransformMatrix(Parallax));
-            foreach (Sprite sprite in Sprites)
-            {
-                sprite.Draw(spriteBatch);
-            }
-            spriteBatch.End();
-        }
+        public abstract void Draw(SpriteBatch spriteBatch, Camera camera);
 
     }
 }

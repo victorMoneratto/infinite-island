@@ -1,9 +1,16 @@
 image "sprite/coin.png"
 
 animation {
-	
-	coin {
-		frame left=0 top=0 width=36 height=36
+
+	outline {
+		frame left=78 top=2 width=42 height=42
 	}
 
+	good {
+		frame left=2 top=2 width=36 height=36
+	}
+
+	bad {
+		frame left=40 top=2 width=36 height=36
+	}
 }

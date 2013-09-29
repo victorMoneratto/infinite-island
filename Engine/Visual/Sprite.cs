@@ -11,7 +11,7 @@ namespace InfiniteIsland.Engine.Visual
         public RotatableRectangleF Body;
         public SpriteEffects Flip;
         public Color Tint;
-        private Vector2 _centerOffset;
+        private Vector2 _centerOffset, _pivotOffset;
 
         private Rectangle[] _frames;
         private int _index;
@@ -73,9 +73,9 @@ namespace InfiniteIsland.Engine.Visual
             }
         }
 
-        private void CalculateOffset()
+        public void CalculateOffset()
         {
-            _centerOffset = (Animation.MaxDimensions - new Vector2(_frames[_index].Width, _frames[_index].Height))/2f;
+            _centerOffset = (Animation.MaxDimensions - new Vector2(_frames[_index].Width, _frames[_index].Height)) / 2f;
         }
 
         public void Draw(SpriteBatch spriteBatch)

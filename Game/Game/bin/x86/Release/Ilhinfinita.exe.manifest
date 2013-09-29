@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Engine.dll" size="23552">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Engine.dll" size="23040">
       <assemblyIdentity name="Engine" version="0.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>v2w3GNYzt86G4sr+sBNRHZ2AIzA=</dsig:DigestValue>
+        <dsig:DigestValue>iVB1+pRG9K/DYeyOb2p+dY4EXg0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>mamWbG9Vi4c4RRyvOQr12jAF5wY=</dsig:DigestValue>
+        <dsig:DigestValue>CTWjqsHDWmQROuVqaa8/I++rElQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -110,31 +110,31 @@
       <dsig:DigestValue>8/HPnJ16R0XzLVqBCkxfDbKbWoY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Blur.xnb" size="550">
+  <file name="Content\Blur.xnb" size="614">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>CJFojcGZw9Zk45gKaCU1ER3DWPY=</dsig:DigestValue>
+      <dsig:DigestValue>KzPWzScwXEpLFelVxAl43UDgXVg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\hg.xnb" size="285494">
+  <file name="Content\Coins.xnb" size="464">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>nqUe57HMEIanV3v1698dIE2CDl4=</dsig:DigestValue>
+      <dsig:DigestValue>o9LCOv6ov8b0PW9gKxo1BTdGwz8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Post.xnb" size="714">
+  <file name="Content\Post.xnb" size="642">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>OjTfkxmsGKValVrBZNwnAwONYX4=</dsig:DigestValue>
+      <dsig:DigestValue>Xc8864igl1V7Qvnn9j7WcLSfULs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\sfx\coin.xnb" size="89961">
@@ -155,13 +155,13 @@
       <dsig:DigestValue>IoSIW5I9Q9d9aLOHXnHN3t0XPeI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\sprite\coin.xnb" size="1202">
+  <file name="Content\sprite\coin.xnb" size="4748">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>9cspsgREWDuGTHfLHOJ+H9gAGEM=</dsig:DigestValue>
+      <dsig:DigestValue>WU01b4i8B1b3hCa1tIikgrU1YRA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\sprite\cursor.xnb" size="744">
@@ -245,13 +245,13 @@
       <dsig:DigestValue>8vyxXPt7WWG0FdJv7AMEPtqzQjg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Terrain.xnb" size="852">
+  <file name="Content\Terrain.xnb" size="872">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>pfRMbH90fUqfNLw6D4vRrTMQIcg=</dsig:DigestValue>
+      <dsig:DigestValue>u0s9bE09qLOWhPz0516h91Amuy0=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

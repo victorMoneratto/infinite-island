@@ -27,11 +27,9 @@ namespace InfiniteIsland
         public static bool IsPaused;
 
         private Texture2D _pauseFilter;
-        private Effect _postFx;
-        private RenderTarget2D _renderTarget;
+        private Effect _postFX, _coinsFX;
+        private RenderTarget2D _postRT, _coinsRT;
         private SpriteBatch _spriteBatch;
-        //To be removed as soon as default values are set
-        private float k = -.12f, kcube = +.2f;
 
         public InfiniteIsland()
         {
@@ -76,14 +74,23 @@ namespace InfiniteIsland
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _renderTarget = new RenderTarget2D(
+            _postRT = new RenderTarget2D(
                 graphicsDevice: GraphicsDevice,
                 width: GraphicsDevice.PresentationParameters.BackBufferWidth,
                 height: GraphicsDevice.PresentationParameters.BackBufferHeight,
                 mipMap: false,
                 preferredFormat: SurfaceFormat.Color,
                 preferredDepthFormat: DepthFormat.None);
-            _postFx = Content.Load<Effect>("Post");
+            _postFX = Content.Load<Effect>("Post");
+
+            _coinsRT = new RenderTarget2D(
+                graphicsDevice: GraphicsDevice,
+                width: GraphicsDevice.PresentationParameters.BackBufferWidth,
+                height: GraphicsDevice.PresentationParameters.BackBufferHeight,
+                mipMap: false,
+                preferredFormat: SurfaceFormat.Color,
+                preferredDepthFormat: DepthFormat.None);
+            _coinsFX = Content.Load<Effect>("Coins");
 
             _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
             _pauseFilter.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
@@ -110,52 +117,42 @@ namespace InfiniteIsland
 
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
-            Debug.Update(gameTime);
             Entities.Update(gameTime);
             Terrain.Update(gameTime);
             CameraOperator.Update(gameTime);
             Hud.Update(gameTime);
             Background.Update(gameTime);
             Cursor.Update(gameTime);
+            Debug.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.SetRenderTarget(_renderTarget);
+            //Render revealed coins to a separate Render Target
+            GraphicsDevice.SetRenderTarget(_coinsRT);
+            GraphicsDevice.Clear(Color.Transparent);
+            Entities.Coins.Draw(_spriteBatch, true);//<= Coins
+
+            //Render all in-game stuff
+            GraphicsDevice.SetRenderTarget(_postRT);
             GraphicsDevice.Clear(Background.SkyColor);
-            
             Background.Draw(_spriteBatch, CameraOperator.Camera);
             Terrain.Draw(_spriteBatch, CameraOperator.Camera);
             Entities.Draw(_spriteBatch, CameraOperator.Camera);
-
-            _spriteBatch.Begin();
-            SpriteFont font = Content.Load<SpriteFont>("Bauhaus");
-            _spriteBatch.DrawString(font, "K: " + k, 100 * Vector2.UnitX, Color.White);
-            _spriteBatch.DrawString(font, "KCube: " + kcube, 500 * Vector2.UnitX, Color.White);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, _coinsFX);
+            _spriteBatch.Draw(_coinsRT, GraphicsDevice.Viewport.Bounds, Color.White);
             _spriteBatch.End();
+            Cursor.Draw(_spriteBatch, CameraOperator.Camera);
 
             GraphicsDevice.SetRenderTarget(null);
-
-            if (Input.Keyboard.IsKeyDown(Keys.Up))
-                k += gameTime.TotalGameTime.Milliseconds*1e-5f;
-            if (Input.Keyboard.IsKeyDown(Keys.Down))
-                k -= gameTime.TotalGameTime.Milliseconds*1e-5f;
-            if (Input.Keyboard.IsKeyDown(Keys.Left))
-                kcube += gameTime.TotalGameTime.Milliseconds*1e-5f;
-            if (Input.Keyboard.IsKeyDown(Keys.Right))
-                kcube -= gameTime.TotalGameTime.Milliseconds*1e-5f;
-
-            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _postFx);
-            _postFx.Parameters["k"].SetValue(k);
-            _postFx.Parameters["kcube"].SetValue(kcube);
-            _spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _postFX);
+            _spriteBatch.Draw(_postRT, Vector2.Zero, Color.White);
             _spriteBatch.End();
 
             Hud.Draw(_spriteBatch, CameraOperator.Camera);
             Debug.Draw(_spriteBatch, CameraOperator.Camera);
-            Cursor.Draw(_spriteBatch, CameraOperator.Camera);
 
             if (IsPaused)
             {

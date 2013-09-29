@@ -29,10 +29,13 @@ namespace InfiniteIsland.Entity
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
+                              InfiniteIsland.CameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
             foreach (Slime slime in _slimes)
             {
                 slime.Draw(spriteBatch);
             }
+            spriteBatch.End();
         }
 
         public static void LoadContent(ContentManager content)
@@ -59,32 +62,17 @@ namespace InfiniteIsland.Entity
                     Key = "walk"
                 };
 
-            //_body = BodyFactory.CreateRectangle(
-            //    world: InfiniteIsland.World,
-            //    width: _sprite.Body.Dimensions.X.ToMeters() * _sprite.Body.Scale.X,
-            //    height: _sprite.Body.Dimensions.Y.ToMeters() * _sprite.Body.Scale.Y,
-            //    density: 1f,
-            //    position: new Vector2(10, 0));
-
-            _body = BodyFactory.CreateCircle(world: InfiniteIsland.World, radius: _sprite.Body.Dimensions.X.ToMeters()*.75f, density:.5f,
-                                             position:new Vector2(10, 0));
+            _body = BodyFactory.CreateCircle(world: InfiniteIsland.World,
+                                             radius: _sprite.Body.Dimensions.X.ToMeters()*.75f, density: .5f,
+                                             position: new Vector2(10, 0));
 
             _body.BodyType = BodyType.Dynamic;
-
-            _body.OnCollision += (a, b, contact) =>
-                {
-                    //Engine.Entity.Entity player = b.UserData as Player;
-                    //if (player != null)
-                    //    _body.ApplyAngularImpulse(-1);
-                    return true;
-                };
         }
 
         public override void Update(GameTime gameTime)
         {
             _body.ApplyLinearImpulse(.1f*Vector2.UnitX);
             _sprite.Body.Center = _body.Position.ToPixels();
-            //_sprite.Body.Rotation = _body.Rotation;
             _sprite.Update(gameTime);
         }
 

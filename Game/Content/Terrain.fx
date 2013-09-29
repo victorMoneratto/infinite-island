@@ -3,12 +3,6 @@ float4 smoothInterpolate(float4 v0, float4 v1, float delta)
 	delta = pow(delta, 2) * (3 - 2*delta);
 	return lerp(v0, v1,delta);
 }
-//
-//float cosineInterpolate(float v0, float v1, float delta)
-//{
-//	delta = (1 - cos(delta*3.14159265f))/2;
-//	return lerp(v0, v1, delta);
-//}
 
 sampler s0 : register(s0);
 
@@ -33,8 +27,8 @@ float4 PixelShaderFunction(float2 texCoords :TEXCOORD0) : COLOR0
     float height = smoothInterpolate(lastHeight, nextHeight, delta);
 
     //TODO Replace with texture or something
-    float4 color0 = float4(1, 1, 0, 1);
-    float4 color1 = float4(0, .5, 0, 1);
+    float4 color0 = float4(0.3984375, 0.17578125, 0.56640625, 1);
+    float4 color1 = float4(0.265625, 0.0546875, 0.3828125, 1);
 
     float4 finalColor = smoothInterpolate(color0, color1, (texCoords.y) - (height));
     if(height < texCoords.y)

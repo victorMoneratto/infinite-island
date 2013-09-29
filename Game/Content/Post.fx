@@ -1,25 +1,12 @@
 sampler s0 : register(s0);
 
-//float4 PixelShaderFunction(float2 texCoords:TEXCOORD0) : COLOR0
-//{
-//	float alpha = 0;
-//	
-//	alpha = sin(texCoords.y*1000) < 0? 0 : .15;
-//
-//    return tex2D(s0, texCoords) - float4(0, 0, 0, alpha);
-//}
-
-float k;
-float kcube;
-bool singularity;
-
 float4 PixelShaderFunction(float2 tex : TEXCOORD0) : COLOR
 {
-        //// lens distortion coefficient (between
-        //float k = 1;
+        // lens distortion coefficient (between
+        float k = -.12;
        
-        //// cubic distortion value
-        //float kcube = -2;
+        // cubic distortion value
+        float kcube = +.2f;
        
        
         float r2 = (tex.x-0.5) * (tex.x-0.5) + (tex.y-0.5) * (tex.y-0.5);       

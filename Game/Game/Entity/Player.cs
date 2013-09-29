@@ -27,17 +27,17 @@ namespace InfiniteIsland.Entity
                 world: InfiniteIsland.World,
                 dimensions: _sprite.Animation.MaxDimensions.ToMeters()*.9f,
                 userData: this);
-            
+
             Body.Torso.OnCollision += OnCollision;
-            
+
             Body.Wheel.OnCollision += (a, b, contact) =>
                 {
-                    _sprite.Key = AnimationKey.Walk;
+                    _sprite.Key = AnimationKeys.Walk;
                     return true;
                 };
 
             Body.Motor.MotorSpeed = MaxSpeed;
-            _sprite.Key = AnimationKey.Walk;
+            _sprite.Key = AnimationKeys.Walk;
         }
 
         private bool OnCollision(Fixture f1, Fixture f2, Contact contact)
@@ -71,7 +71,10 @@ namespace InfiniteIsland.Entity
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
+                              InfiniteIsland.CameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
             _sprite.Draw(spriteBatch);
+            spriteBatch.End();
         }
 
         public static void LoadContent(ContentManager content)
@@ -82,7 +85,7 @@ namespace InfiniteIsland.Entity
             _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
         }
 
-        private struct AnimationKey
+        private struct AnimationKeys
         {
             public const string Walk = "walk";
             public const string Stand = "stand";

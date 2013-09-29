@@ -8,16 +8,14 @@ using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    internal class Entities : IUpdateable, IDrawable
+    internal class Entities : IUpdateable
     {
         public readonly Coins Coins;
         public readonly Player Player;
         public readonly Slimes Slimes;
-        public readonly Singularity Singularity;
 
         public Entities()
         {
-            Singularity = new Singularity();
             Player = new Player();
             Coins = new Coins();
             Slimes = new Slimes();
@@ -25,20 +23,13 @@ namespace InfiniteIsland.Components
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              camera.CalculateTransformMatrix(Vector2.One));
-
-            Singularity.Draw(spriteBatch);
-            Player.Draw(spriteBatch);
-            Coins.Draw(spriteBatch);
+            Coins.Draw(spriteBatch, false);
             Slimes.Draw(spriteBatch);
-
-            spriteBatch.End();
+            Player.Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime)
         {
-            Singularity.Update(gameTime);
             Player.Update(gameTime);
             Coins.Update(gameTime);
             Slimes.Update(gameTime);
@@ -46,7 +37,6 @@ namespace InfiniteIsland.Components
 
         public static void LoadContent(ContentManager content)
         {
-            Singularity.LoadContent(content);
             Coins.LoadContent(content);
             Player.LoadContent(content);
             Slimes.LoadContent(content);

@@ -3,3 +3,5 @@ obj/
 *.pdb
 *.cache*
 *not-used*
+*.db
+*.db

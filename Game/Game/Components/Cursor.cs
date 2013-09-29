@@ -19,7 +19,6 @@ namespace InfiniteIsland.Components
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             spriteBatch.Begin();
-
             _sprite.Draw(spriteBatch);
             spriteBatch.End();
         }
