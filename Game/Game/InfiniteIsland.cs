@@ -17,10 +17,12 @@ namespace InfiniteIsland
         public static int Coins;
         public static float Factor = 1f;
         public static bool IsPaused;
+        private Effect _coinsFX;
+        private RenderTarget2D _coinsRT;
 
         private Texture2D _pauseFilter;
-        private Effect _postFX, _coinsFX;
-        private RenderTarget2D _postRT, _coinsRT;
+        private Effect _postFX;
+        private RenderTarget2D _postRT;
         private SpriteBatch _spriteBatch;
 
         public InfiniteIsland()
@@ -53,7 +55,8 @@ namespace InfiniteIsland
             CameraOperator.Instance = new CameraOperator(GraphicsDevice.Viewport.Bounds);
             HUD.Instance = new HUD();
             Cursor.Instance = new Cursor();
-            Background.Instance = new Background(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+            Background.Instance =
+                new Background(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
         }
 
         protected override void LoadContent()
@@ -125,7 +128,7 @@ namespace InfiniteIsland
             //Render revealed coins to a separate Render Target
             GraphicsDevice.SetRenderTarget(_coinsRT);
             GraphicsDevice.Clear(Color.Transparent);
-            Entities.Instance.Coins.Draw(_spriteBatch, true);//<= Coins
+            Entities.Instance.Coins.Draw(_spriteBatch, true); //<= Coins
 
             //Render all in-game stuff
             GraphicsDevice.SetRenderTarget(_postRT);
@@ -134,6 +137,9 @@ namespace InfiniteIsland
             Terrain.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
             Entities.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, _coinsFX);
+            _coinsFX.Parameters["center"].SetValue(Input.Mouse.Position/
+                                                   new Vector2(GraphicsDevice.Viewport.Bounds.Width,    // <= Creating objects every frame? That makes me sad ):
+                                                               GraphicsDevice.Viewport.Bounds.Height));
             _spriteBatch.Draw(_coinsRT, GraphicsDevice.Viewport.Bounds, Color.White);
             _spriteBatch.End();
             Cursor.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);

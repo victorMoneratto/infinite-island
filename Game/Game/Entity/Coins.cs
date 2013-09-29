@@ -78,18 +78,28 @@ namespace InfiniteIsland.Entity
                 foreach (Coin coin in _coins)
                 {
                     coin.Sprite.Key = coin.Type;
+                    Vector2 badOffset = Vector2.Zero;
+                    if (coin.Type == Coin.AnimationKeys.Bad)
+                    {
+                        badOffset = new Vector2(
+                            x: (float)(InfiniteIsland.Random.NextDouble() - .5f) * 15,
+                            y: (float)(InfiniteIsland.Random.NextDouble() - .5f) * 15);
+                        coin.Sprite.Body.Center += badOffset;
+                    }
+
                     coin.Sprite.Body.Pivot -= Vector2.One*3;
                     coin.Sprite.Body.Center -= Vector2.One*3;
                     coin.Draw(spriteBatch);
                     coin.Sprite.Body.Center += Vector2.One*3;
                     coin.Sprite.Body.Pivot += Vector2.One*3;
+                    coin.Sprite.Body.Center -= badOffset;
                 }
                 spriteBatch.End();
             }
             else
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
+                                  CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
                 foreach (Coin coin in _coins)
                 {
                     coin.Sprite.Key = Coin.AnimationKeys.Outline;
@@ -115,6 +125,7 @@ namespace InfiniteIsland.Entity
     {
         private const float Scale = 2f;
         private static Animation _animation;
+
         public readonly Body Body;
         public readonly Sprite Sprite;
         public readonly string Type;
@@ -138,7 +149,9 @@ namespace InfiniteIsland.Entity
                             Scale = new Vector2(Scale),
                         }
                 };
-            Type = AnimationKeys.Good;
+            if (InfiniteIsland.Random.Next(2) == 0)
+                Type = AnimationKeys.Bad;
+            else Type = AnimationKeys.Good;
         }
 
         public override void Update(GameTime gameTime)

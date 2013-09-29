@@ -49,8 +49,15 @@ namespace InfiniteIsland.Entity
 
             if (entity is Coin)
             {
-                ++InfiniteIsland.Coins;
-                _coinConsumeSound.Play(1f, 1f, 0f);
+                if (((Coin) entity).Type == Coin.AnimationKeys.Good)
+                {
+                    ++InfiniteIsland.Coins;
+                    _coinConsumeSound.Play(1f, 1f, 0f);
+                }
+                else
+                {
+                    InfiniteIsland.Factor -= .2f;
+                }
                 Entities.Instance.Coins.Remove(entity as Coin);
                 return false;
             }

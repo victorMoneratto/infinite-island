@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>oVru6hEUK22H+sYDfNvhdXbrK6Y=</dsig:DigestValue>
+        <dsig:DigestValue>pf1+oeqv2FCr9oTNPlCVKIPJUjs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -119,13 +119,13 @@
       <dsig:DigestValue>D/Ri8z1hBGEvQOr2Lm/HJ5y92/c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Coins.xnb" size="1328">
+  <file name="Content\Coins.xnb" size="1604">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>a3yL7tME1ZdaqpII/aE5ErqiJHg=</dsig:DigestValue>
+      <dsig:DigestValue>9Z9mlJWaeR42WWWfgXufnBNuHNk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Post.xnb" size="2236">
