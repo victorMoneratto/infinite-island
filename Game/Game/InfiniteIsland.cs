@@ -14,14 +14,6 @@ namespace InfiniteIsland
         public static readonly World World = new World(new Vector2(0, 30));
         public static readonly Random Random = new Random();
 
-        public static Debug Debug;
-        public static Entities Entities;
-        public static Terrain Terrain;
-        public static CameraOperator CameraOperator;
-        public static Hud Hud;
-        public static Cursor Cursor;
-        public static Background Background;
-
         public static int Coins;
         public static float Factor = 1f;
         public static bool IsPaused;
@@ -55,20 +47,20 @@ namespace InfiniteIsland
                     Down = GraphicsDevice.Viewport.Height - 2f
                 };
 
-            Debug = new Debug(this, _spriteBatch);
-            Entities = new Entities();
-            Terrain = new Terrain(GraphicsDevice);
-            CameraOperator = new CameraOperator(GraphicsDevice.Viewport.Bounds);
-            Hud = new Hud();
-            Cursor = new Cursor();
-            Background = new Background(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+            Debug.Instance = new Debug(this, _spriteBatch);
+            Entities.Instance = new Entities();
+            Terrain.Instance = new Terrain(GraphicsDevice);
+            CameraOperator.Instance = new CameraOperator(GraphicsDevice.Viewport.Bounds);
+            HUD.Instance = new HUD();
+            Cursor.Instance = new Cursor();
+            Background.Instance = new Background(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
         }
 
         protected override void LoadContent()
         {
             Entities.LoadContent(Content);
             Terrain.LoadContent(Content);
-            Hud.LoadContent(Content);
+            HUD.LoadContent(Content);
             Background.LoadContent(Content);
             Cursor.LoadContent(Content);
 
@@ -117,13 +109,13 @@ namespace InfiniteIsland
 
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
-            Entities.Update(gameTime);
-            Terrain.Update(gameTime);
-            CameraOperator.Update(gameTime);
-            Hud.Update(gameTime);
-            Background.Update(gameTime);
-            Cursor.Update(gameTime);
-            Debug.Update(gameTime);
+            Entities.Instance.Update(gameTime);
+            Terrain.Instance.Update(gameTime);
+            CameraOperator.Instance.Update(gameTime);
+            HUD.Instance.Update(gameTime);
+            Background.Instance.Update(gameTime);
+            Cursor.Instance.Update(gameTime);
+            Debug.Instance.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -133,26 +125,26 @@ namespace InfiniteIsland
             //Render revealed coins to a separate Render Target
             GraphicsDevice.SetRenderTarget(_coinsRT);
             GraphicsDevice.Clear(Color.Transparent);
-            Entities.Coins.Draw(_spriteBatch, true);//<= Coins
+            Entities.Instance.Coins.Draw(_spriteBatch, true);//<= Coins
 
             //Render all in-game stuff
             GraphicsDevice.SetRenderTarget(_postRT);
-            GraphicsDevice.Clear(Background.SkyColor);
-            Background.Draw(_spriteBatch, CameraOperator.Camera);
-            Terrain.Draw(_spriteBatch, CameraOperator.Camera);
-            Entities.Draw(_spriteBatch, CameraOperator.Camera);
+            GraphicsDevice.Clear(Background.Instance.SkyColor);
+            Background.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
+            Terrain.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
+            Entities.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, _coinsFX);
             _spriteBatch.Draw(_coinsRT, GraphicsDevice.Viewport.Bounds, Color.White);
             _spriteBatch.End();
-            Cursor.Draw(_spriteBatch, CameraOperator.Camera);
+            Cursor.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
 
             GraphicsDevice.SetRenderTarget(null);
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _postFX);
             _spriteBatch.Draw(_postRT, Vector2.Zero, Color.White);
             _spriteBatch.End();
 
-            Hud.Draw(_spriteBatch, CameraOperator.Camera);
-            Debug.Draw(_spriteBatch, CameraOperator.Camera);
+            HUD.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
+            Debug.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
 
             if (IsPaused)
             {

@@ -10,8 +10,9 @@ using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Components
 {
-    internal class Hud : IUpdateable, IDrawable
+    internal class HUD : IUpdateable, IDrawable
     {
+        public static HUD Instance;
         private static Sprite _scoreSprite;
         private static SpriteFont _scoreFont;
         private static Vector2 _scoreTextPosition;

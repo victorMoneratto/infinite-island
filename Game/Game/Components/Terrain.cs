@@ -12,6 +12,8 @@ namespace InfiniteIsland.Components
 {
     public class Terrain : IUpdateable, IDrawable
     {
+        public static Terrain Instance;
+
         private static Effect _terrainEffect;
         private readonly Texture2D _blankTexture;
         private readonly TerrainChunk[] _chunks;
@@ -51,7 +53,7 @@ namespace InfiniteIsland.Components
         {
             TerrainChunk firstChunk = _chunks[0];
             if (firstChunk.LastVertex.X.ToPixels() <
-                InfiniteIsland.CameraOperator.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
+                CameraOperator.Instance.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
             {
                 firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
                 firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);

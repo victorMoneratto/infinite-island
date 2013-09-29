@@ -13,6 +13,7 @@ namespace InfiniteIsland.Components
 {
     internal class Cursor : IUpdateable, IDrawable
     {
+        public static Cursor Instance;
         private static Sprite _sprite;
         private FixedMouseJoint _mouseJoint;
 
@@ -30,7 +31,7 @@ namespace InfiniteIsland.Components
             {
                 if (Input.Mouse.IsButtonDown(Input.Mouse.MouseButton.Left))
                 {
-                    _mouseJoint.WorldAnchorB = InfiniteIsland.CameraOperator.Camera.PositionOnWorld(Input.Mouse.Position);
+                    _mouseJoint.WorldAnchorB = CameraOperator.Instance.Camera.PositionOnWorld(Input.Mouse.Position);
                 }
                 else
                 {
@@ -40,7 +41,7 @@ namespace InfiniteIsland.Components
             }
             else
             {
-                Vector2 cursorWorldPosition = InfiniteIsland.CameraOperator.Camera.PositionOnWorld(Input.Mouse.Position);
+                Vector2 cursorWorldPosition = CameraOperator.Instance.Camera.PositionOnWorld(Input.Mouse.Position);
                 if (Input.Mouse.IsButtonClicked(Input.Mouse.MouseButton.Left))
                 {
                     Fixture fixture;

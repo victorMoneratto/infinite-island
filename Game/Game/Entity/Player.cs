@@ -1,5 +1,6 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
+using InfiniteIsland.Components;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Physics;
@@ -50,7 +51,7 @@ namespace InfiniteIsland.Entity
             {
                 ++InfiniteIsland.Coins;
                 _coinConsumeSound.Play(1f, 1f, 0f);
-                InfiniteIsland.Entities.Coins.Remove(entity as Coin);
+                Entities.Instance.Coins.Remove(entity as Coin);
                 return false;
             }
 
@@ -72,7 +73,7 @@ namespace InfiniteIsland.Entity
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              InfiniteIsland.CameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
+                              CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
             _sprite.Draw(spriteBatch);
             spriteBatch.End();
         }

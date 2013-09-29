@@ -10,6 +10,7 @@ namespace InfiniteIsland.Components
 {
     internal class Entities : IUpdateable
     {
+        public static Entities Instance;
         public readonly Coins Coins;
         public readonly Player Player;
         public readonly Slimes Slimes;

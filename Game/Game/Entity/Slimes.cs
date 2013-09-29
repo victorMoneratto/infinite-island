@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using InfiniteIsland.Components;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
@@ -30,7 +31,7 @@ namespace InfiniteIsland.Entity
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              InfiniteIsland.CameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
+                              CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
             foreach (Slime slime in _slimes)
             {
                 slime.Draw(spriteBatch);

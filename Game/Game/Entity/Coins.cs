@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using InfiniteIsland.Components;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Math.Geometry;
 using InfiniteIsland.Engine.Visual;
@@ -28,7 +29,7 @@ namespace InfiniteIsland.Entity
             {
                 --_milis;
 
-                RotatableRectangleF cameraViewport = InfiniteIsland.CameraOperator.Camera.Viewport;
+                RotatableRectangleF cameraViewport = CameraOperator.Instance.Camera.Viewport;
                 if (_coins.Count == _coins.Capacity)
                     Remove(_coins[0]);
 
@@ -44,7 +45,7 @@ namespace InfiniteIsland.Entity
                                              (float) InfiniteIsland.Random.NextDouble()*
                                              cameraViewport.Dimensions.Y*.75f)).ToMeters(),
                             linearVelocity:
-                                InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity*
+                                Entities.Instance.Player.Body.Wheel.LinearVelocity*
                                 new Vector2(1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
                                             -2*(float) InfiniteIsland.Random.NextDouble())
                             ));
@@ -60,7 +61,7 @@ namespace InfiniteIsland.Entity
                                              (float) InfiniteIsland.Random.NextDouble()*
                                              cameraViewport.Dimensions.Y*.75f)).ToMeters(),
                             linearVelocity:
-                                InfiniteIsland.Entities.Player.Body.Wheel.LinearVelocity*
+                                Entities.Instance.Player.Body.Wheel.LinearVelocity*
                                 (new Vector2(1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
                                              -2*(float) InfiniteIsland.Random.NextDouble()) - Vector2.UnitX)
                             ));
@@ -73,7 +74,7 @@ namespace InfiniteIsland.Entity
             if (revealCoins)
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                                  InfiniteIsland.CameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
+                                  CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
                 foreach (Coin coin in _coins)
                 {
                     coin.Sprite.Key = coin.Type;
@@ -88,7 +89,7 @@ namespace InfiniteIsland.Entity
             else
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              InfiniteIsland.CameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
+                              CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
                 foreach (Coin coin in _coins)
                 {
                     coin.Sprite.Key = Coin.AnimationKeys.Outline;

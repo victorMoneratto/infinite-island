@@ -1,5 +1,6 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using InfiniteIsland.Components;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Visual;
@@ -33,7 +34,7 @@ namespace InfiniteIsland.Entity
                     //some hardcoding T-T
                     var randomPos = new Vector2(1280*(float) InfiniteIsland.Random.NextDouble(),
                                                 _sprite.Body.Dimensions.Y/2f);
-                    _body.Position = InfiniteIsland.CameraOperator.Camera.PositionOnWorld(randomPos);
+                    _body.Position = CameraOperator.Instance.Camera.PositionOnWorld(randomPos);
                     _sprite.Body.Center = _body.Position.ToPixels();
                 }
             }
@@ -47,7 +48,7 @@ namespace InfiniteIsland.Entity
                 _sprite.Body.Rotation += (gameTime.ElapsedGameTime.Milliseconds*5e-3f)%MathHelper.TwoPi;
                 _sprite.Body.Scale = new Vector2(1f + (float) InfiniteIsland.Random.NextDouble()/10f);
                 _sprite.Body.Center += new Vector2(
-                    x: (InfiniteIsland.Entities.Player.Body.Motor.MotorSpeed*
+                    x: (Entities.Instance.Player.Body.Motor.MotorSpeed*
                        (float) InfiniteIsland.Random.NextDouble()) +
                        ((float) InfiniteIsland.Random.NextDouble() - .5f)*20,
                     y: ((float) InfiniteIsland.Random.NextDouble() - .5f)*20);

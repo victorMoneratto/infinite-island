@@ -1,7 +1,6 @@
 ﻿using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
-using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
@@ -9,6 +8,7 @@ namespace InfiniteIsland.Components
 {
     internal class CameraOperator : IUpdateable
     {
+        public static CameraOperator Instance;
         public Camera Camera;
 
         public CameraOperator(Rectangle viewportBounds)
@@ -21,11 +21,11 @@ namespace InfiniteIsland.Components
         public void Update(GameTime gameTime)
         {
             Camera.Viewport.Center =
-                InfiniteIsland.Entities.Player.Body.Torso.Position.ToPixels() -
+                Entities.Instance.Player.Body.Torso.Position.ToPixels() -
                 (2f*InfiniteIsland.Factor - 1)*new Vector2(.4f*Camera.Viewport.Dimensions.X, 1f);
 
             //is it really working?
-            Camera.Viewport.Pivot = (InfiniteIsland.Entities.Player.Body.Torso.Position.ToPixels() -
+            Camera.Viewport.Pivot = (Entities.Instance.Player.Body.Torso.Position.ToPixels() -
                                      Camera.Viewport.TopLeft)/
                                     Camera.Viewport.Dimensions;
 

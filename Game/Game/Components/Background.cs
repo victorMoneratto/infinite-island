@@ -10,6 +10,7 @@ namespace InfiniteIsland.Components
 {
     public class Background : IUpdateable, IDrawable
     {
+        public static Background Instance;
         public Color SkyColor = Color.DarkCyan;
 
         public Background(Vector2 screenDimensions)

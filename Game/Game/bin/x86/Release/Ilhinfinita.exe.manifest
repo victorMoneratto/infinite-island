@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>iVB1+pRG9K/DYeyOb2p+dY4EXg0=</dsig:DigestValue>
+        <dsig:DigestValue>hUwees2tgTgX/jijQdmo0VCzDw8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>CTWjqsHDWmQROuVqaa8/I++rElQ=</dsig:DigestValue>
+        <dsig:DigestValue>89E7UzQ9+GrSPrmVYrF/0MXuX0Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -119,13 +119,13 @@
       <dsig:DigestValue>KzPWzScwXEpLFelVxAl43UDgXVg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Coins.xnb" size="464">
+  <file name="Content\Coins.xnb" size="462">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>o9LCOv6ov8b0PW9gKxo1BTdGwz8=</dsig:DigestValue>
+      <dsig:DigestValue>coni7SvtKNam+fFWMid9sgLMFhE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Post.xnb" size="642">
@@ -245,13 +245,13 @@
       <dsig:DigestValue>8vyxXPt7WWG0FdJv7AMEPtqzQjg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Terrain.xnb" size="872">
+  <file name="Content\Terrain.xnb" size="866">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>u0s9bE09qLOWhPz0516h91Amuy0=</dsig:DigestValue>
+      <dsig:DigestValue>BgEZeUZqauU+T/s/+nqRAb4D8cM=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

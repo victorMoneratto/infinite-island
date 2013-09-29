@@ -14,6 +14,7 @@ namespace InfiniteIsland.Components
 {
     public class Debug : IUpdateable, IDrawable
     {
+        public static Debug Instance;
         private readonly DebugViewXNA _physicsDebug;
         public GameConsole Console;
         public bool PhysicsDebugEnabled;
