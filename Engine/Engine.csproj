@@ -59,12 +59,13 @@
     <Compile Include="Math\Geometry\RotatableRectangleF.cs" />
     <Compile Include="Math\Measure.cs" />
     <Compile Include="Math\Noise.cs" />
-    <Compile Include="Math\Tween.cs" />
     <Compile Include="Physics\HumanoidBody.cs" />
     <Compile Include="Terrain\TerrainChunk.cs" />
+    <Compile Include="Tweening.cs" />
     <Compile Include="Visual\Animation.cs" />
     <Compile Include="Visual\ParallaxLayer.cs" />
     <Compile Include="Visual\Sprite.cs" />
+    <Compile Include="Wait.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -24,6 +24,7 @@ namespace InfiniteIsland
         private Effect _postFX;
         private RenderTarget2D _postRT;
         private SpriteBatch _spriteBatch;
+        public const float LinearDistortion = -.12f, CubicDistortion = .2f;
 
         public InfiniteIsland()
         {
@@ -112,6 +113,7 @@ namespace InfiniteIsland
 
             World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
 
+            Wait.Update(gameTime);
             Entities.Instance.Update(gameTime);
             Terrain.Instance.Update(gameTime);
             CameraOperator.Instance.Update(gameTime);
@@ -125,12 +127,12 @@ namespace InfiniteIsland
 
         protected override void Draw(GameTime gameTime)
         {
-            //Render revealed coins to a separate Render Target
+            //Render revealed coins to own buffer
             GraphicsDevice.SetRenderTarget(_coinsRT);
             GraphicsDevice.Clear(Color.Transparent);
             Entities.Instance.Coins.Draw(_spriteBatch, true); //<= Coins
 
-            //Render all in-game stuff
+            //Render all the rest
             GraphicsDevice.SetRenderTarget(_postRT);
             GraphicsDevice.Clear(Background.Instance.SkyColor);
             Background.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
@@ -146,6 +148,8 @@ namespace InfiniteIsland
 
             GraphicsDevice.SetRenderTarget(null);
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _postFX);
+            _postFX.Parameters["k"].SetValue(LinearDistortion);
+            _postFX.Parameters["kcube"].SetValue(CubicDistortion);
             _spriteBatch.Draw(_postRT, Vector2.Zero, Color.White);
             _spriteBatch.End();
 

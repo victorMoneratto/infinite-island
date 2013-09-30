@@ -1,4 +1,5 @@
-﻿using FarseerPhysics.Dynamics;
+﻿using System;
+using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using InfiniteIsland.Components;
 using InfiniteIsland.Engine;
@@ -18,7 +19,7 @@ namespace InfiniteIsland.Entity
         private const float MaxSpeed = 40f;
         private static Sprite _sprite;
 
-        private static SoundEffect _coinConsumeSound, _jumpSound;
+        private static SoundEffect _coinConsumeSound, _jumpSound, _hurtSound;
 
         public readonly HumanoidBody Body;
 
@@ -30,12 +31,6 @@ namespace InfiniteIsland.Entity
                 userData: this);
 
             Body.Torso.OnCollision += OnCollision;
-
-            Body.Wheel.OnCollision += (a, b, contact) =>
-                {
-                    _sprite.Key = AnimationKeys.Walk;
-                    return true;
-                };
 
             Body.Motor.MotorSpeed = MaxSpeed;
             _sprite.Key = AnimationKeys.Walk;
@@ -56,7 +51,16 @@ namespace InfiniteIsland.Entity
                 }
                 else
                 {
-                    InfiniteIsland.Factor -= .2f;
+                    float factor = InfiniteIsland.Factor;
+                    Wait.Until(time =>
+                               Tweening.Tween(
+                                   start: factor,
+                                   end: factor - 1/3f,
+                                   progress: time/.5f,
+                                   step: value => InfiniteIsland.Factor = value,
+                                   scale: TweenScales.Quadratic));
+
+                    _hurtSound.Play();
                 }
                 Entities.Instance.Coins.Remove(entity as Coin);
                 return false;
@@ -89,6 +93,7 @@ namespace InfiniteIsland.Entity
         {
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
+            _hurtSound = content.Load<SoundEffect>("sfx/hurt");
 
             _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
         }

@@ -1,14 +1,13 @@
 sampler s0 : register(s0);
 
+// lens distortion coefficient
+float k;
+       
+// cubic distortion value
+float kcube;
+
 float4 PixelShaderFunction(float2 tex : TEXCOORD0) : COLOR
 {
-        // lens distortion coefficient (between
-        float k = -.12;
-       
-        // cubic distortion value
-        float kcube = +.2f;
-       
-       
         float r2 = (tex.x-0.5) * (tex.x-0.5) + (tex.y-0.5) * (tex.y-0.5);       
         float f = 0;
 		
