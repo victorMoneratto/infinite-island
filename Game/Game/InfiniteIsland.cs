@@ -1,6 +1,6 @@
 using System;
 using FarseerPhysics.Dynamics;
-using InfiniteIsland.Components;
+using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
@@ -11,6 +11,7 @@ namespace InfiniteIsland
 {
     internal class InfiniteIsland : Game
     {
+        public const float LinearDistortion = -.12f, CubicDistortion = .2f;
         public static readonly World World = new World(new Vector2(0, 30));
         public static readonly Random Random = new Random();
 
@@ -24,31 +25,30 @@ namespace InfiniteIsland
         private Effect _postFX;
         private RenderTarget2D _postRT;
         private SpriteBatch _spriteBatch;
-        public const float LinearDistortion = -.12f, CubicDistortion = .2f;
 
         public InfiniteIsland()
         {
             Content.RootDirectory = "Content";
             new GraphicsDeviceManager(this)
-                {
-                    PreferredBackBufferWidth = 1280,
-                    PreferredBackBufferHeight = 720,
-                    PreferMultiSampling = true,
-                    SynchronizeWithVerticalRetrace = true,
-                    //IsFullScreen = true
-                };
+            {
+                PreferredBackBufferWidth = 1280,
+                PreferredBackBufferHeight = 720,
+                PreferMultiSampling = true,
+                SynchronizeWithVerticalRetrace = true,
+                //IsFullScreen = true
+            };
         }
 
         //Replacement for Initialize method, it is so that we can call it after LoadContent
         private void Setup()
         {
             Input.Mouse.Limits = new BoundingLimits
-                {
-                    Left = 2f,
-                    Right = GraphicsDevice.Viewport.Width - 2f,
-                    Up = 2f,
-                    Down = GraphicsDevice.Viewport.Height - 2f
-                };
+            {
+                Left = 2f,
+                Right = GraphicsDevice.Viewport.Width - 2f,
+                Up = 2f,
+                Down = GraphicsDevice.Viewport.Height - 2f
+            };
 
             Debug.Instance = new Debug(this, _spriteBatch);
             Entities.Instance = new Entities();
@@ -70,22 +70,12 @@ namespace InfiniteIsland
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _postRT = new RenderTarget2D(
-                graphicsDevice: GraphicsDevice,
-                width: GraphicsDevice.PresentationParameters.BackBufferWidth,
-                height: GraphicsDevice.PresentationParameters.BackBufferHeight,
-                mipMap: false,
-                preferredFormat: SurfaceFormat.Color,
-                preferredDepthFormat: DepthFormat.None);
+            _postRT = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth,
+                GraphicsDevice.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
             _postFX = Content.Load<Effect>("Post");
 
-            _coinsRT = new RenderTarget2D(
-                graphicsDevice: GraphicsDevice,
-                width: GraphicsDevice.PresentationParameters.BackBufferWidth,
-                height: GraphicsDevice.PresentationParameters.BackBufferHeight,
-                mipMap: false,
-                preferredFormat: SurfaceFormat.Color,
-                preferredDepthFormat: DepthFormat.None);
+            _coinsRT = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth,
+                GraphicsDevice.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
             _coinsFX = Content.Load<Effect>("Coins");
 
             _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
@@ -138,10 +128,12 @@ namespace InfiniteIsland
             Background.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
             Terrain.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
             Entities.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, _coinsFX);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, null, null, null, _coinsFX);
             _coinsFX.Parameters["center"].SetValue(Input.Mouse.Position/
                                                    new Vector2(GraphicsDevice.Viewport.Bounds.Width,    // <= Creating objects every frame? That makes me sad ):
-                                                               GraphicsDevice.Viewport.Bounds.Height));
+                                                       GraphicsDevice.Viewport.Bounds.Height));
+            _coinsFX.Parameters["aspectRatio"].SetValue((float) GraphicsDevice.Viewport.Bounds.Width/
+                                                        GraphicsDevice.Viewport.Bounds.Height);
             _spriteBatch.Draw(_coinsRT, GraphicsDevice.Viewport.Bounds, Color.White);
             _spriteBatch.End();
             Cursor.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);

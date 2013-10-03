@@ -1,6 +1,6 @@
 ﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Components;
+using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Visual;

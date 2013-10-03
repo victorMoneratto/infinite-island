@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
-using InfiniteIsland.Components;
+using InfiniteIsland.Component;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Math.Geometry;
 using InfiniteIsland.Engine.Visual;

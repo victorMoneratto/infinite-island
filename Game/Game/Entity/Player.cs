@@ -1,7 +1,7 @@
 ﻿using System;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
-using InfiniteIsland.Components;
+using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Physics;

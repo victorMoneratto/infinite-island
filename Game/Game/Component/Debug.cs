@@ -10,7 +10,7 @@ using XNAGameConsole;
 using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
-namespace InfiniteIsland.Components
+namespace InfiniteIsland.Component
 {
     public class Debug : IUpdateable, IDrawable
     {

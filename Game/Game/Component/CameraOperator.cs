@@ -4,7 +4,7 @@ using InfiniteIsland.Engine.Terrain;
 using Microsoft.Xna.Framework;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
-namespace InfiniteIsland.Components
+namespace InfiniteIsland.Component
 {
     internal class CameraOperator : IUpdateable
     {
@@ -24,10 +24,7 @@ namespace InfiniteIsland.Components
                 Entities.Instance.Player.Body.Torso.Position.ToPixels() -
                 (2f*InfiniteIsland.Factor - 1)*new Vector2(.4f*Camera.Viewport.Dimensions.X, 1f);
 
-            //is it really working?
-            Camera.Viewport.Pivot = (Entities.Instance.Player.Body.Torso.Position.ToPixels() -
-                                     Camera.Viewport.TopLeft)/
-                                    Camera.Viewport.Dimensions;
+            Camera.Viewport.Pivot = new Vector2(InfiniteIsland.Factor, .5f);
 
             Vector2 mousePosition = Camera.PositionOnWorld(Input.Mouse.Position);
             float rotationFactor = (Camera.Viewport.Center.X - mousePosition.X.ToPixels())/

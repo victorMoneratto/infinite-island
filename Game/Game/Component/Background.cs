@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
 using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
-namespace InfiniteIsland.Components
+namespace InfiniteIsland.Component
 {
     public class Background : IUpdateable, IDrawable
     {
