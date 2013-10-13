@@ -107,7 +107,6 @@
     <Compile Include="Component\Terrain.cs" />
     <Compile Include="Console\CameraCommand.cs" />
     <Compile Include="Entity\Coins.cs" />
-    <Compile Include="Entity\Singularity.cs" />
     <Compile Include="Entity\Slimes.cs" />
     <Compile Include="State\Play.cs" />
     <Compile Include="State\MainMenu.cs" />

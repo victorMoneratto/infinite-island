@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Engine
 {
@@ -34,7 +33,7 @@ namespace InfiniteIsland.Engine
 
     public delegate bool Step(float elapsedTime);
 
-    public class Waiter : IUpdateable
+    public class Waiter
     {
         private readonly Action _completed;
         private readonly Step _step;

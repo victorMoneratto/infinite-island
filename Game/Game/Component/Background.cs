@@ -3,14 +3,11 @@ using InfiniteIsland.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Component
 {
-    public class Background : IUpdateable, IDrawable
+    public class Background 
     {
-        public static Background Instance;
         public Color SkyColor = Color.DarkCyan;
 
         public Background(Vector2 screenDimensions)

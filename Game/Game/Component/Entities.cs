@@ -1,38 +1,37 @@
+using FarseerPhysics.Dynamics;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Entity;
+using InfiniteIsland.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Component
 {
-    internal class Entities : IUpdateable
+    public class Entities
     {
-        public static Entities Instance;
         public readonly Coins Coins;
         public readonly Player Player;
         public readonly Slimes Slimes;
 
-        public Entities()
+        public Entities(World world, Play play)
         {
-            Player = new Player();
+            Player = new Player(world, play);
             Coins = new Coins();
-            Slimes = new Slimes();
+            Slimes = new Slimes(world);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Camera camera)
+        public void Draw(SpriteBatch spriteBatch, CameraOperator cameraOperator)
         {
-            Coins.Draw(spriteBatch, false);
-            Slimes.Draw(spriteBatch);
-            Player.Draw(spriteBatch);
+            Coins.Draw(spriteBatch, cameraOperator, false);
+            Slimes.Draw(spriteBatch, cameraOperator);
+            Player.Draw(spriteBatch, cameraOperator);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, CameraOperator cameraOperator, World world)
         {
             Player.Update(gameTime);
-            Coins.Update(gameTime);
+            Coins.Update(gameTime, cameraOperator, this, world);
             Slimes.Update(gameTime);
         }
 

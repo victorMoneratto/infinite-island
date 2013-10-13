@@ -1,33 +1,30 @@
 using System;
+using FarseerPhysics.Dynamics;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Component
 {
-    public class Terrain : IUpdateable, IDrawable
+    public class Terrain
     {
-        public static Terrain Instance;
-
         private static Effect _terrainEffect;
         private readonly Texture2D _blankTexture;
         private readonly TerrainChunk[] _chunks;
 
-        public Terrain(GraphicsDevice graphics)
+        public Terrain(GraphicsDevice graphics, World world)
         {
             //T_T SAD it doesn't work yet T_T
             _chunks = new TerrainChunk[graphics.Viewport.Width/TerrainChunk.Dimensions.X.ToPixels() + 20];
-            _chunks[0] = new TerrainChunk(0, Noise.Generate(TerrainChunk.HeightCount), graphics, InfiniteIsland.World);
+            _chunks[0] = new TerrainChunk(0, Noise.Generate(TerrainChunk.HeightCount), graphics, world);
 
             for (int i = 1; i < _chunks.Length; i++)
             {
                 _chunks[i] = new TerrainChunk(_chunks[i - 1].LastVertex.X, Noise.Generate(TerrainChunk.HeightCount),
-                                              graphics, InfiniteIsland.World, _chunks[i - 1].LastVertex.Y);
+                                              graphics, world, _chunks[i - 1].LastVertex.Y);
             }
 
             _blankTexture = new Texture2D(graphics, 1, 1);
@@ -49,11 +46,11 @@ namespace InfiniteIsland.Component
             spriteBatch.End();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, CameraOperator cameraOperator)
         {
             TerrainChunk firstChunk = _chunks[0];
             if (firstChunk.LastVertex.X.ToPixels() <
-                CameraOperator.Instance.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
+                cameraOperator.Camera.Viewport.Projection.BoundingBox.TopLeft.X)
             {
                 firstChunk.BodyPosition = _chunks[_chunks.Length - 1].LastVertex;
                 firstChunk.Heights = Noise.Generate(TerrainChunk.HeightCount);

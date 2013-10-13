@@ -1,26 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace InfiniteIsland.Engine
 {
-    public class GameState : DrawableGameComponent
+    public abstract class GameState
     {
-        protected GameState(Game game) : base(game)
+        protected readonly Game Game;
+        protected GameState(Game game)
         {
+            Game = game;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-        }
-
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-        }
+        public abstract void LoadContent();
+        public abstract void Update(GameTime gameTime);
+        public abstract void Draw(SpriteBatch spriteBatch);
     }
 }

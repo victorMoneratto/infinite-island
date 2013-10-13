@@ -1,8 +1,8 @@
 using System;
-using FarseerPhysics.Dynamics;
 using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math.Geometry;
+using InfiniteIsland.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,26 +11,19 @@ namespace InfiniteIsland
 {
     internal class InfiniteIsland : Game
     {
-        public const float LinearDistortion = -.12f, CubicDistortion = .2f;
-        public static readonly World World = new World(new Vector2(0, 30));
         public static readonly Random Random = new Random();
 
-        public static int Coins;
-        public static float Factor = 1f;
         public static bool IsPaused;
-        private Effect _coinsFX;
-        private RenderTarget2D _coinsRT;
-
+        public SpriteBatch SpriteBatch;
         private Texture2D _pauseFilter;
-        private Effect _postFX;
-        private RenderTarget2D _postRT;
-        private SpriteBatch _spriteBatch;
+        public GameState GameState;
 
         public InfiniteIsland()
         {
             Content.RootDirectory = "Content";
             new GraphicsDeviceManager(this)
             {
+                //PreferredBackBufferWidth = 1920, PreferredBackBufferHeight = 1080,
                 PreferredBackBufferWidth = 1280,
                 PreferredBackBufferHeight = 720,
                 PreferMultiSampling = true,
@@ -49,41 +42,26 @@ namespace InfiniteIsland
                 Up = 2f,
                 Down = GraphicsDevice.Viewport.Height - 2f
             };
-
-            Debug.Instance = new Debug(this, _spriteBatch);
-            Entities.Instance = new Entities();
-            Terrain.Instance = new Terrain(GraphicsDevice);
-            CameraOperator.Instance = new CameraOperator(GraphicsDevice.Viewport.Bounds);
-            HUD.Instance = new HUD();
-            Cursor.Instance = new Cursor();
-            Background.Instance =
-                new Background(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+            GameState = new Play(this);
+            GameState.LoadContent();
         }
 
         protected override void LoadContent()
         {
+            Cursor.LoadContent(Content);
             Entities.LoadContent(Content);
             Terrain.LoadContent(Content);
             HUD.LoadContent(Content);
             Background.LoadContent(Content);
-            Cursor.LoadContent(Content);
 
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            _postRT = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth,
-                GraphicsDevice.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-            _postFX = Content.Load<Effect>("Post");
-
-            _coinsRT = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth,
-                GraphicsDevice.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-            _coinsFX = Content.Load<Effect>("Coins");
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             _pauseFilter = new Texture2D(GraphicsDevice, 1, 1);
             _pauseFilter.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
 
-            Setup();
-
             base.LoadContent();
+
+            Setup();
         }
 
         protected override void Update(GameTime gameTime)
@@ -101,58 +79,21 @@ namespace InfiniteIsland
                 return;
             }
 
-            World.Step(gameTime.ElapsedGameTime.Milliseconds*1e-3f);
-
             Wait.Update(gameTime);
-            Entities.Instance.Update(gameTime);
-            Terrain.Instance.Update(gameTime);
-            CameraOperator.Instance.Update(gameTime);
-            HUD.Instance.Update(gameTime);
-            Background.Instance.Update(gameTime);
-            Cursor.Instance.Update(gameTime);
-            Debug.Instance.Update(gameTime);
+
+            GameState.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            //Render revealed coins to own buffer
-            GraphicsDevice.SetRenderTarget(_coinsRT);
-            GraphicsDevice.Clear(Color.Transparent);
-            Entities.Instance.Coins.Draw(_spriteBatch, true); //<= Coins
-
-            //Render all the rest
-            GraphicsDevice.SetRenderTarget(_postRT);
-            GraphicsDevice.Clear(Background.Instance.SkyColor);
-            Background.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-            Terrain.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-            Entities.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, null, null, null, _coinsFX);
-            _coinsFX.Parameters["center"].SetValue(Input.Mouse.Position/
-                                                   new Vector2(GraphicsDevice.Viewport.Bounds.Width,    // <= Creating objects every frame? That makes me sad ):
-                                                       GraphicsDevice.Viewport.Bounds.Height));
-            _coinsFX.Parameters["aspectRatio"].SetValue((float) GraphicsDevice.Viewport.Bounds.Width/
-                                                        GraphicsDevice.Viewport.Bounds.Height);
-            _spriteBatch.Draw(_coinsRT, GraphicsDevice.Viewport.Bounds, Color.White);
-            _spriteBatch.End();
-            Cursor.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-
-            GraphicsDevice.SetRenderTarget(null);
-            _spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, _postFX);
-            _postFX.Parameters["k"].SetValue(LinearDistortion);
-            _postFX.Parameters["kcube"].SetValue(CubicDistortion);
-            _spriteBatch.Draw(_postRT, Vector2.Zero, Color.White);
-            _spriteBatch.End();
-
-            HUD.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-            Debug.Instance.Draw(_spriteBatch, CameraOperator.Instance.Camera);
-
+            GameState.Draw(SpriteBatch);
             if (IsPaused)
             {
-                _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-                _spriteBatch.Draw(_pauseFilter, GraphicsDevice.Viewport.Bounds, Color.White);
-                _spriteBatch.End();
+                SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                SpriteBatch.Draw(_pauseFilter, GraphicsDevice.Viewport.Bounds, Color.White);
+                SpriteBatch.End();
             }
 
             base.Draw(gameTime);

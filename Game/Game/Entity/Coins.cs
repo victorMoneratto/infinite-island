@@ -8,16 +8,15 @@ using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Entity
 {
-    internal class Coins : IUpdateable
+    public class Coins
     {
         private readonly List<Coin> _coins = new List<Coin>(20);
         private float _milis;
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, CameraOperator cameraOperator, Entities entities, World world)
         {
             foreach (Coin coin in _coins)
             {
@@ -29,9 +28,9 @@ namespace InfiniteIsland.Entity
             {
                 --_milis;
 
-                RotatableRectangleF cameraViewport = CameraOperator.Instance.Camera.Viewport;
+                RotatableRectangleF cameraViewport = cameraOperator.Camera.Viewport;
                 if (_coins.Count == _coins.Capacity)
-                    Remove(_coins[0]);
+                    Remove(_coins[0], world);
 
                 //select a way to launch
                 if (InfiniteIsland.Random.Next(2) == 0)
@@ -42,13 +41,12 @@ namespace InfiniteIsland.Entity
                             position:
                                 (cameraViewport.TopLeft +
                                  new Vector2(0,
-                                             (float) InfiniteIsland.Random.NextDouble()*
-                                             cameraViewport.Dimensions.Y*.75f)).ToMeters(),
+                                     (float) InfiniteIsland.Random.NextDouble()*
+                                     cameraViewport.Dimensions.Y*.75f)).ToMeters(),
                             linearVelocity:
-                                Entities.Instance.Player.Body.Wheel.LinearVelocity*
+                                entities.Player.Body.Wheel.LinearVelocity*
                                 new Vector2(1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
-                                            -2*(float) InfiniteIsland.Random.NextDouble())
-                            ));
+                                    -2*(float) InfiniteIsland.Random.NextDouble()), world: world));
                 }
                 else
                 {
@@ -57,24 +55,23 @@ namespace InfiniteIsland.Entity
                         new Coin(
                             position:
                                 (cameraViewport.TopRight +
-                                 new Vector2(0,
-                                             (float) InfiniteIsland.Random.NextDouble()*
-                                             cameraViewport.Dimensions.Y*.75f)).ToMeters(),
-                            linearVelocity:
-                                Entities.Instance.Player.Body.Wheel.LinearVelocity*
-                                (new Vector2(1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
-                                             -2*(float) InfiniteIsland.Random.NextDouble()) - Vector2.UnitX)
-                            ));
+                                new Vector2(0, (float) InfiniteIsland.Random.NextDouble()*cameraViewport.Dimensions.Y*.75f)).ToMeters(),
+                            linearVelocity: 
+                                entities.Player.Body.Wheel.LinearVelocity*
+                                (new Vector2(
+                                    x: 1.5f + (float) InfiniteIsland.Random.NextDouble()/2.5f,
+                                    y:-2*(float) InfiniteIsland.Random.NextDouble()) - Vector2.UnitX),
+                            world: world));
                 }
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, bool revealCoins)
+        public void Draw(SpriteBatch spriteBatch, CameraOperator cameraOperator, bool revealCoins)
         {
             if (revealCoins)
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                                  CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
+                    cameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
                 foreach (Coin coin in _coins)
                 {
                     coin.Sprite.Key = coin.Type;
@@ -82,8 +79,8 @@ namespace InfiniteIsland.Entity
                     if (coin.Type == Coin.AnimationKeys.Bad)
                     {
                         badOffset = new Vector2(
-                            x: (float)(InfiniteIsland.Random.NextDouble() - .5f) * 15,
-                            y: (float)(InfiniteIsland.Random.NextDouble() - .5f) * 15);
+                            x: (float) (InfiniteIsland.Random.NextDouble() - .5f)*15,
+                            y: (float) (InfiniteIsland.Random.NextDouble() - .5f)*15);
                         coin.Sprite.Body.Center += badOffset;
                     }
 
@@ -99,7 +96,7 @@ namespace InfiniteIsland.Entity
             else
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                                  CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
+                    cameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
                 foreach (Coin coin in _coins)
                 {
                     coin.Sprite.Key = Coin.AnimationKeys.Outline;
@@ -109,9 +106,9 @@ namespace InfiniteIsland.Entity
             }
         }
 
-        public void Remove(Coin coin)
+        public void Remove(Coin coin, World world)
         {
-            InfiniteIsland.World.RemoveBody(coin.Body);
+            world.RemoveBody(coin.Body);
             _coins.Remove(coin);
         }
 
@@ -121,7 +118,7 @@ namespace InfiniteIsland.Entity
         }
     }
 
-    internal class Coin : Engine.Entity.Entity
+    public class Coin
     {
         private const float Scale = 2f;
         private static Animation _animation;
@@ -130,10 +127,10 @@ namespace InfiniteIsland.Entity
         public readonly Sprite Sprite;
         public readonly string Type;
 
-        public Coin(Vector2 position, Vector2 linearVelocity)
+        public Coin(Vector2 position, Vector2 linearVelocity, World world)
         {
             Body = BodyFactory.CreateCircle(
-                world: InfiniteIsland.World,
+                world: world,
                 radius: (_animation.MaxDimensions.X/2f).ToMeters()*Scale,
                 density: 1f,
                 position: position,
@@ -143,24 +140,22 @@ namespace InfiniteIsland.Entity
             Body.LinearVelocity = linearVelocity;
 
             Sprite = new Sprite(_animation)
+            {
+                Body =
                 {
-                    Body =
-                        {
-                            Scale = new Vector2(Scale),
-                        }
-                };
-            if (InfiniteIsland.Random.Next(2) == 0)
-                Type = AnimationKeys.Bad;
-            else Type = AnimationKeys.Good;
+                    Scale = new Vector2(Scale),
+                }
+            };
+            Type = InfiniteIsland.Random.Next(2) == 0 ? AnimationKeys.Bad : AnimationKeys.Good;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             Sprite.Body.Center = Body.Position.ToPixels();
             Sprite.Body.Rotation = Body.Rotation;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             Sprite.Draw(spriteBatch);
         }

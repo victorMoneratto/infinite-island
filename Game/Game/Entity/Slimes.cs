@@ -7,17 +7,16 @@ using InfiniteIsland.Engine.Visual;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Entity
 {
-    internal class Slimes : IUpdateable
+    public class Slimes
     {
         private readonly List<Slime> _slimes;
 
-        public Slimes()
+        public Slimes(World world)
         {
-            _slimes = new List<Slime> {new Slime()};
+            _slimes = new List<Slime> {new Slime(world)};
         }
 
         public void Update(GameTime gameTime)
@@ -28,10 +27,10 @@ namespace InfiniteIsland.Entity
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, CameraOperator cameraOperator)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
+                cameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
             foreach (Slime slime in _slimes)
             {
                 slime.Draw(spriteBatch);
@@ -45,7 +44,7 @@ namespace InfiniteIsland.Entity
         }
     }
 
-    internal class Slime : Engine.Entity.Entity
+    internal class Slime
     {
         private const float Scale = 2f;
         private static Animation _animation;
@@ -53,31 +52,31 @@ namespace InfiniteIsland.Entity
         private readonly Body _body;
         private readonly Sprite _sprite;
 
-        public Slime()
+        public Slime(World world)
         {
             _sprite = new Sprite(_animation)
-                {
-                    FramesPerSecond = 10,
-                    Flip = SpriteEffects.FlipHorizontally,
-                    Body = {Scale = new Vector2(Scale)},
-                    Key = "walk"
-                };
+            {
+                FramesPerSecond = 10,
+                Flip = SpriteEffects.FlipHorizontally,
+                Body = {Scale = new Vector2(Scale)},
+                Key = "walk"
+            };
 
-            _body = BodyFactory.CreateCircle(world: InfiniteIsland.World,
-                                             radius: _sprite.Body.Dimensions.X.ToMeters()*.75f, density: .5f,
-                                             position: new Vector2(10, 0));
+            _body = BodyFactory.CreateCircle(world: world,
+                radius: _sprite.Body.Dimensions.X.ToMeters()*.75f, density: .5f,
+                position: new Vector2(10, 0));
 
             _body.BodyType = BodyType.Dynamic;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             _body.ApplyLinearImpulse(.1f*Vector2.UnitX);
             _sprite.Body.Center = _body.Position.ToPixels();
             _sprite.Update(gameTime);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             _sprite.Draw(spriteBatch);
         }

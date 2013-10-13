@@ -1,11 +1,11 @@
-﻿using System;
-using FarseerPhysics.Dynamics;
+﻿using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Physics;
 using InfiniteIsland.Engine.Visual;
+using InfiniteIsland.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace InfiniteIsland.Entity
 {
-    public class Player : Engine.Entity.Entity
+    public class Player
     {
         private const float MaxSpeed = 40f;
         private static Sprite _sprite;
@@ -22,11 +22,12 @@ namespace InfiniteIsland.Entity
         private static SoundEffect _coinConsumeSound, _jumpSound, _hurtSound;
 
         public readonly HumanoidBody Body;
-
-        public Player()
+        private Play _play;
+        public Player(World world, Play play)
         {
+            _play = play;
             Body = new HumanoidBody(
-                world: InfiniteIsland.World,
+                world: world,
                 dimensions: _sprite.Animation.MaxDimensions.ToMeters()*.9f,
                 userData: this);
 
@@ -38,38 +39,33 @@ namespace InfiniteIsland.Entity
 
         private bool OnCollision(Fixture f1, Fixture f2, Contact contact)
         {
-            var entity = f2.UserData as Engine.Entity.Entity;
-            if (entity == null)
+            Coin coin = f2.UserData as Coin;
+            if (coin == null)
                 return false;
 
-            if (entity is Coin)
+            if (coin.Type == Coin.AnimationKeys.Good)
             {
-                if (((Coin) entity).Type == Coin.AnimationKeys.Good)
-                {
-                    ++InfiniteIsland.Coins;
-                    _coinConsumeSound.Play(1f, 1f, 0f);
-                }
-                else
-                {
-                    float factor = InfiniteIsland.Factor;
-                    Wait.Until(time =>
-                               Tweening.Tween(
-                                   start: factor,
-                                   end: factor - 1/3f,
-                                   progress: time/.5f,
-                                   step: value => InfiniteIsland.Factor = value,
-                                   scale: TweenScales.Quadratic));
-
-                    _hurtSound.Play();
-                }
-                Entities.Instance.Coins.Remove(entity as Coin);
-                return false;
+                ++_play.Coins;
+                _coinConsumeSound.Play(1f, 1f, 0f);
             }
+            else
+            {
+                float factor = _play.Factor;
+                Wait.Until(time =>
+                    Tweening.Tween(
+                        start: factor,
+                        end: factor - 1/3f,
+                        progress: time/.5f,
+                        step: value => _play.Factor = value,
+                        scale: TweenScales.Quadratic));
 
-            return true;
+                _hurtSound.Play();
+            }
+            _play.Entities.Coins.Remove(coin, _play.World);
+            return false;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
@@ -81,10 +77,10 @@ namespace InfiniteIsland.Entity
             _sprite.Body.TopRight = Body.TopMiddle.ToPixels() + new Vector2(_sprite.Body.Dimensions.X/2f, 0);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, CameraOperator cameraOperator)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null,
-                              CameraOperator.Instance.Camera.CalculateTransformMatrix(Vector2.One));
+                cameraOperator.Camera.CalculateTransformMatrix(Vector2.One));
             _sprite.Draw(spriteBatch);
             spriteBatch.End();
         }

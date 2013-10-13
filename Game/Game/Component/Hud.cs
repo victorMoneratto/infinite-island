@@ -5,21 +5,18 @@ using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using IDrawable = InfiniteIsland.Engine.Interface.IDrawable;
-using IUpdateable = InfiniteIsland.Engine.Interface.IUpdateable;
 
 namespace InfiniteIsland.Component
 {
-    internal class HUD : IUpdateable, IDrawable
+    public class HUD
     {
-        public static HUD Instance;
         private static Sprite _scoreSprite;
         private static SpriteFont _scoreFont;
         private static Vector2 _scoreTextPosition;
 
-        public void Draw(SpriteBatch spriteBatch, Camera camera)
+        public void Draw(SpriteBatch spriteBatch, int coins)
         {
-            string scoreText = InfiniteIsland.Coins.ToString(CultureInfo.InvariantCulture);
+            string scoreText = coins.ToString(CultureInfo.InvariantCulture);
 
             spriteBatch.Begin();
 
