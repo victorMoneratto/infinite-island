@@ -16,7 +16,7 @@ namespace InfiniteIsland
         public static bool IsPaused;
         public SpriteBatch SpriteBatch;
         private Texture2D _pauseFilter;
-        public GameState GameState;
+        public static GameState GameState;
 
         public InfiniteIsland()
         {
@@ -42,7 +42,7 @@ namespace InfiniteIsland
                 Up = 2f,
                 Down = GraphicsDevice.Viewport.Height - 2f
             };
-            GameState = new Play(this);
+            GameState = new MainMenu(this);
             GameState.LoadContent();
         }
 

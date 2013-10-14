@@ -22,7 +22,7 @@ namespace InfiniteIsland.Entity
         private static SoundEffect _coinConsumeSound, _jumpSound, _hurtSound;
 
         public readonly HumanoidBody Body;
-        private Play _play;
+        private readonly Play _play;
         public Player(World world, Play play)
         {
             _play = play;
@@ -55,7 +55,7 @@ namespace InfiniteIsland.Entity
                     Tweening.Tween(
                         start: factor,
                         end: factor - 1/3f,
-                        progress: time/.5f,
+                        progress: time.Alive/.5f,
                         step: value => _play.Factor = value,
                         scale: TweenScales.Quadratic));
 

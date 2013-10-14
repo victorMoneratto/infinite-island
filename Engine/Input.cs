@@ -10,11 +10,11 @@ namespace InfiniteIsland.Engine
     /// </summary>
     public static class Input
     {
-        public static KeyboardState PreviousKeyboardState { get; set; }
-        public static KeyboardState CurrentKeyboardState { get; set; }
+        private static KeyboardState PreviousKeyboardState { get; set; }
+        private static KeyboardState CurrentKeyboardState { get; set; }
 
-        public static MouseState PreviousMouseState { get; set; }
-        public static MouseState CurrentMouseState { get; set; }
+        private static MouseState PreviousMouseState { get; set; }
+        private static MouseState CurrentMouseState { get; set; }
 
         public static void Update(bool limitMouse)
         {
