@@ -3,6 +3,7 @@ using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace InfiniteIsland.State
 {
@@ -36,6 +37,7 @@ namespace InfiniteIsland.State
             HUD = new HUD();
             Background =
                 new Background(new Vector2(game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
+            
         }
 
         public override void LoadContent()
@@ -57,6 +59,8 @@ namespace InfiniteIsland.State
                 preferredFormat: SurfaceFormat.Color,
                 preferredDepthFormat: DepthFormat.None);
             _coinsFX = Game.Content.Load<Effect>("Coins");
+            MediaPlayer.Play(Game.Content.Load<Song>("bgm/chaotic"));
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void Update(GameTime gameTime)

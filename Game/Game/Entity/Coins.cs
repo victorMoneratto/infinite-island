@@ -146,7 +146,7 @@ namespace InfiniteIsland.Entity
                     Scale = new Vector2(Scale),
                 }
             };
-            Type = InfiniteIsland.Random.Next(2) == 0 ? AnimationKeys.Bad : AnimationKeys.Good;
+            Type = InfiniteIsland.Random.Next(4) == 0 ? AnimationKeys.Bad : AnimationKeys.Good;
         }
 
         public void Update(GameTime gameTime)

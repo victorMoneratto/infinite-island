@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math.Geometry;
 using Microsoft.Xna.Framework;
@@ -12,10 +11,11 @@ namespace InfiniteIsland.State
 {
     internal class MainMenu : GameState
     {
+        private SoundEffect _elements;
         private SpriteFont _font;
         private Song _song;
-        private SoundEffect _elements;
         private RotatableRectangleF _textBounds;
+        private Waiter _waiter;
 
         public MainMenu(Game game) : base(game)
         {
@@ -32,13 +32,15 @@ namespace InfiniteIsland.State
             {
                 Center = .5f*new Vector2(
                     x: Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
-                    y: Game.GraphicsDevice.PresentationParameters.BackBufferHeight)
+                    y: 200 + Game.GraphicsDevice.PresentationParameters.BackBufferHeight)
             };
 
-            Wait.Until(time =>
+            //Should be disposed :)
+            _waiter = Wait.Until(time =>
             {
                 _textBounds.Rotation = (float) Math.Sin(time.Alive*MathHelper.TwoPi)*.25f;
-                _textBounds.Scale = 1.5f*new Vector2(.5f + (float) Math.Sin((time.Alive*MathHelper.TwoPi)%MathHelper.Pi));
+                _textBounds.Scale = 1.5f*new Vector2(
+                    .5f + (float) Math.Sin((time.Alive*MathHelper.TwoPi)%MathHelper.Pi));
                 return false;
             }, null, -1);
         }
@@ -47,9 +49,10 @@ namespace InfiniteIsland.State
         {
             if (Input.Keyboard.IsKeyTyped(Keys.Enter))
             {
+                MediaPlayer.Stop();
                 InfiniteIsland.GameState = new Play(Game);
                 InfiniteIsland.GameState.LoadContent();
-                MediaPlayer.Stop();
+                Wait.Waiters.Remove(_waiter);
                 _elements.Play();
             }
         }

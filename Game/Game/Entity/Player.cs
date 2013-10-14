@@ -4,6 +4,7 @@ using InfiniteIsland.Component;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Physics;
+using InfiniteIsland.Engine.Terrain;
 using InfiniteIsland.Engine.Visual;
 using InfiniteIsland.State;
 using Microsoft.Xna.Framework;
@@ -32,9 +33,15 @@ namespace InfiniteIsland.Entity
                 userData: this);
 
             Body.Torso.OnCollision += OnCollision;
+            Body.Wheel.OnCollision += Wheel_OnCollision;
 
             Body.Motor.MotorSpeed = MaxSpeed;
             _sprite.Key = AnimationKeys.Walk;
+        }
+
+        bool Wheel_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+            return (fixtureB.Body.UserData is TerrainChunk);
         }
 
         private bool OnCollision(Fixture f1, Fixture f2, Contact contact)
@@ -54,12 +61,12 @@ namespace InfiniteIsland.Entity
                 Wait.Until(time =>
                     Tweening.Tween(
                         start: factor,
-                        end: factor - 1/3f,
-                        progress: time.Alive/.5f,
+                        end: factor - 1/5f,
+                        progress: time.Alive/.6f,
                         step: value => _play.Factor = value,
                         scale: TweenScales.Quadratic));
 
-                _hurtSound.Play();
+                _hurtSound.Play(1, 1f, 0);
             }
             _play.Entities.Coins.Remove(coin, _play.World);
             return false;
@@ -70,7 +77,7 @@ namespace InfiniteIsland.Entity
             if (Input.Keyboard.IsKeyTyped(Keys.Space))
             {
                 _jumpSound.Play(1f, 1f, 0f);
-                Body.Torso.ApplyLinearImpulse(new Vector2(0, -15));
+                Body.Torso.ApplyLinearImpulse(new Vector2(0, -20));
             }
 
             _sprite.Update(gameTime);
@@ -89,7 +96,7 @@ namespace InfiniteIsland.Entity
         {
             _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
-            _hurtSound = content.Load<SoundEffect>("sfx/hurt");
+            _hurtSound = content.Load<SoundEffect>("sfx/elements08");
 
             _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
         }

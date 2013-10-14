@@ -8,10 +8,11 @@ namespace InfiniteIsland.Engine
     {
         public static readonly List<Waiter> Waiters = new List<Waiter>();
 
-        public static void Until(Step step, Action completed = null, int repeat = 1)
+        public static Waiter Until(Step step, Action completed = null, int repeat = 1)
         {
-            Waiters.Add(
-                new Waiter(step, completed, repeat));
+            Waiter waiter = new Waiter(step, completed, repeat);
+            Waiters.Add(waiter);
+            return waiter;
         }
 
         //public static void For(float time, Action completed = null, int repeat = 1)
@@ -74,6 +75,7 @@ namespace InfiniteIsland.Engine
                 {
                     _completed();
                 }
+                _time.Alive = 0;
             }
         }
     }

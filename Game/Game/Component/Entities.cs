@@ -18,7 +18,7 @@ namespace InfiniteIsland.Component
         {
             Player = new Player(world, play);
             Coins = new Coins();
-            Slimes = new Slimes(world);
+            Slimes = new Slimes(world, play);
         }
 
         public void Draw(SpriteBatch spriteBatch, CameraOperator cameraOperator)

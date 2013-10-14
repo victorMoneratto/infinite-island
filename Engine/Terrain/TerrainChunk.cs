@@ -26,7 +26,7 @@ namespace InfiniteIsland.Engine.Terrain
                             World world,
                             float? firstHeight = null)
         {
-            _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition));
+            _body = BodyFactory.CreateBody(world, new Vector2(horizonalPosition, VerticalPosition), this);
             _bounds = new RotatableRectangleF(Dimensions) {TopLeft = _body.Position};
             _heightmap = new Texture2D(graphicsDevice, HeightCount, 1, false, SurfaceFormat.Single);
 
