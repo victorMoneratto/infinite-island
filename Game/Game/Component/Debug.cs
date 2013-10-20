@@ -4,6 +4,7 @@ using FarseerPhysics.Dynamics;
 using InfiniteIsland.Console;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
+using InfiniteIsland.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,24 +15,14 @@ namespace InfiniteIsland.Component
     public class Debug
     {
         private readonly DebugViewXNA _physicsDebug;
-        public GameConsole Console;
+        public static GameConsole Console;
         public bool PhysicsDebugEnabled;
 
-        public Debug(Game game, World world)
+        public Debug(Game game, World world, Play play)
         {
             _physicsDebug = new DebugViewXNA(world);
             _physicsDebug.LoadContent(game.GraphicsDevice, game.Content);
             _physicsDebug.AppendFlags(DebugViewFlags.DebugPanel);
-
-            Console = new GameConsole(
-                game,
-                new SpriteBatch(game.GraphicsDevice),
-                new[] {new CameraCommand()},
-                new GameConsoleOptions
-                    {
-                        AnimationSpeed = .2f,
-                        OpenOnWrite = false
-                    });
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)

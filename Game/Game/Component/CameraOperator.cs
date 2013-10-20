@@ -1,26 +1,27 @@
 ﻿using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
-using InfiniteIsland.Engine.Terrain;
 using Microsoft.Xna.Framework;
 
 namespace InfiniteIsland.Component
 {
     public class CameraOperator
     {
-        public Camera Camera;
+        public readonly Camera Camera;
 
         public CameraOperator(Rectangle viewportBounds)
         {
             Camera = new Camera();
             Camera.Setup(new Vector2(viewportBounds.Width, viewportBounds.Height));
-            Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
+            //Camera.Limits.Down = (TerrainChunk.VerticalPosition + TerrainChunk.Dimensions.Y).ToPixels();
         }
 
         public void Update(GameTime gameTime, Entities entities, float factor)
         {
+            float y = MathHelper.Max(50, entities.Player.Body.Torso.Position.Y.ToPixels() - 100f);
             Camera.Viewport.Center =
-                entities.Player.Body.Torso.Position.ToPixels() -
-                (2f*factor - 1)*new Vector2(.4f*Camera.Viewport.Dimensions.X, 1f);
+                new Vector2(
+                    entities.Player.Body.Torso.Position.X.ToPixels() - (2f*factor - 1)*.4f*Camera.Viewport.Dimensions.X,
+                    y);
 
             Camera.Viewport.Pivot = new Vector2(factor, .5f);
 

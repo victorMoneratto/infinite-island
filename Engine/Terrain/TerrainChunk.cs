@@ -11,7 +11,7 @@ namespace InfiniteIsland.Engine.Terrain
     {
         public const int HeightCount = 10;
         public const float VerticalPosition = 3f;
-        public static readonly Vector2 Dimensions = new Vector2(4000f.ToMeters(), 150f.ToMeters());
+        public static readonly Vector2 Dimensions = new Vector2(4000f.ToMeters(), 300f.ToMeters());
 
         private readonly Body _body;
         private readonly RectangleF _bounds;

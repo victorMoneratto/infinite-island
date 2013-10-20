@@ -53,13 +53,13 @@ namespace InfiniteIsland.State
                 InfiniteIsland.GameState = new Play(Game);
                 InfiniteIsland.GameState.LoadContent();
                 Wait.Waiters.Remove(_waiter);
-                _elements.Play();
+                _elements.Play(.5f, 0f, 0f);
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Game.GraphicsDevice.Clear(Color.DarkGray);
+            Game.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
             spriteBatch.DrawString(

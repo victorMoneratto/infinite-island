@@ -13,8 +13,8 @@ namespace InfiniteIsland.Entity
 {
     public class Coins
     {
-        private readonly List<Coin> _coins = new List<Coin>(20);
-        private float _milis;
+        private readonly List<Coin> _coins = new List<Coin>(5);
+        private float _seconds;
 
         public void Update(GameTime gameTime, CameraOperator cameraOperator, Entities entities, World world)
         {
@@ -23,10 +23,10 @@ namespace InfiniteIsland.Entity
                 coin.Update(gameTime);
             }
 
-            _milis += gameTime.ElapsedGameTime.Milliseconds*1e-3f;
-            if (_milis > .5f)
+            _seconds += gameTime.ElapsedGameTime.Milliseconds*1e-3f;
+            if (_seconds > 1f)
             {
-                --_milis;
+                --_seconds;
 
                 RotatableRectangleF cameraViewport = cameraOperator.Camera.Viewport;
                 if (_coins.Count == _coins.Capacity)
@@ -120,7 +120,7 @@ namespace InfiniteIsland.Entity
 
     public class Coin
     {
-        private const float Scale = 2f;
+        private const float Scale = 3f;
         private static Animation _animation;
 
         public readonly Body Body;
@@ -146,7 +146,7 @@ namespace InfiniteIsland.Entity
                     Scale = new Vector2(Scale),
                 }
             };
-            Type = InfiniteIsland.Random.Next(4) == 0 ? AnimationKeys.Bad : AnimationKeys.Good;
+            Type = InfiniteIsland.Random.Next(3) == 0 ? AnimationKeys.Bad : AnimationKeys.Good;
         }
 
         public void Update(GameTime gameTime)

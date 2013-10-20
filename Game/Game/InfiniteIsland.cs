@@ -6,6 +6,7 @@ using InfiniteIsland.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using XNAGameConsole;
 
 namespace InfiniteIsland
 {
@@ -14,9 +15,9 @@ namespace InfiniteIsland
         public static readonly Random Random = new Random();
 
         public static bool IsPaused;
+        public static GameState GameState;
         public SpriteBatch SpriteBatch;
         private Texture2D _pauseFilter;
-        public static GameState GameState;
 
         public InfiniteIsland()
         {
@@ -42,7 +43,9 @@ namespace InfiniteIsland
                 Up = 2f,
                 Down = GraphicsDevice.Viewport.Height - 2f
             };
-            GameState = new MainMenu(this);
+
+            //GameState = new MainMenu(this);
+            GameState = new HighScore(this, 0);
             GameState.LoadContent();
         }
 
@@ -60,6 +63,16 @@ namespace InfiniteIsland
             _pauseFilter.SetData(new[] {new Color(0f, 0f, 0f, .4f)});
 
             base.LoadContent();
+
+            Debug.Console = new GameConsole(
+                this,
+                new SpriteBatch(GraphicsDevice),
+                new IConsoleCommand[]{},
+                new GameConsoleOptions
+                {
+                    AnimationSpeed = .2f,
+                    OpenOnWrite = false
+                });
 
             Setup();
         }

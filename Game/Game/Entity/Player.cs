@@ -36,12 +36,14 @@ namespace InfiniteIsland.Entity
             Body.Wheel.OnCollision += Wheel_OnCollision;
 
             Body.Motor.MotorSpeed = MaxSpeed;
-            _sprite.Key = AnimationKeys.Walk;
+            //_sprite.Key = AnimationKeys.Walk;
         }
+
+        private bool _canJump = true;
 
         bool Wheel_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            return (fixtureB.Body.UserData is TerrainChunk);
+            return fixtureB.Body.UserData is TerrainChunk;
         }
 
         private bool OnCollision(Fixture f1, Fixture f2, Contact contact)
@@ -52,21 +54,11 @@ namespace InfiniteIsland.Entity
 
             if (coin.Type == Coin.AnimationKeys.Good)
             {
-                ++_play.Coins;
-                _coinConsumeSound.Play(1f, 1f, 0f);
+                _play.RaiseFactor();
             }
             else
             {
-                float factor = _play.Factor;
-                Wait.Until(time =>
-                    Tweening.Tween(
-                        start: factor,
-                        end: factor - 1/5f,
-                        progress: time.Alive/.6f,
-                        step: value => _play.Factor = value,
-                        scale: TweenScales.Quadratic));
-
-                _hurtSound.Play(1, 1f, 0);
+                _play.LowerFactor();
             }
             _play.Entities.Coins.Remove(coin, _play.World);
             return false;
@@ -74,10 +66,12 @@ namespace InfiniteIsland.Entity
 
         public void Update(GameTime gameTime)
         {
-            if (Input.Keyboard.IsKeyTyped(Keys.Space))
+            if (Input.Keyboard.IsKeyTyped(Keys.Space) && _canJump)
             {
+                _canJump = false;
+                Wait.Until(time => time.Alive > .75f, () => _canJump = true);
                 _jumpSound.Play(1f, 1f, 0f);
-                Body.Torso.ApplyLinearImpulse(new Vector2(0, -20));
+                Body.Torso.ApplyLinearImpulse(new Vector2(0, -30));
             }
 
             _sprite.Update(gameTime);
@@ -94,18 +88,16 @@ namespace InfiniteIsland.Entity
 
         public static void LoadContent(ContentManager content)
         {
-            _coinConsumeSound = content.Load<SoundEffect>("sfx/coin");
+            
             _jumpSound = content.Load<SoundEffect>("sfx/jump");
-            _hurtSound = content.Load<SoundEffect>("sfx/elements08");
-
-            _sprite = new Sprite(content.Load<Animation>("sprite/p3"));
+            _sprite = new Sprite(content.Load<Animation>("sprite/kraemer")){FramesPerSecond = 13};
         }
 
-        private struct AnimationKeys
-        {
-            public const string Walk = "walk";
-            public const string Stand = "stand";
-            public const string Jump = "jump";
-        }
+        //private struct AnimationKeys
+        //{
+        //    public const string Walk = "walk";
+        //    public const string Stand = "stand";
+        //    public const string Jump = "jump";
+        //}
     }
 }

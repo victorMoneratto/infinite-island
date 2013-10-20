@@ -82,7 +82,7 @@ namespace InfiniteIsland.Entity
 
             _body = BodyFactory.CreateCircle(world: world,
                 radius: .5f, density: .5f,
-                position: play.Entities.Player.Body.TopMiddle - new Vector2(25, 0));
+                position: play.Entities.Player.Body.TopMiddle - new Vector2(20, 0));
 
             _body.BodyType = BodyType.Dynamic;
             _body.LinearVelocity = new Vector2(play.Entities.Player.Body.Motor.MotorSpeed * .5f, 0);
@@ -93,7 +93,7 @@ namespace InfiniteIsland.Entity
         {
             Player player = fixtureB.UserData as Player;
             if (player == null) return true;
-            _hurtSound.Play(1, 1f, 0);
+            _hurtSound.Play(1f, 0f, 0);
             _body.LinearVelocity = new Vector2(0, -5);
             _body.IgnoreGravity = true;
             _body.CollidesWith = Category.None;
@@ -110,14 +110,7 @@ namespace InfiniteIsland.Entity
                     _play.Entities.Slimes.SlimeList.Remove(this);
                     _play.World.RemoveBody(_body);
                 });
-            float factor = _play.Factor;
-            Wait.Until(gameTime =>
-                Tweening.Tween(
-                    start: factor,
-                    end: factor - 1 / 5f,
-                    progress: gameTime.Alive / .6f,
-                    step: value => _play.Factor = value,
-                    scale: TweenScales.Quadratic));
+            _play.LowerFactor();
             return false;
         }
 
@@ -137,7 +130,7 @@ namespace InfiniteIsland.Entity
         {
             _hitSound = content.Load<SoundEffect>("sfx/hit");
             _animation = content.Load<Animation>("sprite/slime");
-            _hurtSound = content.Load<SoundEffect>("sfx/elements08");
+            _hurtSound = content.Load<SoundEffect>("sfx/sword03");
         }
     }
 }

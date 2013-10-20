@@ -15,11 +15,11 @@ namespace InfiniteIsland.Engine
             return waiter;
         }
 
-        //public static void For(float time, Action completed = null, int repeat = 1)
-        //{
-        //    Waiters.Add(
-        //        new Waiter(elapsedTime => elapsedTime.Alive >= time, completed, repeat));
-        //}
+        public static void For(float time, Action completed = null, int repeat = 1)
+        {
+            Waiters.Add(
+                new Waiter(elapsedTime => elapsedTime.Alive >= time, completed, repeat));
+        }
 
         public static void Update(GameTime gameTime)
         {

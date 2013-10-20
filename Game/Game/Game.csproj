@@ -105,9 +105,10 @@
     <Compile Include="Component\Entities.cs" />
     <Compile Include="Component\Hud.cs" />
     <Compile Include="Component\Terrain.cs" />
-    <Compile Include="Console\CameraCommand.cs" />
+    <Compile Include="Console\ResetCommand.cs" />
     <Compile Include="Entity\Coins.cs" />
     <Compile Include="Entity\Slimes.cs" />
+    <Compile Include="State\HighScore.cs" />
     <Compile Include="State\Play.cs" />
     <Compile Include="State\MainMenu.cs" />
     <Compile Include="Visual\MoonLayer.cs" />

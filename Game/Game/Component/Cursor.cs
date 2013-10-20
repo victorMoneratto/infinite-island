@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics.Joints;
 using InfiniteIsland.Engine;
 using InfiniteIsland.Engine.Math;
 using InfiniteIsland.Engine.Visual;
+using InfiniteIsland.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,11 +53,14 @@ namespace InfiniteIsland.Component
                         (fixture =
                             world.TestPoint(cursorWorldPosition - new Vector2(radiusMeters, -radiusMeters))) != null)
                     {
-                        _mouseJoint = new FixedMouseJoint(fixture.Body, cursorWorldPosition)
+                        if (fixture.UserData is Coin)
                         {
-                            MaxForce = 200*fixture.Body.Mass
-                        };
-                        world.AddJoint(_mouseJoint);
+                            _mouseJoint = new FixedMouseJoint(fixture.Body, cursorWorldPosition)
+                            {
+                                MaxForce = 200*fixture.Body.Mass
+                            };
+                            world.AddJoint(_mouseJoint);
+                        }
                     }
                 }
             }

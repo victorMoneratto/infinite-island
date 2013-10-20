@@ -8,7 +8,7 @@ namespace InfiniteIsland.Component
 {
     public class Background 
     {
-        public Color SkyColor = Color.DarkCyan;
+        public Color SkyColor = new Color(87, 168, 168);
 
         public Background(Vector2 screenDimensions)
         {
