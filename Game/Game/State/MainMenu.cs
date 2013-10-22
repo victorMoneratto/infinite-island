@@ -16,6 +16,7 @@ namespace InfiniteIsland.State
         private Song _song;
         private RotatableRectangleF _textBounds;
         private Waiter _waiter;
+        private Texture2D _tutorial;
 
         public MainMenu(Game game) : base(game)
         {
@@ -27,12 +28,14 @@ namespace InfiniteIsland.State
             _font = Game.Content.Load<SpriteFont>("Bauhaus");
             _elements = Game.Content.Load<SoundEffect>("sfx/elements01");
 
+            _tutorial = Game.Content.Load<Texture2D>("img/tutorial");
+
             MediaPlayer.Play(_song);
             _textBounds = new RotatableRectangleF(_font.MeasureString("[Enter] to Play"))
             {
-                Center = .5f*new Vector2(
-                    x: Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
-                    y: 200 + Game.GraphicsDevice.PresentationParameters.BackBufferHeight)
+                Center = new Vector2(
+                    x: .5f * Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
+                    y: Game.GraphicsDevice.PresentationParameters.BackBufferHeight - 100)
             };
 
             //Should be disposed :)
@@ -62,9 +65,10 @@ namespace InfiniteIsland.State
             Game.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+            spriteBatch.Draw(_tutorial, Vector2.Zero, Color.White);
             spriteBatch.DrawString(
                 spriteFont: _font,
-                text: "[Enter] to Play!",
+                text: "[Enter] to Play",
                 position: _textBounds.Center,
                 color: Color.WhiteSmoke,
                 rotation: _textBounds.Rotation,
