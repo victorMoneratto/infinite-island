@@ -19,7 +19,7 @@ namespace InfiniteIsland
         public SpriteBatch SpriteBatch;
         private Texture2D _pauseFilter;
 
-        public InfiniteIsland()
+        public InfiniteIsland(bool fullscreen)
         {
             Content.RootDirectory = "Content";
             new GraphicsDeviceManager(this)
@@ -29,7 +29,7 @@ namespace InfiniteIsland
                 PreferredBackBufferHeight = 720,
                 PreferMultiSampling = true,
                 SynchronizeWithVerticalRetrace = true,
-                //IsFullScreen = true
+                IsFullScreen = fullscreen
             };
         }
 
@@ -44,8 +44,8 @@ namespace InfiniteIsland
                 Down = GraphicsDevice.Viewport.Height - 2f
             };
 
-            //GameState = new MainMenu(this);
-            GameState = new HighScore(this, 0);
+            GameState = new MainMenu(this);
+            //GameState = new HighScore(this, 0);
             GameState.LoadContent();
         }
 

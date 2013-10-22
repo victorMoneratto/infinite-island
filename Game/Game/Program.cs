@@ -2,9 +2,10 @@ namespace InfiniteIsland
 {
     internal static class Program
     {
-        private static void Main()
+        private static void Main(string[] args)
         {
-            using (var game = new InfiniteIsland())
+            bool fullscreen = args.Length > 0 && args[0] == "fullscreen";
+            using (var game = new InfiniteIsland(fullscreen))
             {
                 game.Window.Title = "Infinite Island";
                 game.Run();
