@@ -1,7 +1,0 @@
-# git ignore file
-obj/
-*.pdb
-*.cache*
-*not-used*
-*.db
-*.db
